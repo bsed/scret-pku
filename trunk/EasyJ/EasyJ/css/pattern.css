@@ -1,0 +1,17 @@
+#message
+{
+	background-color:#EDF2FC;
+	color:#333333; 
+	border: 1px #9DBAF7 solid;
+	font-size: 9px; 
+	height: auto; 
+	padding-right: 4px; 
+	padding-left: 4px; 
+	padding-top: 2px; 
+	padding-bottom: 2px; 
+	filter: Alpha(Opacity=0);
+	position:absolute;
+	right: 5%;
+	z-index:1000;
+	display: none;
+}

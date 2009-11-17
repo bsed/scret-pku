@@ -1,0 +1,534 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
+                    "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="usecase.css" />
+<script type="text/javascript" src="../js/jquery-1.2.3.js"></script>
+<title>Use Case Assoc Demo</title>
+
+<script type="text/javascript">
+	
+	//----------------
+	//    Util
+	//----------------
+    function getTh(tr){
+        if (!tr) {
+            return null;
+        }
+        var th = null;
+        for (var c = tr.firstChild; c != null; c = c.nextSibling) {
+            if (c.nodeType == 1 && c.nodeName.toLowerCase() == "th") {
+                th = c;
+                break;
+            }
+        }
+        return th;
+    }
+    
+    function isTr(tr){
+        return tr && tr.nodeType == 1 && tr.nodeName.toLowerCase() == "tr";
+    }
+    
+    function isBegin(tr){
+        return isTr(tr) && $(tr).hasClass("use_case_begin");
+    }
+    
+    function isEnd(tr){
+        return isTr(tr) && $(tr).hasClass("use_case_end");
+    }
+	
+	// node is before target?
+	function isBefore(node, target) {
+		if (node == target) {
+			return false;
+		}
+		for (var n = node; n != null; n = n.nextSibling) {
+			if (n == target) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	function isAfter(node, target) {
+		return isBefore(target, node);
+	}
+	
+	function setClassBefore(node, name) {
+		for (var n = node.previousSibling; n != null; n = n.previousSibling) {
+			if (n.nodeType == 1) {
+				$(n).removeClass("valid_range invalid_range");
+				if (name) {
+					$(n).addClass(name);
+				}
+			}
+		}
+	}
+	
+	function setClassAfter(node, name) {
+		for (var n = node.nextSibling; n != null; n = n.nextSibling) {
+			if (n.nodeType == 1) {
+				$(n).removeClass("valid_range invalid_range");
+				if (name) {
+					$(n).addClass(name);
+				}
+			}
+		}
+	}
+	
+	function setClassBetween(begin, end, name) {
+		for (var n = begin; n != null; n = n.nextSibling) {
+			if (n.nodeType == 1) {
+				$(n).removeClass("valid_range invalid_range");
+				if (name) {
+					$(n).addClass(name);
+				}
+			}
+			if (n == end) {
+				break;
+			}
+		}
+	}
+	
+    function normalizeEvent(event){
+        event = event || window.event;
+        if (!event.stopPropagation) {
+            event.stopPropagation = function(){
+                this.cancelBubble = true;
+            };
+            event.preventDefault = function(){
+                this.returnValue = false;
+            };
+        }
+        if (!event.stop) {
+            event.stop = function(){
+                this.stopPropagation();
+                this.preventDefault();
+            };
+        }
+        
+        if (event.type == "keypress") {
+            if (event.charCode === 0 || event.charCode == undefined) 
+                event.code = event.keyCode;
+            else event.code = event.charCode;
+            event.character = String.fromCharCode(event.code);
+        }
+		
+		event.source = event.srcElement || event.target;
+		event.key = event.keyCode || event.which;
+        return event;
+    }
+	
+	function createAssocBegin(th, name) {
+		$(th).empty();
+		
+		var s = document.createElement("span");
+		s.className = "assoc_name";
+		s.appendChild(document.createTextNode(name));
+		th.appendChild(s);
+		
+		var del = document.createElement("img");
+		del.src = "../image/assoc_delete.gif";
+		del.title = "取消关联";
+		del.className = "button";
+		del.onclick = deleteAssoc;
+		
+		var up = document.createElement("img");
+		up.src = "../image/assoc_up.gif";
+		up.className = "button";
+		up.onclick = expandBegin;
+		
+		var down = document.createElement("img");
+		down.src = "../image/assoc_down.gif";
+		down.className = "button";
+		down.onclick = collapseBegin;
+		
+		th.appendChild(del);
+		th.appendChild(up);
+		th.appendChild(down);
+	}
+	
+	function createAssocEnd(th) {
+		$(th).empty();
+		var up = document.createElement("img");
+		up.src = "../image/assoc_up.gif";
+		up.className = "button";
+		up.onclick = collapseEnd;
+		
+		var down = document.createElement("img");
+		down.src = "../image/assoc_down.gif";
+		down.className = "button";
+		down.onclick = expandEnd;
+		
+		th.appendChild(up);
+		th.appendChild(down);
+	}
+	
+	function createPlainTextHeader(th) {
+		$(th).empty();
+		var btn = document.createElement("img");
+		btn.src = "../image/assoc_add.gif";
+		btn.title = "关联用况";
+		btn.className = "button";
+		btn.onclick = createAssoc;
+		th.appendChild(btn);
+	}
+	//-----------------
+	//  class Manager
+	//-----------------
+	var Manager = {
+		
+		assocs: [],
+		
+		rows: [],
+		
+		init: function(firstRow) {
+			for (var r = firstRow; r != null; r = r.nextSibling) {
+				if (isTr(r)) {
+					Manager.rows.push(r);
+					createPlainTextHeader(getTh(r));
+				}
+			}
+		}
+		
+	};
+	
+	//-----------------
+	//  class Assoc
+	//-----------------
+	function Assoc(rows, name) {
+		var begin = rows[0];
+		var end = rows[rows.length - 1];
+		this.begin = begin, this.end = end;
+		this.name = name;
+		
+		$(begin).addClass("use_case_begin");
+		$(end).addClass("use_case_end");
+		begin.assoc = this;
+		
+     	var beginTh = getTh(begin);
+		var endTh = getTh(end);
+		createAssocBegin(beginTh, name);
+       
+        if (begin != end) {
+			end.assoc = this;
+			createAssocEnd(endTh);
+            for (var r = begin.nextSibling; r != end; r = r.nextSibling) {
+				if (isTr(r)) {
+					$(getTh(r)).empty();
+				}
+            }
+        }
+	}
+	//--------------------
+	//  Event Handlers
+	//--------------------
+	var Range = {
+		begin: null,
+		end: null
+	};
+	
+	function createAssoc(event) {
+		event = normalizeEvent(event);
+		var tr = event.source;
+		event.stop();
+		while (tr && !isTr(tr)) {
+			tr = tr.parentNode;
+		}
+		
+		$(".button").hide();
+		
+		Range.begin = tr;
+		Range.end = tr;
+		$(tr).addClass("valid_range");
+		
+		$("tr").unbind().mouseover(checkRange).click(confirmRange);
+		$(document.body).unbind().keyup(function(event) {
+			event = normalizeEvent(event);
+			if (event.key == 27) { //ESC
+				endCreateAssoc();
+			}
+		});
+	}
+	
+	function endCreateAssoc() {
+		$("tr").unbind().removeClass("valid_range invalid_range");
+		$(document.body).unbind();
+		$(".button").show();
+	}
+	
+	function checkRange(event) {
+		event = normalizeEvent(event);
+		var tr = event.source;
+		while (tr && !isTr(tr)) {
+			tr = tr.parentNode;
+		}
+		
+		if (tr == Range.begin) {
+			Range.end = Range.begin;
+			setClassBefore(tr);
+			setClassAfter(tr);
+		} else if (isBefore(tr, Range.begin)) {
+			Range.end = Range.begin;
+			setClassBefore(tr);
+			setClassBetween(tr, Range.begin, "invalid_range");
+			$(Range.begin).removeClass("invalid_range").addClass("valid_range");
+			setClassAfter(Range.begin);
+		} else {
+			// search for another use_case_begin between Range.begin and tr
+			var end = null, lastTr = null;
+			for (var r = Range.begin.nextSibling; r != null; r = r.nextSibling) {
+				if (isBegin(r)) {
+					end = r;
+					break;
+				}
+				if (isTr(r)) {
+					lastTr = r;
+				}
+				if (r == tr) {
+					break;
+				}
+			}
+
+			if (end) {
+				Range.end = lastTr ? lastTr : Range.begin;
+			} else {
+				Range.end = tr;
+			}
+			
+			setClassBefore(Range.begin);			
+			setClassBetween(Range.begin, Range.end, "valid_range");
+			if (end) {
+				setClassBetween(end, tr, "invalid_range");
+			} 
+			setClassAfter(tr);
+		}
+	}
+	
+	function confirmRange(event) {
+		event = normalizeEvent(event);
+		event.stop();  // avoid clicking button in <tr>
+		
+		var name = prompt("请输入用况名", "");
+		name = (name ? name : "UseCase_" + Manager.assocs.length);
+		var lines = [];
+		var r = Range.begin;
+		while (r) {
+			if (isTr(r)) {
+				lines.push(r);
+			}
+			if (r == Range.end) {
+				break;
+			}
+			r = r.nextSibling;
+		}
+		Manager.assocs.push(new Assoc(lines, name));
+		endCreateAssoc();
+	}
+	
+	function expandBegin(event) {
+		event = normalizeEvent(event);
+		var tr = event.source;
+		while (tr && !isTr(tr)) {
+			tr = tr.parentNode;
+		}
+		
+		var prevRow = null;
+		for (var r = tr.previousSibling; r != null; r = r.previousSibling) {
+			if (isTr(r)) {
+				prevRow = r;
+				break;
+			}
+		}
+		
+		if (prevRow && !isEnd(prevRow)) {
+			if (tr.assoc.begin == tr.assoc.end) {
+				tr.assoc.end = tr;
+				createAssocEnd(getTh(tr));
+			} else {
+				$(getTh(tr)).empty();
+			}
+			tr.assoc.begin = prevRow;
+			createAssocBegin(getTh(prevRow), tr.assoc.name);
+			$(tr).removeClass("use_case_begin");
+			$(prevRow).addClass("use_case_begin");
+			prevRow.assoc = tr.assoc;
+		}
+	}
+	
+	function expandEnd(event) {
+		event = normalizeEvent(event);
+		var tr = event.source;
+		while (tr && !isTr(tr)) {
+			tr = tr.parentNode;
+		}
+		
+		var nextRow = null;
+		for (var r = tr.nextSibling; r != null; r = r.nextSibling) {
+			if (isTr(r)) {
+				nextRow = r;
+				break;
+			}
+		}
+		
+		if (nextRow && !isBegin(nextRow)) {
+			tr.assoc.end = nextRow;
+			$(getTh(tr)).empty();
+			createAssocEnd(getTh(nextRow));
+			$(tr).removeClass("use_case_end");
+			$(nextRow).addClass("use_case_end");
+			nextRow.assoc = tr.assoc;
+		}
+	}
+	
+	function collapseBegin(event) {
+		event = normalizeEvent(event);
+		var tr = event.source;
+		while (tr && !isTr(tr)) {
+			tr = tr.parentNode;
+		}
+        var nextRow = null;
+        for (var r = tr.nextSibling; r != null; r = r.nextSibling) {
+            if (isTr(r)) {
+                nextRow = r;
+                break;
+            }
+        }
+		if (tr.assoc.begin != tr.assoc.end) {
+			if (nextRow) {
+				$(getTh(tr)).empty();
+				$(tr).removeClass("use_case_begin");
+				createAssocBegin(getTh(nextRow), tr.assoc.name);
+				$(nextRow).addClass("use_case_begin");
+				nextRow.assoc = tr.assoc;
+				nextRow.assoc.begin = nextRow;
+				createPlainTextHeader(getTh(tr));
+			}
+		} else {
+            if (nextRow && !isBegin(nextRow)) {
+                tr.assoc.end = nextRow;
+                createAssocEnd(getTh(nextRow));
+                $(tr).removeClass("use_case_end");
+                $(nextRow).addClass("use_case_end");
+                nextRow.assoc = tr.assoc;
+            }
+		}
+	}
+	
+	function collapseEnd(event) {
+		event = normalizeEvent(event);
+		var tr = event.source;
+		while (tr && !isTr(tr)) {
+			tr = tr.parentNode;
+		}
+		
+        if (tr.assoc.begin != tr.assoc.end) {
+            var prevRow = null;
+            for (var r = tr.previousSibling; r != null; r = r.previousSibling) {
+                if (isTr(r)) {
+                    prevRow = r;
+                    break;
+                }
+            }
+			
+			if (prevRow) {
+				$(getTh(tr)).empty();
+				$(tr).removeClass("use_case_end");
+				if (prevRow != tr.assoc.begin) {
+					createAssocEnd(getTh(prevRow));
+				}
+				$(prevRow).addClass("use_case_end");
+				prevRow.assoc = tr.assoc;
+				prevRow.assoc.end = prevRow;
+				createPlainTextHeader(getTh(tr));
+			}
+        }
+	}
+	
+	function deleteAssoc(event) {
+		event = normalizeEvent(event);
+		var tr = event.source;
+		while (tr && !isTr(tr)) {
+			tr = tr.parentNode;
+		}
+		
+		var begin = tr.assoc.begin;
+		var end = tr.assoc.end;
+		
+		$(begin).removeClass("use_case_begin");
+		$(end).removeClass("use_case_end");
+		$(getTh(begin)).empty();
+		$(getTh(end)).empty();
+		for (var r = begin; r != null; r = r.nextSibling) {
+			if (isTr(r)) {
+				createPlainTextHeader(getTh(r));
+			}
+			if (r == end) {
+				break;
+			}
+		}
+	}
+</script>
+</head>
+
+<body>
+	<table id="assoc" width="500px">
+		<tr id="1st">
+			<th width="20%">
+				
+			</th>
+			<td>
+				用户登录到系统中。
+			</td>
+		</tr><tr>
+			<th width="20%">
+				
+			</th>
+			<td>
+				启动<span class="data">浏览器</span>。
+			</td>
+		</tr>
+		
+		<tr>
+			<th width="20%">
+				
+			</th>
+			<td>
+				通过网址www.china-pub.com访问书店的网站。 
+			</td>
+		</tr>
+		
+		<tr>
+			<th width="20%">
+				
+			</th>
+			<td>
+				在网站上，用户通过书名查询到想购买的图书。
+			</td>
+		</tr>
+		
+		<tr>
+			<th width="20%">
+				
+			</th>
+			<td>
+				用户确认图书信息后，点击“购买”。
+			</td>
+		</tr>
+		
+		<tr>
+			<th width="20%">
+				
+			</th>
+			<td>
+				填写订单，等待送货上门。
+			</td>
+		</tr>
+	</table>
+</body>
+<script type="text/javascript">
+	var x = document.getElementById("1st").nextSibling;
+	alert(x.id == "" ? "null" : "not null");
+</script>
+</html>

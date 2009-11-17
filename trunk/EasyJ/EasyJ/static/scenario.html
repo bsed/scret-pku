@@ -1,0 +1,92 @@
+<html>
+<head>
+<link rel="stylesheet" href="common.css"/>
+</head>
+<body>
+<table class="general_table">
+  <tr>
+    <th>场景名称</th>
+	<td>迎宾</td>
+	<th>参与者</th>
+	<td>迎宾人员，顾客<input type="button" value="编辑"/></td>
+  </tr>
+  <tr>
+    <th>外部交互者</th>
+	<td><input type="button" value="编辑"/></td>
+	<th>观察者</th>
+	<td>餐馆经理<input type="button" value="编辑"/></td>
+  </tr>
+  <tr>
+    <th>数据</th>
+	<td colspan="3"><input type="button" value="编辑"/></td>
+  </tr>
+  <tr>
+    <th>迎宾人员</th>
+	<td colspan="3">
+	  <!--放置一个编辑器-->
+	  <div class="table_title">
+	    评论<input type="button" value="添加"/>
+	  </div>
+	  <table class="general_table">
+	    <tr>
+		  <th>内容</th>
+		  <th>评论人</th>
+		  <th>评论时间</th>
+		  <th>操作</th>
+		</tr>
+		<tr>
+		  <td>这里的描述还没有考虑到<span class="role">顾客</span>可能已经预定了座位这种情况。如果<span class="role">顾客</span>已经预定了座位，<span class="role">顾客</span>是否按时到？</td>
+		  <td>somebody</td>
+		  <td>2008-11-11</td>
+		  <td><input type="button" value="确认"/></td>
+		</tr>
+	  </table>
+	</td>
+  </tr>
+  <tr>
+    <th>顾客</th>
+	<td colspan="3">
+	  <!-- content -->
+	  <div class="table_title">
+	    评论<input type="button" value="添加"/>
+	  </div>
+	  <table class="general_table">
+	    <tr>
+		  <th>内容</th>
+		  <th>评论人</th>
+		  <th>评论时间</th>
+		  <th>操作</th>
+		</tr>
+		<tr>
+		  <td>还要考虑到排队的问题吧？</td>
+		  <td>admin</td>
+		  <td>2008-11-09</td>
+		  <td><input type="button" value="取消"/></td>
+		</tr>
+	  </table>
+	</td>
+  </tr>
+  <tr>
+    <td colspan="4">
+		<div class="table_title">
+		  问题<input type="button" value="添加"/>
+		</div>
+		<table class="general_table">
+		  <tr>
+			<th>标题</th>
+			<th>提问人</th>
+			<th>提问时间</th>
+			<th>操作</th>
+		  </tr>
+		  <tr>
+			<td>业务流程存在严重问题</td>
+			<td>yili</td>
+			<td>2008-11-15</td>
+			<td><input type="button" value="参与讨论"/></td>
+		  </tr>
+		</table>
+	</td>
+  </tr>
+</table>
+</body>
+</html>

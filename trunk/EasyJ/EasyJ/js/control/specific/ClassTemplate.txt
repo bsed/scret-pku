@@ -1,0 +1,109 @@
+/* 这是具体控件类的定义模板
+ *   根据"TODO"的建议来定义自己的控件类
+ * 
+ * 重要：构造函数将以如下步骤创建控件，其中包含具体控件类可覆盖/增加的方法
+ *   1) 记录this.options = options参数; （构造函数仅接受一个options参数）
+ *   2) 对options的预处理，以确保options的一致性和完整性 - preprocessOptions()  *可覆盖
+ *   3) 创建事件发布列表 - buildEventMap() **必须覆盖
+ *   4) 创建子控件并将子控件记录在 this.subControls 数组中
+ *   5) 生成控件HTML - generateHtml()  *可覆盖
+ *   6) load额外的JS和CSS文件
+ *   7) 请求数据
+ *   8) 绑定数据到HTML上  - bindData() *可覆盖
+ *   9) 建立发布者/订阅者关系
+ *  10) 建立控件内部行为  - initEventHandlers()  *必须覆盖
+ *  11) 组装子控件  - assembleSubControls()  ***如果该控件可以包含子控件，则必须覆盖
+ */
+ 
+Module.require("JsControl.ControlFactory");
+Module.require("JsControl.AppControl");
+Module.require("JS");
+//TODO: 在此添加额外的模块依赖
+//Module.require(Extra_Dependency);
+
+//TODO: 替换 @FullName 为控件类全名（如JsControl.MySpecificControl)
+if (!Module.isDefined("@FullName")) {
+
+Module.define("@FullName");
+
+@FullName = (function() {
+    
+    //TODO: 替换 @Name 为任意名字，作为控件类的别名 （如MyControl）
+    var @Name = function(options) {
+        @Name.superClass.constructor.call(this, options);
+        //TODO: 在此调用除了下面覆盖的方法之外的方法（即本控件类特有的方法）
+    };
+    
+    JS.extend(@Name, JsControl.AppControl);
+    
+    //TODO: 在此定义类常量
+    @Name.STATIC_CLASS_CONSTANT = Constant_Value;
+    
+    //TODO: 在此覆盖父类（AppControl）定义的方法
+    // 如果需要调用父类的同名方法，使用@Name.superClass.MethodName.call(this, arg1, arg2, ...)
+    // 如果不需要覆盖，则删除该方法的定义
+    
+    // -------- Overrides --------
+    
+    //TODO: 覆盖：可选
+    @Name.prototype.preprocessOptions = function() {
+        // 预处理options
+        // NOTE: 如果需要覆盖此方法，则必须在此先调用父类的同名方法
+        @Name.superClass.preprocessOptions.call(this); 
+        
+        //TODO: 对Options的进一步检查 和/或 从Options中取得必要的数据  
+    };
+    
+    @Name.prototype.buildEventMap = function() {
+        // 创建事件表
+        //TODO: 必须覆盖此方法
+        //this.eventMap = new JsControl.EventMap(["event-name-1", "event-name-2", ...]);
+    };
+    
+    //TODO: 覆盖：可选
+    @Name.prototype.generateHtml = function(options) {
+        // 生成Html，如果已经在HTML文件中单独定义了控件外观，则不需覆盖此方法
+        // NOTE: 可以调用父类的importHtml(html)方法
+        //TODO: specific HTML-generating code
+        // @Name.superClass.importHtml.call(this, my_specific_html_string);
+    };
+    
+    //TODO: 覆盖：可选
+    @Name.prototype.bindData = function(data, noJSON = false) {
+        // 绑定数据到Html上，一般需要覆盖此方法，否则数据不会显示到页面上
+        // NOTE: 覆盖时必须先调用父类的方法，在父类的方法中会尝试将type为string的data用JSON.parse转换为对象, 可以指定noJSON参数来避免此转换
+        @Name.superClass.bindData.call(this, data, noJSON);
+        
+        //TODO: bind this.data with this.element
+        
+    };
+    
+    @Name.prototype.initEventHandlers = function() {
+        // 定义控件内部行为（例如，Console控件中包含一个按钮，当点击该按钮时清空控件的内容）
+        //TODO: code here 
+    };
+    
+    //TODO: 如果可以包含子控件，则必须覆盖
+    @Name.prototype.assembleSubControls = function() {
+        //TODO: assemble this.subControls together
+        // 对于Style=“new”的控件，可以调用place回调函数来组装控件
+    };
+    
+    // ---------------------------
+    
+    //TODO: 在此定义具体类特有的方法
+    
+    
+    return @Name;
+})();
+
+//TODO: 在此添加控件信息，其中type必填，中间三项没有可不填，最后一项如果不填则默认为false
+JsControl.ControlFactory.extend({
+    type: "@TypeName",
+    html: "@HtmlFileName",
+    css: "@CssFileName",
+    js: "@JsFileName",
+    canHaveChildren: @Boolean
+});
+
+}

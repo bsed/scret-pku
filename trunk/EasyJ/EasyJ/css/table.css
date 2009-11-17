@@ -1,0 +1,116 @@
+/*TODO: 固定表格宽度（IE&Firefox）
+ * 例子：
+ <style>
+ table {table-layout:fixed}
+ td {overflow:hidden; white-space:nowrap}</style>
+ <table border=1 width=80>
+    <tr>
+      <td width=25%>
+        <div>abcdefghigklmnopqrstuvwxyz 1234567890</div>
+      </td>
+      <td>
+        <div>abcdefghigklmnopqrstuvwxyz 1234567890</div>
+      </td>
+    </tr>
+ </table>
+  在Firefox下，要table-layout起作用，需要在td中再嵌套一个div
+  （上述例子来自网络，效果如何还要试验）
+ */
+table {
+	width: 100%;
+	margin: 0;
+	line-height: 1.4em;
+	border-collapse: collapse;
+}
+
+th {
+	padding: 2px 3px 2px 3px;
+	text-align: center;
+	background-color: #F1F4F8; /*COLOR*/
+	border: 1px solid #EAEAEA;
+	white-space: nowrap;
+}
+
+td {
+	padding-top: 2px;
+	padding-left: 2px;
+	border: 1px solid #EAEAEA; /*COLOR*/
+}
+
+table.details {
+	table-layout: fixed; /*TODO：在firefox下不起作用*/
+	/*备注：似乎和屏幕分辨率有关系？1280*800分辨率下无误*/
+}
+
+table.details th.order {
+	cursor: pointer;
+}
+
+table.details td { /* 这类表的每一行都是超链接 */
+	cursor: pointer;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	text-align: center;
+}
+
+div.table_title {
+	width: 100%;
+	padding-left: 0.5em;
+}
+
+div.tableTopic {
+	height: 26px;
+}
+
+/*TODO: 以下内容如果要合并最终的CSS中，还需要修改相应的Tag和JSP文件*/
+.NewsTitleRight {
+	background: url(/image/tab_right.gif) no-repeat right top;
+	height: 20px;
+	padding-bottom: 2px;
+	width: 100%;
+}
+
+.NewsTitleRightClick {
+	background: url(/image/tab_right_click.gif) no-repeat right top;
+	height: 20px;
+	padding-bottom: 2px;
+	width: 100%;
+}
+
+.NewsTitleLeft {
+	height: 20px;
+	padding-bottom: 2px;
+	line-height: 24px;
+	background: url(/image/tab_left.gif) no-repeat left top;
+	width: 100%;
+	color: #fff;
+	font-weight: bold;
+	text-align: center;
+}
+
+.NewsTitleLeftClick {
+	height: 20px;
+	padding-bottom: 2px;
+	line-height: 24px;
+	background: url(/image/tab_left_click.gif) no-repeat left top;
+	width: 100%;
+	color: #fff;
+	font-weight: bold;
+	text-align: center;
+}
+
+.border {
+	border-collapse: collapse;
+	border: 1px solid #C4E2FF;
+	background: #FFFFF;
+	width: 100%;
+	margin-top: 5px;
+}
+
+.borderNoSpace {
+	border-collapse: collapse;
+	border: 1px solid #C4E2FF;
+	background: #FFFFF;
+	width: 100%;
+}

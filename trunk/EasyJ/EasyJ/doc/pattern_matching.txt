@@ -1,0 +1,26 @@
+初始化preString = null
+beginInput() {
+  如果preString为null，则preString = 该行光标之前的文本
+}
+
+endInput() {
+  preStringNew = 该行光标之前的文本
+  pattern = preStringNew - preString
+  搜索pattern对应术语
+  如果有术语并且用户选择了术语，则重新计算preString，即下一次的pattern在现有字符串之后重新计算
+  如果没有匹配术语，则preString不变
+}
+
+回车 {
+  令preString = null，即术语匹配不跨行进行
+}
+
+删除（Backspace和Delete） {
+  首先应计算出是否应该处于匹配状态，对于backspace而言，应逆向计算是否匹配；delete则对匹配无影响
+  然后，对于backspace应该重新计算preString（令preString = null）
+}
+
+光标移动结束 {
+  令preString = null即可
+  至于光标是否被移回到上一次处于匹配状态的位置，建议不加以考虑（即光标一旦开始移动就退出匹配状态），因为用户很少会在输入字符的时候又到处移动光标
+}

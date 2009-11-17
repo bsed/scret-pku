@@ -1,0 +1,40 @@
+BODY {
+
+scrollbar-face-color:#EBF0FE;
+
+scrollbar-highlight-color:#3464CC;
+
+scrollbar-3dlight-color:#EBF0FE;
+
+scrollbar-darkshadow-color:#EBF0FE;
+
+scrollbar-shadow-color:#3464CC;
+
+scrollbar-arrow-color:#3464CC;
+
+scrollbar-track-color:#EBF0FE;
+
+}
+
+INPUT{ background-color: #CFDBF3; BORDER-TOP-WIDTH: 1px; PADDING-RIGHT: 1px; PADDING-LEFT: 1px; BORDER-LEFT-WIDTH: 1px; FONT-SIZE: 9pt; BORDER-LEFT-COLOR: #cccccc; BORDER-BOTTOM-WIDTH: 1px; BORDER-BOTTOM-COLOR: #cccccc; PADDING-BOTTOM: 1px; BORDER-TOP-COLOR: #cccccc; PADDING-TOP: 1px; HEIGHT: 18px; BORDER-RIGHT-WIDTH: 1px; BORDER-RIGHT-COLOR: #cccccc}
+
+TEXTAREA{BORDER-TOP-WIDTH: 1px; PADDING-RIGHT: 1px; PADDING-LEFT: 1px; BORDER-LEFT-WIDTH: 1px; FONT-SIZE: 9pt; BORDER-LEFT-COLOR: #cccccc; BORDER-BOTTOM-WIDTH: 1px; BORDER-BOTTOM-COLOR: #cccccc; PADDING-BOTTOM: 1px; BORDER-TOP-COLOR: #cccccc; PADDING-TOP: 1px; BORDER-RIGHT-WIDTH: 1px; BORDER-RIGHT-COLOR: #cccccc}
+
+SELECT{BORDER-TOP-WIDTH: 1px; PADDING-RIGHT: 1px; PADDING-LEFT: 1px; BORDER-LEFT-WIDTH: 1px; FONT-SIZE: 9pt; BORDER-LEFT-COLOR: #cccccc; BORDER-BOTTOM-WIDTH: 1px; BORDER-BOTTOM-COLOR: #cccccc; PADDING-BOTTOM: 1px; BORDER-TOP-COLOR: #cccccc; PADDING-TOP: 1px; HEIGHT: 18px; BORDER-RIGHT-WIDTH: 1px; BORDER-RIGHT-COLOR: #cccccc}
+
+OPTION{FONT-FAMILY:"Verdana" ; FONT-SIZE: 9pt}
+
+
+
+p {  font-family: "Arial", ""; font-size: 10pt; white-space: nowrap;margin: 0 0 8px 0px;}
+
+a:active {  text-decoration: none}
+
+a:hover {  text-decoration: underline}
+
+a:link {  text-decoration: none}
+
+a:visited {  text-decoration: none}
+
+a {  text-indent: 4px}
+
