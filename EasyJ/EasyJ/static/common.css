@@ -1,0 +1,68 @@
+/* Font */
+html {
+    font-size: 62.5%;
+}
+
+body {
+    font-family: Verdana, Geneva, Arial, helvetica, sans-serif;
+    font-size: 1em;
+}
+
+/* Layout */
+div#header, div#footer {
+	clear: both;
+	width: 800px;
+}
+
+div#navList {
+	float: left;
+	width: 150px;
+}
+
+div#main {
+	float: left;
+	width: 500px;
+}
+
+div#interestList {
+	float: left;
+	width: 150px;
+}
+
+/* Table */
+table.general_table {
+	width: 100%;
+	margin: 0;
+	line-height: 1.4em;
+	border-collapse: collapse;
+}
+
+table.general_table th {
+	padding: 0.3em 0.3em;
+	text-align: center;
+	background-color: #EEEEEE;
+	border: 1px solid #BBBBBB;
+	white-space: nowrap;
+}
+
+table.general_table td {
+	padding: 0;
+	border: 1px solid #BBBBBB;
+}
+
+div.table_title {
+	width: 100%;
+	padding-left: 0.5em;
+}
+
+/* Input */
+input {
+    border: 1px solid #BBBBBB;
+	margin: 1px 2px;
+	padding: 1px;
+}
+/* Others */
+iframe#mainContent {  
+    display: none;
+}
+

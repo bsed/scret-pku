@@ -1,0 +1,44 @@
+table {
+	width: 100%;
+	border-collapse: separate;
+}
+
+.data {
+	color: green;
+	font-weight: bold;
+}
+
+.valid_range {
+	background-color: #99FF66;
+}
+
+.invalid_range {
+	background-color: #FF6666;
+}
+
+.use_case_begin th, .use_case_begin td {
+	border-top: #000000 solid 1px;
+}
+
+.use_case_end th, .use_case_end td{
+	border-bottom: #000000 solid 1px;
+}
+
+th {
+	width: 20%;
+	border-right: #000000 solid 1px;
+	text-align: right;
+}
+
+span.assoc_name {
+	padding-right: 10px;
+	cursor: pointer;
+}
+
+img.button {
+	cursor: pointer;
+	width: 12px;
+	height: 12px;
+	margin-left: 3px;
+	margin-right: 3px;
+}

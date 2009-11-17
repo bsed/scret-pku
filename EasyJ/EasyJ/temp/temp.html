@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
+                    "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" src="../js/jquery-1.2.3.js"></script>
+<script type="text/javascript" src="../js/editor_v2/Util.js"></script>
+<script type="text/javascript" src="../js/editor_v2/json2.js"></script>
+<title>Temp</title>
+
+<style>
+#msg {
+    border: solid 1px black;
+}
+</style>
+<script>
+    function DynObj() {
+        this.msg = null;
+        var self = this;
+        $.ajax({
+            async: false,
+            url: "/static/Dialog/EditUseCaseLink.html",
+            error: function(xhr, state, err) {
+                alert("Error: " + xhr.status);
+            },
+            success: function(data) {
+                self.msg = data;
+            }
+        });
+    }
+    DynObj.prototype.show = function() {
+        $("#msg").html(this.msg);
+    };
+</script>
+
+</head>
+<body>
+	<button onclick="ajaxGet();">get html!</button>
+	<button onclick="onthefly();">create on-the-fly</button>
+	<div id="msg"></div>	
+</body>
+<script>
+    function onthefly() {
+        var e = $('<p>This is new shit<span class="inner"> -- Marilyn Manson</span></p>');
+        $(".inner", e).css({ "color": "red" });
+        $("#msg").append(e);
+    }
+    
+    function ajaxGet() {
+        var o = new DynObj();
+        o.show();
+        var o2 = {
+            x: 2,
+            y: x * 2
+        };
+        alert(o2.y);
+    }
+</script>
+
+
+</html>

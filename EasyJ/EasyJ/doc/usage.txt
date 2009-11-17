@@ -1,0 +1,29 @@
+In Scenario.html:
+
+  <script language="javascript" src="ScriptLoader.js"></script>
+
+  <div class="editor_border">
+    <textarea id="xxxx">    // id MUST be set
+    </textarea>
+  </div>
+  <script>
+    var options = { ... };
+    Scenario.addTerm("Role_name", "role");
+    Scenario.addTerm("Data_name", "data");
+    Scenario.createEditor(document.getElementById("xxxx"), options);  
+  </script>
+
+Options格式：
+   options = {
+       data: {   //将来要提交给服务器的数据
+          xxxContent: null,  // 必须为Null
+          xxxId: <value>     // xxx表示前缀，比如description，problem等
+       },
+       content: 编辑区域的初始内容,
+       url: 提交到服务器的哪个url,
+       form: Ajax.submit方法中的formId参数,
+       menu: {   // 编辑区域是否有菜单，如果没有，则此项不写
+           save: 'y',   // “保存”
+           showHistory: 'y'    // “查看历史版本”
+       }
+   }

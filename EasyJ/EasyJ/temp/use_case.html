@@ -1,0 +1,216 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
+                    "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="usecase.css" />
+<script type="text/javascript" src="../js/jquery-1.2.3.js"></script>
+<title>Use Case Link Demo</title>
+<script type="text/javascript">
+	
+	//-----------------
+	//  class UseCase
+	//-----------------
+	function UseCase(lines, name) {
+		this.lines = lines;
+		this.name = name;
+		var begin = lines[0];
+		var end = lines[lines.length - 1]; 
+		alert(begin.firstChild);
+		begin.firstChild.appendChild(document.createTextNode(name));
+		$(begin.firstChild).addClass("use_case_begin");
+		$(begin.lastChild).addClass("use_case_begin");
+		$(end.firstChild).addClass("use_case_end");
+		$(end.lastChild).addClass("use_case_end");
+	}
+</script>
+</head>
+
+<body>
+	<table id="action_table" width="500px">
+		<tr id="line_1">
+			<th width="20%"></th>
+			<td>
+				用户登录到系统中。
+			</td>
+		</tr>
+		<tr id="line_2">
+			<th width="20%" class="use_case_begin">用况1</th>
+			<td  class="use_case_begin">
+				用户启动<span class="data">浏览器</span>。
+			</td>
+		</tr>
+		<tr id="line_3">
+			<th width="20%"></th>
+			<td>
+				用户通过网址www.china-pub.com访问书店的网站。
+			</td>
+		</tr>
+		<tr id="line_4">
+			<th width="20%"></th>
+			<td>
+				在网站上，用户通过书名查询到想购买的图书。
+			</td>
+		</tr>
+		<tr id="line_5">
+			<th width="20%" class="use_case_begin">用况2</th>
+			<td  class="use_case_begin">
+				用户确认图书信息后，在线购买该图书。
+			</td>
+		</tr>
+	</table>
+</body>
+<script type="text/javascript">
+	
+	var useCases = [];
+	// 合法的行(tr)必须同时满足以下条件：
+	//  1、在begin之后
+	//  2、在下一个UseCase之前
+	var useCaseRange = {
+		begin: null, 
+		end: null
+	};
+	
+	var btnAdd = document.createElement("input");
+	btnAdd.type = "button";
+	btnAdd.value = "关联用况";
+	btnAdd.onclick = onAddUseCase;
+	
+	function onCancel() {
+		$("th").unbind().mouseover(onHeadOver);
+		$("td").unbind().mouseover(onBodyOver);
+		$("tr").removeClass();
+	}
+	
+	function onCheckRange(event) {
+		event = event || window.event;
+		var tr = event.srcElement || event.target;
+		while (tr.nodeName.toLowerCase() != "tr") {
+			tr = tr.parentNode;
+		}
+		var th = tr.firstChild;
+		
+		// 取得begin到tr之间的行
+		var foundBegin = false;
+		var range = [];
+		var row = tr;
+		while (row) {
+			if (row == useCaseRange.begin) {
+				foundBegin = true;
+				break;
+			}
+			range.unshift(row);
+			row = row.previousSibling;
+		}
+		
+		if (foundBegin) {
+			// tr在begin之后或者tr == begin
+			var valid = true;
+			useCaseRange.end = useCaseRange.begin;
+			for (var i = 0; i < range.length; ++i) {
+				if (valid && $(range[i].firstChild).hasClass("use_case_begin")) {
+					valid = false;
+				}
+				if (valid) {
+					$(range[i]).addClass("valid_line");
+					useCaseRange.end = range[i];
+				} else {
+					$(range[i]).addClass("invalid_line");
+				}
+			}
+			if (tr == useCaseRange.begin) {
+				for (var row = tr.previousSibling; row != null; row = row.previousSibling) {
+					$(row).removeClass();
+				}
+				
+			} 
+				for (var r = tr.nextSibling; r != null; r = r.nextSibling) {
+					$(r).removeClass();
+				}
+			
+		} else {
+			// tr在begin之前
+			useCaseRange.end = useCaseRange.begin;
+			for (var row = tr.previousSibling; row != null; row = row.previousSibling) {
+				$(row).removeClass();
+			}
+			for (var r = tr; r != useCaseRange.begin; r = r.nextSibling) {
+				$(r).removeClass().addClass("invalid_line");
+			}
+		}
+	}
+	
+	function onConfirmRange(event) {
+		$("tr").removeClass();
+		var name = prompt("请输入用况名", "");
+		name = (name ? name : "UseCase_" + useCases.length);
+		var lines = [];
+		var r = useCaseRange.begin;
+		while (r) {
+			lines.push(r);
+			if (r == useCaseRange.end) {
+				break;
+			}
+			r = r.nextSibling;
+		}
+		useCases.push(new UseCase(lines, name));
+		
+		$("th").unbind().mouseover(onHeadOver);
+		$("td").unbind().mouseover(onBodyOver);
+	}
+	
+	function onAddUseCase(event) {
+		// 消除所有tr、th和td上的事件
+		// 为tr绑定事件：
+		//   mouseover：判断该tr是否跨越了另一个UseCase的边界
+		//   click：将该tr和begin之间的合乎要求的行标记为一个UseCase
+		// 为body绑定事件：
+		//   keyup： 按下ESC表示放弃
+		event = event || window.event;
+		event.stopPropagation();
+        event.preventDefault();
+		$("body, table, tr, th, td").unbind();
+		useCaseRange.begin = btnAdd.parentNode.parentNode; //<tr>
+		useCaseRange.end = useCaseRange.begin;
+		
+		$(useCaseRange.begin).addClass("valid_line use_case_begin");
+		
+		$("body").keyup(function(event) {
+			event = event || window.event;
+			var key = event.keyCode || event.which;
+			if (key == 27) {// ESC
+			    onCancel();
+			}
+		});
+		
+		$("tr").mouseover(onCheckRange).click(onConfirmRange);
+		btnAdd.parentNode.removeChild(btnAdd);
+	}
+	
+	function onHeadOver(event) {
+		event = event || window.event;
+		var th = event.srcElement || event.target;
+		while (th.nodeName.toLowerCase() != "th") {
+			th = th.parentNode;
+		}
+		
+		if ($(th).hasClass("use_case_begin")) {
+			
+		} else {
+			if (btnAdd.parentNode != th && btnAdd.parentNode != null) {
+				btnAdd.parentNode.removeChild(btnAdd);
+			}
+			th.appendChild(btnAdd);
+		}
+	}
+	
+	function onBodyOver(event) {
+		event = event || window.event;
+		var td = event.srcElement || event.target;
+	}
+	
+	$("th").mouseover(onHeadOver);
+	$("td").mouseover(onBodyOver);
+
+</script>
+</html>

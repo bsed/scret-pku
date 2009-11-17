@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                    "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="css/common.css" />
+<link rel="stylesheet" href="css/AjaxScenario.css" />
+<script type="text/javascript" src="js/jquery-1.2.3.js"></script>
+<title> Scenario Test </title>
+<style type="text/css">
+    .editor_border {
+        width: 600px;
+        height: 400px;
+     }
+</style>
+</head>
+<body>
+		<div class="editor_border">
+			<textarea id='editor'></textarea>
+		</div>
+	<script type="text/javascript" src="js/ScriptLoader.js"></script>
+	<script>
+	var initContent = [
+	    
+	];
+
+	var scenario = EditorManagerFactory.createEditorManager("scenario");
+	scenario.addTerms("主板, 主管, 主管人, 主管人员, term one, term two, term three, term one hundred, term third", "data");
+	var edit = scenario.createEditor(document.getElementById("editor"), "description", {
+		content: initContent.join(""),
+		console: "yes"
+	});
+	</script>
+</body>
+</html>
