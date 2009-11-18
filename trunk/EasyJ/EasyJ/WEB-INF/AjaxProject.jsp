@@ -9,20 +9,20 @@
 <title>
 协同式需求获取工具
 </title>
-<link href="/css/common.css" rel="stylesheet" type="text/css">
-<link href="/css/common/dialog.css" rel="stylesheet" type="text/css">
-<link href="/css/table.css" rel="stylesheet" type="text/css">
-<link href="/css/pattern.css" rel="stylesheet" type="text/css">
+<link href="css/common.css" rel="stylesheet" type="text/css">
+<link href="css/common/dialog.css" rel="stylesheet" type="text/css">
+<link href="css/table.css" rel="stylesheet" type="text/css">
+<link href="css/pattern.css" rel="stylesheet" type="text/css">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta http-equiv="Expires" content="0">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Cache-Control" content="no-cache">
-<script language="javascript" type="text/javascript" src="/js/jquery-1.2.3.js"> </script>
-<script language="javascript" src="/js/jqDnR.js"> </script>
-<script language="javascript" type="text/javascript" src="/js/jquery.form.js"> </script>
-<script language="javascript" type="text/javascript" src="/js/jquery.dimensions.js"></script>
-<script language="javascript" type="text/javascript" src="/js/ui.base.js"></script>
-<script language="javascript" type="text/javascript" src="/js/ui.draggable.js"></script>
+<script language="javascript" type="text/javascript" src="js/jquery-1.2.3.js"> </script>
+<script language="javascript" src="js/jqDnR.js"> </script>
+<script language="javascript" type="text/javascript" src="js/jquery.form.js"> </script>
+<script language="javascript" type="text/javascript" src="js/jquery.dimensions.js"></script>
+<script language="javascript" type="text/javascript" src="js/ui.base.js"></script>
+<script language="javascript" type="text/javascript" src="js/ui.draggable.js"></script>
 
 <script language="javascript">
 function checkBrowser(){
@@ -84,18 +84,18 @@ function changeSize() {
     }
 }
 </script>
-<script language="javascript" type="text/javascript" src="/js/Util.js"></script>
-<script language="javascript" type="text/javascript" src="/js/Validate.js"></script>
+<script language="javascript" type="text/javascript" src="js/Util.js"></script>
+<script language="javascript" type="text/javascript" src="js/Validate.js"></script>
 
-<script language="javascript" type="text/javascript" src="/js/tree.js"></script>
-<script language="javascript" type="text/javascript" src="/js/Ajax.js"></script>
-<script language="javascript" type="text/javascript" src="/js/Data.js"></script>
+<script language="javascript" type="text/javascript" src="js/tree.js"></script>
+<script language="javascript" type="text/javascript" src="js/Ajax.js"></script>
+<script language="javascript" type="text/javascript" src="js/Data.js"></script>
 
-<script language="javascript" type="text/javascript" src="/js/Enter2Tab.js"></script>
-<script language="javascript" type="text/javascript" src="/js/hint.js"></script>
-<script language="javascript" type="text/javascript" src="/js/PopUpWindow.js"></script>
-<script language="javascript" type="text/javascript" src="/js/MultiSelect.js"></script>
-<script language="javascript" type="text/javascript" src="/js/ScriptLoader.js"></script>
+<script language="javascript" type="text/javascript" src="js/Enter2Tab.js"></script>
+<script language="javascript" type="text/javascript" src="js/hint.js"></script>
+<script language="javascript" type="text/javascript" src="js/PopUpWindow.js"></script>
+<script language="javascript" type="text/javascript" src="js/MultiSelect.js"></script>
+<script language="javascript" type="text/javascript" src="js/ScriptLoader.js"></script>
 
 
 

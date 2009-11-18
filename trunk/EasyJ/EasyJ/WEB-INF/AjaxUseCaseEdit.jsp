@@ -2,7 +2,7 @@
 <%@ page import="easyJ.common.*,easyJ.http.Globals,java.util.*,easyJ.system.service.*,easyJ.system.data.*"%>
 <%@ page import="easyJ.common.validate.*,cn.edu.pku.dr.requirement.elicitation.action.UseCaseAction"%>
 <%@ taglib uri="/WEB-INF/easyJ.tld" prefix="easyJ" %>
-<link rel="stylesheet" href="/css/scenario.css"/>
+<link rel="stylesheet" href="css/scenario.css"/>
 <script language="javascript">
   var UseCase={};
   var manager = EditorManagerFactory.createEditorManager("plaintext");

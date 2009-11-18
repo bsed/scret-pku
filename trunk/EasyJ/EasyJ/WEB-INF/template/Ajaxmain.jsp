@@ -7,17 +7,17 @@
 <title>
 协同需求获取工具
 </title>
-<link href="table.css" rel="/css/stylesheet" type="text/css">
-<link href="pattern.css" rel="/css/stylesheet" type="text/css">
-<link rel="stylesheet" href="/css/scenario.css" type="text/css" />
+<link href="table.css" rel="css/stylesheet" type="text/css">
+<link href="pattern.css" rel="css/stylesheet" type="text/css">
+<link rel="stylesheet" href="css/scenario.css" type="text/css" />
 <link rel="stylesheet" href="iknow1_1.css" type="text/css" />
-<script language="javascript" src="/js/jquery-1.2.3.js"> </script>
-<script language="javascript" src="/js/jquery.form.js"> </script>
-<script language="javascript" src="/js/Ajax.js"></script>
-<script language="javascript" src="/js/Data.js"></script>
-<script language="javascript" src="/js/Enter2Tab.js"></script>
-<script language="javascript" src="/js/Problem.js"></script>
-<script language="javascript" src="/js/Problemsolution.js"></script>
+<script language="javascript" src="js/jquery-1.2.3.js"> </script>
+<script language="javascript" src="js/jquery.form.js"> </script>
+<script language="javascript" src="js/Ajax.js"></script>
+<script language="javascript" src="js/Data.js"></script>
+<script language="javascript" src="js/Enter2Tab.js"></script>
+<script language="javascript" src="js/Problem.js"></script>
+<script language="javascript" src="js/Problemsolution.js"></script>
 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta http-equiv="Expires" content="0">
@@ -56,19 +56,19 @@ function moduleQuery(actionName){
 }
 
 </script>
-<script language="javascript" type="text/javascript" src="/js/Validate.js"></script>
-<script language="javascript" src="/js/jquery-1.2.3.js"> </script>
-<script language="javascript" src="/js/jquery.form.js"> </script>
-<script language="javascript" src="/js/tree.js"></script>
-<script language="javascript" src="/js/Ajax.js"></script>
-<script language="javascript" src="/js/Data.js"></script>
-<script language="javascript" src="/js/jquery.dimensions.js"></script>
-<script language="javascript" src="/js/ui.base.js"></script>
-<script language="javascript" src="/js/ui.draggable.js"></script>
-<script language="javascript" src="/js/Enter2Tab.js"></script>
-<script language="javascript" src="/js/hint.js"></script>
-<script language="javascript" src="/js/PopUpWindow.js"></script>
-<script language="javascript" src="/js/ScriptLoader.js"></script>
+<script language="javascript" type="text/javascript" src="js/Validate.js"></script>
+<script language="javascript" src="js/jquery-1.2.3.js"> </script>
+<script language="javascript" src="js/jquery.form.js"> </script>
+<script language="javascript" src="js/tree.js"></script>
+<script language="javascript" src="js/Ajax.js"></script>
+<script language="javascript" src="js/Data.js"></script>
+<script language="javascript" src="js/jquery.dimensions.js"></script>
+<script language="javascript" src="js/ui.base.js"></script>
+<script language="javascript" src="js/ui.draggable.js"></script>
+<script language="javascript" src="js/Enter2Tab.js"></script>
+<script language="javascript" src="js/hint.js"></script>
+<script language="javascript" src="js/PopUpWindow.js"></script>
+<script language="javascript" src="js/ScriptLoader.js"></script>
 
 </head>
 <body onload="initEnter2Tab()">

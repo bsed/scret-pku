@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=utf-8" %>
 <%@ page import="easyJ.http.Globals,easyJ.business.proxy.SingleDataProxy,cn.edu.pku.dr.requirement.elicitation.data.Problem"%>
 <%@ taglib uri="/WEB-INF/easyJ.tld" prefix="easyJ" %>
-<script language="javascript" src="/js/Discuss.js"></script>
+<script language="javascript" src="js/Discuss.js"></script>
 <easyJ:QueryHiddenTag/>
 <SPAN class="NewsTitleRight" style="width=80px" ><SPAN class=NewsTitleLeft>问题描述：</span></span>
 <table class="borderNoSpace">

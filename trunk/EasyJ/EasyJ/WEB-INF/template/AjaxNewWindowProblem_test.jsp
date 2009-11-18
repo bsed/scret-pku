@@ -2,8 +2,8 @@
 <%@ page import="easyJ.http.Globals,easyJ.business.proxy.SingleDataProxy,cn.edu.pku.dr.requirement.elicitation.action.ScenarioVersionAction"%>
 <%@ taglib uri="/WEB-INF/easyJ.tld" prefix="easyJ" %>
 
-<link href="/css/iknow1_1.css" rel="stylesheet" type="text/css">
-<link href="/css/table.css" rel="stylesheet" type="text/css">
+<link href="css/iknow1_1.css" rel="stylesheet" type="text/css">
+<link href="css/table.css" rel="stylesheet" type="text/css">
 
 <style>.cpro table{margin:auto}.cpro{ text-align:center;float:auto;}.mr20{margin-right:20px;}.note{background:url(http://img.baidu.com/img/iknow/popo.gif) no-repeat left; margin:12px 0;padding-left:20px;font-weight:bold;}
 .answer1,.answer2,.answer3{background:url(http://img.baidu.com/img/iknow/answer.gif) no-repeat;width:100px;height:25px;overflow:hidden}
@@ -26,8 +26,8 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Cache-Control" content="no-cache">
 
-<script language="javascript" src="/js/Problem.js"></script> 
-<script language="javascript" src="/js/Message.js"></script> 
+<script language="javascript" src="js/Problem.js"></script> 
+<script language="javascript" src="js/Message.js"></script> 
 
 
 
