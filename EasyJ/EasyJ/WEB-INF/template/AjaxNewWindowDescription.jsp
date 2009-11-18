@@ -1,27 +1,27 @@
 <%@ page contentType="text/html; charset=utf-8" %>
 <%@ page import="easyJ.http.Globals,easyJ.business.proxy.SingleDataProxy,cn.edu.pku.dr.requirement.elicitation.action.ScenarioVersionAction"%>
 <%@ taglib uri="/WEB-INF/easyJ.tld" prefix="easyJ" %>
-<link href="/css/table.css" rel="stylesheet" type="text/css">
-<link href="/css/pattern.css" rel="stylesheet" type="text/css">
+<link href="css/table.css" rel="stylesheet" type="text/css">
+<link href="css/pattern.css" rel="stylesheet" type="text/css">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta http-equiv="Expires" content="0">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Cache-Control" content="no-cache">
 
-<script language="javascript" type="text/javascript" src="/js/Validate.js"></script>
-<script language="javascript" src="/js/jquery-1.2.3.js"> </script>
-<script language="javascript" src="/js/jquery.form.js"> </script>
-<script language="javascript" src="/js/tree.js"></script>
-<script language="javascript" src="/js/Ajax.js"></script>
-<script language="javascript" src="/js/Data.js"></script>
-<script language="javascript" src="/js/jquery.dimensions.js"></script>
-<script language="javascript" src="/js/ui.base.js"></script>
-<script language="javascript" src="/js/ui.draggable.js"></script>
-<script language="javascript" src="/js/Enter2Tab.js"></script>
-<script language="javascript" src="/js/hint.js"></script>
-<script language="javascript" src="/js/PopUpWindow.js"></script>
-<script language="javascript" src="/js/ScriptLoader.js"></script>
-<link rel="stylesheet" href="/css/scenario.css"/>
+<script language="javascript" type="text/javascript" src="js/Validate.js"></script>
+<script language="javascript" src="js/jquery-1.2.3.js"> </script>
+<script language="javascript" src="js/jquery.form.js"> </script>
+<script language="javascript" src="js/tree.js"></script>
+<script language="javascript" src="js/Ajax.js"></script>
+<script language="javascript" src="js/Data.js"></script>
+<script language="javascript" src="js/jquery.dimensions.js"></script>
+<script language="javascript" src="js/ui.base.js"></script>
+<script language="javascript" src="js/ui.draggable.js"></script>
+<script language="javascript" src="js/Enter2Tab.js"></script>
+<script language="javascript" src="js/hint.js"></script>
+<script language="javascript" src="js/PopUpWindow.js"></script>
+<script language="javascript" src="js/ScriptLoader.js"></script>
+<link rel="stylesheet" href="css/scenario.css"/>
 
 <script type="text/javascript">
 $(document).ready(function(){

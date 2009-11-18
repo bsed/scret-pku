@@ -6,8 +6,8 @@
 <title>
 查询数据
 </title>
-<link href="/css/table.css" rel="stylesheet" type="text/css">
-<link href="/css/pattern.css" rel="stylesheet" type="text/css">
+<link href="css/table.css" rel="stylesheet" type="text/css">
+<link href="css/pattern.css" rel="stylesheet" type="text/css">
 
 <script language="javascript">
 function checkBrowser(){
@@ -33,20 +33,21 @@ function registerSave(){
   }
 }
 </script>
-<script language="javascript" type="text/javascript" src="/js/Validate.js"></script>
-<script language="javascript" type="text/javascript" src="/js/jquery-1.2.3.js"> </script>
-<script language="javascript" type="text/javascript" src="/js/jquery.form.js"> </script>
-<script language="javascript" type="text/javascript" src="/js/tree.js"></script>
-<script language="javascript" type="text/javascript" src="/js/Ajax.js"></script>
-<script language="javascript" type="text/javascript" src="/js/Data.js"></script>
-<script language="javascript" type="text/javascript" src="/js/jquery.dimensions.js"></script>
-<script language="javascript" type="text/javascript" src="/js/ui.base.js"></script>
-<script language="javascript" type="text/javascript" src="/js/ui.draggable.js"></script>
-<script language="javascript" type="text/javascript" src="/js/Enter2Tab.js"></script>
-<script language="javascript" type="text/javascript" src="/js/hint.js"></script>
-<script language="javascript" type="text/javascript" src="/js/PopUpWindow.js"></script>
-<script language="javascript" type="text/javascript" src="/js/ScriptLoader.js"></script>
+<script language="javascript" type="text/javascript" src="js/Validate.js"></script>
+<script language="javascript" type="text/javascript" src="js/jquery-1.2.3.js"> </script>
+<script language="javascript" type="text/javascript" src="js/jquery.form.js"> </script>
+<script language="javascript" type="text/javascript" src="js/tree.js"></script>
+<script language="javascript" type="text/javascript" src="js/Ajax.js"></script>
+<script language="javascript" type="text/javascript" src="js/Data.js"></script>
+<script language="javascript" type="text/javascript" src="js/jquery.dimensions.js"></script>
+<script language="javascript" type="text/javascript" src="js/ui.base.js"></script>
+<script language="javascript" type="text/javascript" src="js/ui.draggable.js"></script>
+<script language="javascript" type="text/javascript" src="js/Enter2Tab.js"></script>
+<script language="javascript" type="text/javascript" src="js/hint.js"></script>
+<script language="javascript" type="text/javascript" src="js/PopUpWindow.js"></script>
+<script language="javascript" type="text/javascript" src="js/ScriptLoader.js"></script>
 </head>
+<body>
 <div id="message"></div>
 <div width="500" align="center">
 <form name="registerForm" action="" method="POST" id="registerForm">
@@ -59,4 +60,5 @@ function registerSave(){
 </form>
 </div>
 <jsp:include flush="true" page="/WEB-INF/template/common/History.jsp"/>
+</body>
 </html>

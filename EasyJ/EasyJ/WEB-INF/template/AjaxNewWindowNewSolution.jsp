@@ -2,8 +2,8 @@
 <%@ page import="easyJ.http.Globals,easyJ.business.proxy.SingleDataProxy,cn.edu.pku.dr.requirement.elicitation.action.ScenarioVersionAction"%>
 <%@ taglib uri="/WEB-INF/easyJ.tld" prefix="easyJ" %>
 
-<link href="/css/iknow1_1.css" rel="stylesheet" type="text/css">
-<link href="/css/table.css" rel="stylesheet" type="text/css">
+<link href="css/iknow1_1.css" rel="stylesheet" type="text/css">
+<link href="css/table.css" rel="stylesheet" type="text/css">
 <STYLE type=text/css>
 body{margin:4px 8px 0 0}
 td{font-size:12px;line-height:18px}
@@ -71,13 +71,13 @@ a.c:visited{color:#7777CC}
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Cache-Control" content="no-cache">
 
-<script language="javascript" src="/js/jquery-1.2.3.js"> </script>
-<script language="javascript" src="/js/jquery.form.js"> </script>
-<script language="javascript" src="/js/Ajax.js"></script>
-<script language="javascript" src="/js/Data.js"></script>
-<script language="javascript" src="/js/Enter2Tab.js"></script>
-<script language="javascript" src="/js/Problem.js"></script>
-<script language="javascript" src="/js/Problemsolution.js"></script>
+<script language="javascript" src="js/jquery-1.2.3.js"> </script>
+<script language="javascript" src="js/jquery.form.js"> </script>
+<script language="javascript" src="js/Ajax.js"></script>
+<script language="javascript" src="js/Data.js"></script>
+<script language="javascript" src="js/Enter2Tab.js"></script>
+<script language="javascript" src="js/Problem.js"></script>
+<script language="javascript" src="js/Problemsolution.js"></script>
 
 
 

@@ -7,7 +7,7 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Cache-Control" content="no-cache">
 
-<script language="javascript" src="/js/Message.js"></script>
+<script language="javascript" src="js/Message.js"></script>
 
 
 <easyJ:QueryHiddenTag/>

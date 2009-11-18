@@ -7,8 +7,8 @@
 <title>
 协同需求获取工具
 </title>
-<link href="/css/table.css" rel="stylesheet" type="text/css">
-<link href="/css/pattern.css" rel="stylesheet" type="text/css">
+<link href="css/table.css" rel="stylesheet" type="text/css">
+<link href="css/pattern.css" rel="stylesheet" type="text/css">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta http-equiv="Expires" content="0">
 <meta http-equiv="Pragma" content="no-cache">
@@ -32,19 +32,19 @@ function checkBrowser(){
 var broswer=checkBrowser();
 
 </script>
-<script language="javascript" type="text/javascript" src="/js/Validate.js"></script>
-<script language="javascript" src="/js/jquery-1.2.3.js"> </script>
-<script language="javascript" src="/js/jquery.form.js"> </script>
-<script language="javascript" src="/js/tree.js"></script>
-<script language="javascript" src="/js/Ajax.js"></script>
-<script language="javascript" src="/js/Data.js"></script>
-<script language="javascript" src="/js/jquery.dimensions.js"></script>
-<script language="javascript" src="/js/ui.base.js"></script>
-<script language="javascript" src="/js/ui.draggable.js"></script>
-<script language="javascript" src="/js/Enter2Tab.js"></script>
-<script language="javascript" src="/js/hint.js"></script>
-<script language="javascript" src="/js/PopUpWindow.js"></script>
-<script language="javascript" src="/js/ScriptLoader.js"></script>
+<script language="javascript" type="text/javascript" src="js/Validate.js"></script>
+<script language="javascript" src="js/jquery-1.2.3.js"> </script>
+<script language="javascript" src="js/jquery.form.js"> </script>
+<script language="javascript" src="js/tree.js"></script>
+<script language="javascript" src="js/Ajax.js"></script>
+<script language="javascript" src="js/Data.js"></script>
+<script language="javascript" src="js/jquery.dimensions.js"></script>
+<script language="javascript" src="js/ui.base.js"></script>
+<script language="javascript" src="js/ui.draggable.js"></script>
+<script language="javascript" src="js/Enter2Tab.js"></script>
+<script language="javascript" src="js/hint.js"></script>
+<script language="javascript" src="js/PopUpWindow.js"></script>
+<script language="javascript" src="js/ScriptLoader.js"></script>
 
 </head>
 <body>

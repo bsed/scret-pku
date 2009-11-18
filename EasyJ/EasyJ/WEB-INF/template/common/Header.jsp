@@ -1,8 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page import="easyJ.common.*,easyJ.http.Globals,easyJ.system.data.*,easyJ.business.proxy.*"%>
 <%@page import="easyJ.common.validate.GenericValidator,cn.edu.pku.dr.requirement.elicitation.system.Context"%>
-<script language="javascript" src="/js/Message.js"></script>
-<script language="javascript" src="/js/Ajax.js"></script>
+<script language="javascript" src="js/Message.js"></script>
+<script language="javascript" src="js/Ajax.js"></script>
 
 <script language="javascript">
 window.onload = Message.remindNewMessage;

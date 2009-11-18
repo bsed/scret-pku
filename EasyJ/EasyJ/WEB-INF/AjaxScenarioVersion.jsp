@@ -3,10 +3,10 @@
 <%@ page import="cn.edu.pku.dr.requirement.elicitation.data.*,easyJ.http.*,easyJ.database.dao.Page"%>
 <%@ taglib uri="/WEB-INF/easyJ.tld" prefix="easyJ" %>
 
-<script language="javascript" src="/js/Datas.js"> </script>
-<link rel="stylesheet" type="text/css" href="/css/jquery.panels.css"/>
-<link rel="stylesheet" type="text/css" href="/css/example.css"/>
-<link href="/css/ScenarioVersion.css" rel="stylesheet" type="text/css">
+<script language="javascript" src="js/Datas.js"> </script>
+<link rel="stylesheet" type="text/css" href="css/jquery.panels.css"/>
+<link rel="stylesheet" type="text/css" href="css/example.css"/>
+<link href="css/ScenarioVersion.css" rel="stylesheet" type="text/css">
 <script type="text/javascript">
 $(document).ready(function(){
 

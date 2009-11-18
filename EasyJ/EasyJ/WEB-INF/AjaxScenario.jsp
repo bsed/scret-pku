@@ -5,15 +5,15 @@
 	import="cn.edu.pku.dr.requirement.elicitation.data.*,easyJ.http.*,easyJ.system.data.SysUserCache"%>
 <%@ page import="cn.edu.pku.dr.requirement.elicitation.tools.*"%>
 
-<link rel="stylesheet" href="/css/AjaxScenario.css" />
+<link rel="stylesheet" href="css/AjaxScenario.css" />
 
-<script language="javascript" src="/js/jqDnR.js"> </script>
-<script language="javascript" src="/js/jquery-1.2.3.js"> </script>
-<script language="javascript" src="/js/jquery.form.js"> </script>
-<script language="javascript" src="/js/Data.js"></script>
-<script language="javascript" src="/js/Enter2Tab.js"></script>
-<script language="javascript" src="/js/Problem.js"></script>
-<script language="javascript" src="/js/Problemsolution.js"></script>
+<script language="javascript" src="js/jqDnR.js"> </script>
+<script language="javascript" src="js/jquery-1.2.3.js"> </script>
+<script language="javascript" src="js/jquery.form.js"> </script>
+<script language="javascript" src="js/Data.js"></script>
+<script language="javascript" src="js/Enter2Tab.js"></script>
+<script language="javascript" src="js/Problem.js"></script>
+<script language="javascript" src="js/Problemsolution.js"></script>
 <script>
 function getAbsolutePosition(obj)
 {
