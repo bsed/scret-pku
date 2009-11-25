@@ -3,8 +3,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="melibrary.com.genuitec.eclipse.j2eedt.core.MYECLIPSE_JAVAEE_5_CONTAINER"/>
-	<classpathentry kind="lib" path="D:/Code/Maven/EasyJ/EasyJ/WEB-INF/lib/servlet-api.jar"/>
-	<classpathentry kind="lib" path="D:/Code/Maven/EasyJ/EasyJ/WEB-INF/lib/jsp-api.jar"/>
 	<classpathentry kind="lib" path="EasyJ/WEB-INF/lib/commons-beanutils.jar"/>
 	<classpathentry kind="lib" path="EasyJ/WEB-INF/lib/commons-cli-src.zip"/>
 	<classpathentry kind="lib" path="EasyJ/WEB-INF/lib/commons-cli.jar"/>
@@ -34,18 +32,18 @@
 	<classpathentry kind="lib" path="EasyJ/WEB-INF/lib/iText-2.1.7.jar"/>
 	<classpathentry kind="lib" path="EasyJ/WEB-INF/lib/iText-rtf-2.1.7.jar"/>
 	<classpathentry kind="lib" path="EasyJ/WEB-INF/lib/jakarta-oro.jar"/>
-	<classpathentry kind="lib" path="EasyJ/WEB-INF/lib/jsp-api.jar"/>
 	<classpathentry kind="lib" path="EasyJ/WEB-INF/lib/junit.jar"/>
 	<classpathentry kind="lib" path="EasyJ/WEB-INF/lib/ldap.jar"/>
 	<classpathentry kind="lib" path="EasyJ/WEB-INF/lib/mssqlserver.jar"/>
 	<classpathentry kind="lib" path="EasyJ/WEB-INF/lib/mysql-connector-java-5.1.6-bin.jar"/>
 	<classpathentry kind="lib" path="EasyJ/WEB-INF/lib/org-netbeans-api-visual.jar"/>
 	<classpathentry kind="lib" path="EasyJ/WEB-INF/lib/org-openide-util.jar"/>
-	<classpathentry kind="lib" path="EasyJ/WEB-INF/lib/servlet-api.jar"/>
 	<classpathentry kind="lib" path="EasyJ/WEB-INF/lib/sitecapturer.jar"/>
 	<classpathentry kind="lib" path="EasyJ/WEB-INF/lib/thumbelina.jar"/>
 	<classpathentry kind="lib" path="EasyJ/WEB-INF/lib/unittest.jar"/>
 	<classpathentry kind="lib" path="EasyJ/WEB-INF/lib/utilities.jar"/>
 	<classpathentry kind="lib" path="EasyJ/WEB-INF/lib/yl.jar"/>
+	<classpathentry kind="lib" path="D:/Program Files/Apache Software Foundation/Tomcat 6.0/lib/jsp-api.jar"/>
+	<classpathentry kind="lib" path="D:/Program Files/Apache Software Foundation/Tomcat 6.0/lib/servlet-api.jar"/>
 	<classpathentry kind="output" path="EasyJ/WEB-INF/classes"/>
 </classpath>

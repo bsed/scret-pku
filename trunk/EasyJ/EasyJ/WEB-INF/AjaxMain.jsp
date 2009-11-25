@@ -71,7 +71,7 @@ function changeSize() {
        main.style.width="72%";
        main.style.maxWidth = "72%";
        sizeControl.style.width="85%";
-       sizeControlImg.src="/image/assoc_up.gif";
+       sizeControlImg.src="image/assoc_up.gif";
        sizeControlImg.alt="最大化";
     }else{
        left.style.display="none";
@@ -79,7 +79,7 @@ function changeSize() {
        main.style.width="95%";
        main.style.maxWidth = "95%";
        sizeControl.style.width="96%";
-       sizeControlImg.src="/image/assoc_down.gif";
+       sizeControlImg.src="image/assoc_down.gif";
        sizeControlImg.alt="最小化";
     }
 }
@@ -167,7 +167,7 @@ function changeSize() {
   <div id="message" align="center">
   </div>
       <div id="sizeControl" align="right">
-        <img id="sizeControlImg" alt="最大化" src="/image/assoc_up.gif" onclick="changeSize()"/>
+        <img id="sizeControlImg" alt="最大化" src="image/assoc_up.gif" onclick="changeSize()"/>
      </div>
   <jsp:include flush="true" page="/WEB-INF/template/common/Left.jsp"/>
 

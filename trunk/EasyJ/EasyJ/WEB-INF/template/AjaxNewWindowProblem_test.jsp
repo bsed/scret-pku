@@ -97,8 +97,8 @@
 <div class="t2">对于问题是否有价值的详细解释：</div>
 <div id="Lg"></div>
 <div class="f14 p90 pl10" class="answer_content">英镑</div>
-<IMG src="/image/flower.gif"> <A class=brown12  href="javascript:Problem.flower()">送鲜花</A>（得<SPAN>0</SPAN>支）
-<IMG height=15 src="/image/badegg.gif" width=16><A class=brown12  href="javascript:Problem.badegg()">扔鸡蛋</A>（得<SPAN class=orange12>0</SPAN>个)
+<IMG src="image/flower.gif"> <A class=brown12  href="javascript:Problem.flower()">送鲜花</A>（得<SPAN>0</SPAN>支）
+<IMG height=15 src="image/badegg.gif" width=16><A class=brown12  href="javascript:Problem.badegg()">扔鸡蛋</A>（得<SPAN class=orange12>0</SPAN>个)
 <div align="right" style="margin: 5px 5px 8px;" id="comment_info"><span class="gray">评论者：</span>	<a href="#">zjxgn</a> <a href="#"  style="display:none">- 试用期 一级</a> </div>
 <div id="Lg"></div>
 <div class="f14 p90 pl10" class="answer_content"> <cn>啥是高糖？
@@ -200,21 +200,21 @@
 <div style="display:none" id="votingSolution">
 <div id="Lg"></div>
 <div class="f14 p90 pl10" class="answer_content">对于问题原因1,3的解决方案(经过综合解决方案得到的结果)</div>
-<IMG src="/image/flower.gif"> <A class=brown12  href="javascript:Problem.flower()">送鲜花</A>（得<SPAN>0</SPAN>支）
-<IMG height=15 src="/image/badegg.gif" width=16><A class=brown12  href="javascript:Problem.badegg()">扔鸡蛋</A>（得<SPAN class=orange12>0</SPAN>个)
+<IMG src="image/flower.gif"> <A class=brown12  href="javascript:Problem.flower()">送鲜花</A>（得<SPAN>0</SPAN>支）
+<IMG height=15 src="image/badegg.gif" width=16><A class=brown12  href="javascript:Problem.badegg()">扔鸡蛋</A>（得<SPAN class=orange12>0</SPAN>个)
 <a href="javascript:Problem.showHide('votingSolution1')">详细</a>
 <div align="right" style="margin: 5px 5px 8px;" id="comment_info"><span class="gray">评论者：</span>	<a href="#">zjxgn</a> <a href="#"  style="display:none">- 试用期 一级</a> </div>
 <div id="votingSolution1" style="display:none">
 <div id="Lg"></div>
 <div class="f14 p90 pl10" class="answer_content" >re解决方案一,我们可以这么做....</div>
-<IMG src="/image/flower.gif"> <A class=brown12  href="javascript:Problem.flower()">送鲜花</A>（得<SPAN>0</SPAN>支）
-<IMG height=15 src="/image/badegg.gif" width=16><A class=brown12  href="javascript:Problem.badegg()">扔鸡蛋</A>（得<SPAN class=orange12>0</SPAN>个)
+<IMG src="image/flower.gif"> <A class=brown12  href="javascript:Problem.flower()">送鲜花</A>（得<SPAN>0</SPAN>支）
+<IMG height=15 src="image/badegg.gif" width=16><A class=brown12  href="javascript:Problem.badegg()">扔鸡蛋</A>（得<SPAN class=orange12>0</SPAN>个)
 &nbsp<a>回复</a>
 <div align="right" style="margin: 5px 5px 8px;" id="comment_info"><span class="gray">评论者：</span>	<a href="#">zjxgn</a> <a href="#"  style="display:none">- 试用期 一级</a> </div>
 <div id="Lg"></div>
 <div class="f14 p90 pl10" class="answer_content"   >rere解决方案一,我们可以这么做....</div>
-<IMG src="/image/flower.gif"> <A class=brown12  href="javascript:Problem.flower()">送鲜花</A>（得<SPAN>0</SPAN>支）
-<IMG height=15 src="/image/badegg.gif" width=16><A class=brown12  href="javascript:Problem.badegg()">扔鸡蛋</A>（得<SPAN class=orange12>0</SPAN>个)
+<IMG src="image/flower.gif"> <A class=brown12  href="javascript:Problem.flower()">送鲜花</A>（得<SPAN>0</SPAN>支）
+<IMG height=15 src="image/badegg.gif" width=16><A class=brown12  href="javascript:Problem.badegg()">扔鸡蛋</A>（得<SPAN class=orange12>0</SPAN>个)
 &nbsp<a>回复</a>
 <div align="right" style="margin: 5px 5px 8px;" id="comment_info"><span class="gray">评论者：</span>	<a href="#">zjxgn</a> <a href="#"  style="display:none">- 试用期 一级</a> </div>
 </div>
@@ -222,21 +222,21 @@
 <div style="cursor:pointer">综合解决方案</div>
 <div id="Lg"></div>
 <div class="f14 p90 pl10" class="answer_content">对于问题原因2,4的解决方案(经过综合解决方案得到的结果)</div>
-<IMG src="/image/flower.gif"> <A class=brown12  href="javascript:Problem.flower()">送鲜花</A>（得<SPAN>0</SPAN>支）
-<IMG height=15 src="/image/badegg.gif" width=16><A class=brown12  href="javascript:Problem.badegg()">扔鸡蛋</A>（得<SPAN class=orange12>0</SPAN>个)
+<IMG src="image/flower.gif"> <A class=brown12  href="javascript:Problem.flower()">送鲜花</A>（得<SPAN>0</SPAN>支）
+<IMG height=15 src="image/badegg.gif" width=16><A class=brown12  href="javascript:Problem.badegg()">扔鸡蛋</A>（得<SPAN class=orange12>0</SPAN>个)
 <a href="javascript:Problem.showHide('votingSolution2')">详细</a>
 <div align="right" style="margin: 5px 5px 8px;" id="comment_info"><span class="gray">评论者：</span>	<a href="#">zjxgn</a> <a href="#"  style="display:none">- 试用期 一级</a> </div>
 <div id="votingSolution2" style="display:none">
 <div id="Lg"></div>
 <div class="f14 p90 pl10" class="answer_content" >re解决方案一,我们可以这么做....</div>
-<IMG src="/image/flower.gif"> <A class=brown12  href="javascript:Problem.flower()">送鲜花</A>（得<SPAN>0</SPAN>支）
-<IMG height=15 src="/image/badegg.gif" width=16><A class=brown12  href="javascript:Problem.badegg()">扔鸡蛋</A>（得<SPAN class=orange12>0</SPAN>个)
+<IMG src="image/flower.gif"> <A class=brown12  href="javascript:Problem.flower()">送鲜花</A>（得<SPAN>0</SPAN>支）
+<IMG height=15 src="image/badegg.gif" width=16><A class=brown12  href="javascript:Problem.badegg()">扔鸡蛋</A>（得<SPAN class=orange12>0</SPAN>个)
 &nbsp<a>回复</a>
 <div align="right" style="margin: 5px 5px 8px;" id="comment_info"><span class="gray">评论者：</span>	<a href="#">zjxgn</a> <a href="#"  style="display:none">- 试用期 一级</a> </div>
 <div id="Lg"></div>
 <div class="f14 p90 pl10" class="answer_content"   >rere解决方案一,我们可以这么做....</div>
-<IMG src="/image/flower.gif"> <A class=brown12  href="javascript:Problem.flower()">送鲜花</A>（得<SPAN>0</SPAN>支）
-<IMG height=15 src="/image/badegg.gif" width=16><A class=brown12  href="javascript:Problem.badegg()">扔鸡蛋</A>（得<SPAN class=orange12>0</SPAN>个)
+<IMG src="image/flower.gif"> <A class=brown12  href="javascript:Problem.flower()">送鲜花</A>（得<SPAN>0</SPAN>支）
+<IMG height=15 src="image/badegg.gif" width=16><A class=brown12  href="javascript:Problem.badegg()">扔鸡蛋</A>（得<SPAN class=orange12>0</SPAN>个)
 &nbsp<a>回复</a>
 <div align="right" style="margin: 5px 5px 8px;" id="comment_info"><span class="gray">评论者：</span>	<a href="#">zjxgn</a> <a href="#"  style="display:none">- 试用期 一级</a> </div>
 <div id="Lg"></div>
@@ -257,21 +257,21 @@
 <div style="display:none" id="allSolution">
 <div id="Lg"></div>
 <div class="f14 p90 pl10" class="answer_content">解决方案一,我们可以这么做</div>
-<IMG src="/image/flower.gif"> <A class=brown12  href="javascript:Problem.flower()">送鲜花</A>（得<SPAN>0</SPAN>支）
-<IMG height=15 src="/image/badegg.gif" width=16><A class=brown12  href="javascript:Problem.badegg()">扔鸡蛋</A>（得<SPAN class=orange12>0</SPAN>个)
+<IMG src="image/flower.gif"> <A class=brown12  href="javascript:Problem.flower()">送鲜花</A>（得<SPAN>0</SPAN>支）
+<IMG height=15 src="image/badegg.gif" width=16><A class=brown12  href="javascript:Problem.badegg()">扔鸡蛋</A>（得<SPAN class=orange12>0</SPAN>个)
 <a href="javascript:Problem.showHide('allSolution1')">详细</a>
 <div align="right" style="margin: 5px 5px 8px;" id="comment_info"><span class="gray">评论者：</span>	<a href="#">zjxgn</a> <a href="#"  style="display:none">- 试用期 一级</a> </div>
 <div id="allSolution1" style="display:none">
 <div id="Lg"></div>
 <div class="f14 p90 pl10" class="answer_content" >re解决方案一,我们可以这么做....</div>
-<IMG src="/image/flower.gif"> <A class=brown12  href="javascript:Problem.flower()">送鲜花</A>（得<SPAN>0</SPAN>支）
-<IMG height=15 src="/image/badegg.gif" width=16><A class=brown12  href="javascript:Problem.badegg()">扔鸡蛋</A>（得<SPAN class=orange12>0</SPAN>个)
+<IMG src="image/flower.gif"> <A class=brown12  href="javascript:Problem.flower()">送鲜花</A>（得<SPAN>0</SPAN>支）
+<IMG height=15 src="image/badegg.gif" width=16><A class=brown12  href="javascript:Problem.badegg()">扔鸡蛋</A>（得<SPAN class=orange12>0</SPAN>个)
 &nbsp<a>回复</a>
 <div align="right" style="margin: 5px 5px 8px;" id="comment_info"><span class="gray">评论者：</span>	<a href="#">zjxgn</a> <a href="#"  style="display:none">- 试用期 一级</a> </div>
 <div id="Lg"></div>
 <div class="f14 p90 pl10" class="answer_content"   >rere解决方案一,我们可以这么做....</div>
-<IMG src="/image/flower.gif"> <A class=brown12  href="javascript:Problem.flower()">送鲜花</A>（得<SPAN>0</SPAN>支）
-<IMG height=15 src="/image/badegg.gif" width=16><A class=brown12  href="javascript:Problem.badegg()">扔鸡蛋</A>（得<SPAN class=orange12>0</SPAN>个)
+<IMG src="image/flower.gif"> <A class=brown12  href="javascript:Problem.flower()">送鲜花</A>（得<SPAN>0</SPAN>支）
+<IMG height=15 src="image/badegg.gif" width=16><A class=brown12  href="javascript:Problem.badegg()">扔鸡蛋</A>（得<SPAN class=orange12>0</SPAN>个)
 &nbsp<a>回复</a>
 <div align="right" style="margin: 5px 5px 8px;" id="comment_info"><span class="gray">评论者：</span>	<a href="#">zjxgn</a> <a href="#"  style="display:none">- 试用期 一级</a> </div>
 <div id="Lg"></div>
@@ -280,21 +280,21 @@
 </div>
 <div id="Lg"></div>
 <div class="f14 p90 pl10" class="answer_content">解决方案二,我们可以这么做....</div>
-<IMG src="/image/flower.gif"> <A class=brown12  href="javascript:Problem.flower()">送鲜花</A>（得<SPAN>0</SPAN>支）
-<IMG height=15 src="/image/badegg.gif" width=16><A class=brown12  href="javascript:Problem.badegg()">扔鸡蛋</A>（得<SPAN class=orange12>0</SPAN>个)
+<IMG src="image/flower.gif"> <A class=brown12  href="javascript:Problem.flower()">送鲜花</A>（得<SPAN>0</SPAN>支）
+<IMG height=15 src="image/badegg.gif" width=16><A class=brown12  href="javascript:Problem.badegg()">扔鸡蛋</A>（得<SPAN class=orange12>0</SPAN>个)
 <a href="javascript:Problem.showHide('allSolution2')">详细</a>
 <div align="right" style="margin: 5px 5px 8px;" id="comment_info"><span class="gray">评论者：</span>	<a href="#">zjxgn</a> <a href="#"  style="display:none">- 试用期 一级</a> </div>
 <div id="allSolution2" style="display:none">
 <div id="Lg"></div>
 <div class="f14 p90 pl10" class="answer_content" >re解决方案二,我们可以这么做....</div>
-<IMG src="/image/flower.gif"> <A class=brown12  href="javascript:Problem.flower()">送鲜花</A>（得<SPAN>0</SPAN>支）
-<IMG height=15 src="/image/badegg.gif" width=16><A class=brown12  href="javascript:Problem.badegg()">扔鸡蛋</A>（得<SPAN class=orange12>0</SPAN>个)
+<IMG src="image/flower.gif"> <A class=brown12  href="javascript:Problem.flower()">送鲜花</A>（得<SPAN>0</SPAN>支）
+<IMG height=15 src="image/badegg.gif" width=16><A class=brown12  href="javascript:Problem.badegg()">扔鸡蛋</A>（得<SPAN class=orange12>0</SPAN>个)
 &nbsp<a>回复</a>
 <div align="right" style="margin: 5px 5px 8px;" id="comment_info"><span class="gray">评论者：</span>	<a href="#">zjxgn</a> <a href="#"  style="display:none">- 试用期 一级</a> </div>
 <div id="Lg"></div>
 <div class="f14 p90 pl10" class="answer_content"   >rere解决方案二,我们可以这么做....</div>
-<IMG src="/image/flower.gif"> <A class=brown12  href="javascript:Problem.flower()">送鲜花</A>（得<SPAN>0</SPAN>支）
-<IMG height=15 src="/image/badegg.gif" width=16><A class=brown12  href="javascript:Problem.badegg()">扔鸡蛋</A>（得<SPAN class=orange12>0</SPAN>个)
+<IMG src="image/flower.gif"> <A class=brown12  href="javascript:Problem.flower()">送鲜花</A>（得<SPAN>0</SPAN>支）
+<IMG height=15 src="image/badegg.gif" width=16><A class=brown12  href="javascript:Problem.badegg()">扔鸡蛋</A>（得<SPAN class=orange12>0</SPAN>个)
 &nbsp<a>回复</a>
 <div align="right" style="margin: 5px 5px 8px;" id="comment_info"><span class="gray">评论者：</span>	<a href="#">zjxgn</a> <a href="#"  style="display:none">- 试用期 一级</a> </div>
 <div id="Lg"></div>
