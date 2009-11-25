@@ -39,7 +39,7 @@ function refresh() {
         <a href="javascript:logout();">注销</a>
         <%} %>
       </div>
-      <h1><img src="/image/seforge_logo.gif"/></h1>
+      <h1><img src="image/seforge_logo.gif"/></h1>
       <div id="headerNavLinks">
         您所在的位置: 
         <ul>
