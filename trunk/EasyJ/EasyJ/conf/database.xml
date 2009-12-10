@@ -3,7 +3,7 @@
 <database>
 	<connection>
 		<driver>com.mysql.jdbc.Driver</driver>
-		<url>jdbc:mysql://192.168.4.133:3306/RequirementElicitation?characterEncoding=utf8</url>
+		<url>jdbc:mysql://127.0.0.1:3306/RequirementElicitation?characterEncoding=utf8</url>
 		<user>root</user>
 	</connection>
 	
