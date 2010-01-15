@@ -1,0 +1,25 @@
+body {
+	font-size: 12px;
+	line-height: 18px;
+	white-space: nowrap;
+}
+
+span.data {
+	color: red;
+	font-weight: bold;
+}
+
+span.role {
+	color: green;
+	font-weight: bold;
+}
+
+span.keyword_if, span.keyword_else, span.keyword_then {
+	color: blue;
+	font-weight: bold;
+}
+
+span.term_clean_candidate {
+	color: black;
+	font-weight: normal;
+}

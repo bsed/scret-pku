@@ -1,0 +1,11 @@
+#parent {
+    height: 400px;
+    width: 600px;
+    border: solid 1px black;
+    margin-left: 10px;
+}
+#text {
+    border: none;
+    height: 98%;
+    width: 100%;
+}

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="GB2312"?>
+<pad:Parameters xmlns:pad="http://sei.pku.edu.cn/DomainEngineering/parameters" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://sei.pku.edu.cn/DomainEngineering/Parameter	Parameter.xsd" name="Decomposition-Templete">
+  <pad:feature ID="feature-1196865387655-3045822233040754733">0</pad:feature>
+  <pad:feature ID="feature-1196865387312-6743510279811116909">1</pad:feature>
+</pad:Parameters>
+

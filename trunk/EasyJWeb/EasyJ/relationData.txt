@@ -1,0 +1,52 @@
+s1
+s2
+s22222222222
+s2.2222
+s3
+咋搞得
+!end of scenario
+a1
+a2
+a3
+a4
+a5
+这是咋搞得
+!end of actor
+d1
+d2
+d3
+d4
+d5
+d6
+!end of data
+s1,a1,solid
+s2,a1,solid
+s3,a2,dash
+s3,a4,solid
+s1,a2,dash
+s3,a5,solid
+s2,a5,solid
+!end of saRelation
+a1,d1,solid
+a2,d2,solid
+a3,d3,solid
+a3,d2,solid
+a3,d5,solid
+a3,d6,solid
+a4,d4,dash
+a5,d6,dash
+a5,d6,dash
+a4,d2,solid
+a5,d3,solid
+a2,d4,solid
+a1,d6,solid
+!end of adRelation
+s1,d1,solid
+s2,d2,solid
+s3,d3,solid
+s2,d3,solid
+s1,d3,solid
+s3,d6,dash
+s3,d5,dash
+s1,d4,dash
+!end of sdRelation

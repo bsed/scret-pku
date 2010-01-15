@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="GB2312"?>
+<cmd:constraintModel xmlns:cmd="http://sei.pku.edu.cn/DomainEngineering/constraintmodel" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://sei.pku.edu.cn/DomainEngineering/constraintmodel	constraintmodel.xsd" name="Specialization-Templete">
+  <cmd:constraintList>
+    <cmd:compositeConstraintList />
+    <cmd:groupConstraintList />
+    <cmd:vpConstraintList>
+      <cmd:vpConstraint id="vp-constraint-1196865387905-2461265147110971618">
+        <vpType>SingleVP</vpType>
+      </cmd:vpConstraint>
+    </cmd:vpConstraintList>
+  </cmd:constraintList>
+  <cmd:relationList>
+    <cmd:plRelation id="pl-relation-1196865388437-174631586891900128">
+      <constraintID>vp-constraint-1196865387905-2461265147110971618</constraintID>
+      <featureID>feature-1196865387780-5662921556364561686</featureID>
+      <isSource>true</isSource>
+      <modifier>Affirmation</modifier>
+    </cmd:plRelation>
+    <cmd:plRelation id="pl-relation-1196865388437-6601011076761295038">
+      <constraintID>vp-constraint-1196865387905-2461265147110971618</constraintID>
+      <featureID>feature-1196865387780-4972567358825373940</featureID>
+      <isSource>false</isSource>
+      <modifier>Affirmation</modifier>
+    </cmd:plRelation>
+  </cmd:relationList>
+</cmd:constraintModel>
+

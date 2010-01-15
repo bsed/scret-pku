@@ -1,0 +1,33 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                    "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="css/common/dialog.css" />
+<script type="text/javascript" src="js/jquery-1.2.3.js"></script>
+<title> Dialog with jqModal -- Test </title>
+</head>
+
+<body>
+Let's Open it!! <input type="button" value="open!" onclick="open();"/>
+<div id="container"></div>
+<script type="text/javascript" src="js/ScriptLoader.js"></script>
+<script type="text/javascript">
+var dlg = null;
+function open() {
+  $("#container").ajaxStart(function() {
+      $(this).text("Loading...");
+  }).load("http://localhost:8080/static/Dialog/NewUseCaseLink.html");
+/*    alert("open");
+    if (!dlg) {
+        dlg = new Dialog({
+            id: "test",
+            modal: true,
+            templateUrl: "http://localhost:8080/static/Dialog/NewUseCaseLink.html"
+        });
+    }
+    dlg.show();
+*/  
+}
+</script>
+</body>

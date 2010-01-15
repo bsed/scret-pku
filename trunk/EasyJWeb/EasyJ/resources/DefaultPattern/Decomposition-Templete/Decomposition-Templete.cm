@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="GB2312"?>
+<cmd:constraintModel xmlns:cmd="http://sei.pku.edu.cn/DomainEngineering/constraintmodel" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://sei.pku.edu.cn/DomainEngineering/constraintmodel	constraintmodel.xsd" name="Decomposition-Templete">
+  <cmd:constraintList>
+    <cmd:compositeConstraintList />
+    <cmd:groupConstraintList />
+    <cmd:vpConstraintList />
+  </cmd:constraintList>
+  <cmd:relationList />
+</cmd:constraintModel>
+

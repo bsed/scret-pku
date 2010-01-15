@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="fm">
+	<resultMap id="modelMap" class="model.FileModel">
+		<result property="id" column="id"/>
+		<result property="name" column="name"/>
+		<result property="featureModel" column="fm"/>
+	 	<result property="constraintModel" column="cm"/>
+		<result property="interactionModel" column="im"/>
+		<result property="index" column="index"/>
+		<result property="customizationIndex" column="customize"/>
+	</resultMap>
+	<select id="getModel" parameterClass="int" resultMap="modelMap">
+		select * from ftable where id =#value#
+	</select>
+	<select id="getModels" resultMap="modelMap">
+		select * from ftable
+	</select>
+
+	<resultMap id="drawMap" class="model.DrawModel">
+		<result property ="id" column="id"/>
+		<result property ="name" column="name"/>
+		<result property ="content" column="content"/>
+	</resultMap>
+	<select id="getDraws" parameterClass="int" resultMap="drawMap">
+		select * from draw where resourceID = #value#
+	</select>
+	<parameterMap class="model.FileModel" id="param_modelMap">
+		<parameter property="name" javaType="java.lang.String" jdbcType="char"/>
+		<parameter property="customizationIndex" javaType="java.lang.String" jdbcType="char"/>
+		<parameter property="constraintModel" javaType="java.lang.String" jdbcType="char"/>
+		<parameter property="featureModel" javaType="java.lang.String" jdbcType="char"/>
+		<parameter property="interactionModel" javaType="java.lang.String" jdbcType="char"/>
+		<parameter property="index" javaType="java.lang.String" jdbcType="char"/>
+		<parameter property="id" javaType="int" jdbcType="int"/>
+	</parameterMap>
+	<update id="updateModel" parameterMap="param_modelMap">
+		update ftable set name=?, customize=?, cm=?,fm=?,im=? ,ftable.index=? where id = ?
+	</update>
+	<update id="updateDrawModel" parameterClass="model.DrawModel">
+		update draw set name = #name# , content = #content# where id = #id#
+	</update>
+</sqlMap>

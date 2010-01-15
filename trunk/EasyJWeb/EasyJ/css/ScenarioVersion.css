@@ -1,0 +1,76 @@
+.dis{
+	color:#00FF33
+}
+tr{
+	font-size: 9pt;
+	font-family:   ����;
+}
+.creator{
+	color:#0066CC
+}
+.name{
+	font-size:10pt;
+	color:#000066
+}
+.time{
+	font-size: 9pt;
+	color:#0066CC
+}
+.changeDomain{
+	font-size: 9pt;
+	color:#FF0033
+}
+.normal{
+	font-size: 9pt;
+}
+.target{
+	display:none
+}
+.target-closed{
+	display:none
+}
+.panel-up{
+	background:url(../image/up.gif) no-repeat scroll 0px;
+	height:22px;
+	padding-top:6px
+ }
+.panel-down{
+	background:url(../image/down.gif) no-repeat scroll 0px;
+	height:22px;
+	padding-top:6px
+}
+.up{
+	background:url(../image/up.gif) no-repeat scroll 10px;
+	height:15px;
+	padding-top:2px
+ }
+.down{
+	background:url(../image/down.gif) no-repeat scroll 10px;
+	height:15px;
+	padding-top:2px
+}
+.change{
+	font-size:9pt;
+	color:#FF0033
+}
+.version{
+	font-size:9pt;
+}
+.content{
+	font-size:9pt;
+	background-color:#EEF4FF;
+}
+.changeborder{
+border-left:50px;
+border-collapse:collapse;border:1px solid #C4E2FF;background:#FFFFF;width:100%;margin-top:5px}
+.blank{
+margin-right: 40px;
+height:100%;
+width: 40px;}
+.add{
+color:#9900FF;
+text-decoration:underline;}
+.delete{
+color:#99FF33;
+text-decoration:line-through}
+

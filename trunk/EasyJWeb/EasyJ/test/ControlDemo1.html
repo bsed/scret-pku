@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>ControlDemo1.html</title>
+	
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+    <script type="text/javascript" src="../js/jquery-1.2.3.js"></script>
+    <script type="text/javascript" src="../js/json2.js"></script>
+    <script type="text/javascript" src="../js/util/Language.js"></script>
+    <script type="text/javascript" src="../js/control/Global.js"></script>
+    <script type="text/javascript" src="../js/control/ControlFactory.js"></script>
+    <script type="text/javascript" src="../js/control/ObserverMap.js"></script>
+    <script type="text/javascript" src="../js/control/EventMap.js"></script>
+    <script type="text/javascript" src="../js/control/AppControl.js"></script>
+    <script type="text/javascript" src="../js/control/specific/ListAndPreview.js"></script>
+    <script type="text/javascript" src="../js/control/specific/Console.js"></script>
+    <script type="text/javascript" src="../js/control/specific/InputFilter.js"></script>
+    
+    <script type="text/javascript">
+        var controls = {};
+        function load() {
+                    
+            var filter = JsControl.ControlFactory.create({
+                type: "InputFilter",
+                dataBinding: "在此输入过滤字符串",
+                publish: {
+                    id: "filter1",
+                    publications: [ { event: "change-filter-string" } ]
+                }
+            });
+            controls.filter = filter;
+            $(filter.get()).prependTo("#result");
+            
+            
+            var lap = JsControl.ControlFactory.create({
+                type: "ListAndPreview",
+                id: "lap1",
+                dataBinding: {
+                    "BeanUtil.java": {
+                        code: "import java.lang.reflect.*;\nimport java.util.Collection;\nimport java.util.Iterator;\nimport java.math.BigDecimal;\n..."
+                    },
+                    "StringUtil.java": {
+                        code: "import easyJ.common.validate.Validate;\nimport easyJ.common.validate.GenericValidator;\npublic class StringUtil {\n    public StringUtil() {}..."
+                    },
+                    "DataProxy.java": {
+                        code: "import java.util.ArrayList;\npublic interface DataProxy {\n    public Object create(Object o) throws EasyJException;..."
+                    }
+                },
+                callback: {
+                    preview: function(area, val) {
+                        $(area).empty().html(val.code.replace(/\n/g, "<br/>"));
+                    }
+                },
+                publish: {
+                    id: "lap1",
+                    publications: [
+                        {event: "select-item"},
+                        {event: "filter-data"}
+                    ]
+                },
+                subscribe: [
+                    {
+                        id: "filter1",
+                        update: function(id, eventName, data) {
+                            this.filterBy(data);
+                        }
+                    }
+                ]
+            });
+            controls.lap = lap;
+            lap.appendTo("#result");
+            
+            var console = JsControl.ControlFactory.create({
+                type: "Console",
+                dataBinding: "Console初始化完毕.",
+                subscribe: [
+                    {
+                        id: "lap1",
+                        update: function(id, eventName, data) {
+                            this.appendMessage("事件 " + eventName + " 来自 " + id + ", 数据: " + JS.toString(data, "<br/>", "&nbsp;&nbsp;"));
+                        }
+                    },
+                    {
+                        id: "filter1",
+                        update: function(id, eventName, data) {
+                            this.appendMessage("事件 " + eventName + " 来自 " + id + ", 数据: " + data);
+                        }
+                    }
+                ]
+            });
+            controls.console = console;
+            console.appendTo("#result");
+
+        }
+        
+    </script>
+  </head>
+  
+  <body>
+    <button onclick="load();">load controls</button> <br/>
+    <div id="result"></div>
+  </body>
+</html>

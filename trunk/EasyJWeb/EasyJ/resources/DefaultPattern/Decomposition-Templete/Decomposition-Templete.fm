@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="GB2312"?>
+<fmd:featureModel xmlns:fmd="http://sei.pku.edu.cn/DomainEngineering/featuremodel" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://sei.pku.edu.cn/DomainEngineering/featuremodel	featuremodel.xsd" name="Decomposition-Templete">
+  <fmd:featureList>
+    <fmd:feature id="feature-1196865387312-6743510279811116909">
+      <name>feature</name>
+      <description></description>
+      <source></source>
+      <category>Service</category>
+      <variability>Mandatory</variability>
+      <bindingTime>Null</bindingTime>
+      <issueAndDecision></issueAndDecision>
+      <note></note>
+    </fmd:feature>
+    <fmd:feature id="feature-1196865387655-3045822233040754733">
+      <name>feature</name>
+      <description></description>
+      <source></source>
+      <category>Service</category>
+      <variability>Mandatory</variability>
+      <bindingTime>Null</bindingTime>
+      <issueAndDecision></issueAndDecision>
+      <note></note>
+    </fmd:feature>
+  </fmd:featureList>
+  <fmd:relationList>
+    <fmd:relation name="decompose-relation">
+      <fmd:instance id="include-relation-1196865387780-5547570851534697224">
+        <startFeatureID>feature-1196865387312-6743510279811116909</startFeatureID>
+        <endFeatureID>feature-1196865387655-3045822233040754733</endFeatureID>
+      </fmd:instance>
+    </fmd:relation>
+  </fmd:relationList>
+</fmd:featureModel>
+
