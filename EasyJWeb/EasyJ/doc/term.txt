@@ -1,0 +1,4 @@
+Properties for Term Span: 
+   id: term_X (X = 0, 1, ...)
+   class: data / role
+   length: the length of term
