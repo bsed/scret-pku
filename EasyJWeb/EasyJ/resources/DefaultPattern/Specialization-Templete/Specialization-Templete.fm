@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="GB2312"?>
+<fmd:featureModel xmlns:fmd="http://sei.pku.edu.cn/DomainEngineering/featuremodel" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://sei.pku.edu.cn/DomainEngineering/featuremodel	featuremodel.xsd" name="Specialization-Templete">
+  <fmd:featureList>
+    <fmd:feature id="feature-1196865387780-4972567358825373940">
+      <name>feature</name>
+      <description></description>
+      <source></source>
+      <category>Service</category>
+      <variability>Mandatory</variability>
+      <bindingTime>Null</bindingTime>
+      <issueAndDecision></issueAndDecision>
+      <note></note>
+    </fmd:feature>
+    <fmd:feature id="feature-1196865387780-5662921556364561686">
+      <name>feature</name>
+      <description></description>
+      <source></source>
+      <category>Service</category>
+      <variability>Mandatory</variability>
+      <bindingTime>Null</bindingTime>
+      <issueAndDecision></issueAndDecision>
+      <note></note>
+    </fmd:feature>
+  </fmd:featureList>
+  <fmd:relationList />
+</fmd:featureModel>
+

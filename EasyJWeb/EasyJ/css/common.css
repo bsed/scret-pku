@@ -1,0 +1,134 @@
+@CHARSET "UTF-8";
+
+/* ------------- 
+ * Part 1: 布局与字体
+ * -------------
+ *
+ * 关于em和px的说明：
+ *    使用em作单位，则用户可以缩放；使用px作单位则不能缩放
+ *    一般对于内外边距（padding，margin）使用px为单位，这样用户把字体调大的时候，该边距就不会跟着变大
+ *    对于字体大小和高度/宽度使用em作单位，这样用户可以自由调整字体，同时包含该文字的相应元素也会随之改变
+ */
+body {
+	margin: 0;
+	padding: 0;
+	font-family: Verdana, Geneva, Arial, helvetica, sans-serif;
+}
+
+div#pageWrapper {
+	margin-left: auto;
+	margin-right: auto; /* 左右margin设为auto可以使网页在大屏幕上居中显示 */
+	font-size: 12px; 
+	line-height: 14px;
+	width: 85%;
+	max-width: 87%;
+}
+
+div#columnLeft {
+	float: left;
+	width: 12%;
+	max-width: 12%;
+	padding-top: 5px;
+}
+
+div#columnMain {
+	float: left;
+	width: 85%;
+	max-width: 85%;
+	padding: 5px 10px 5px 10px; /* 上 右 下 左 */
+}
+
+div#columnRight {
+	display: none;
+	float: left;
+	width: 13%;
+	max-width: 13%;
+	padding-top: 5px;
+}
+
+div#sizeControl {
+	width: 98%;
+	display: none;
+}
+
+/* --------------
+ * Part 2: 页眉
+ * -------------- 
+ */
+div#header { 
+	
+}
+
+#header h1 {
+	padding: 0;
+	margin: 0;
+}
+
+div#headerLinks {
+	float: right;
+	font-size: 1em;
+	padding: 10px 4px 8px 8px;
+}
+
+div#headerNavLinks {
+	margin-top: 2px;
+}
+
+#headerNavLinks ul,#headerNavLinks li {
+	display: inline;
+	padding: 0;
+	margin: 0;
+}
+
+#headerNavLinks ul li {
+	padding-left: 0;
+}
+
+#headerNavLinks ul li ul li {
+	padding-left: 14px;
+	background: url(../image/arrow.gif) no-repeat left center;
+}
+
+/* -------------
+  * Part 3: 页脚
+  * -------------
+  */
+div#footer {
+	clear: both;
+	border-top: 1px solid #333; /*COLOR*/
+	text-align: center;
+	width: 100%;
+	max-width: 100%;
+}
+
+/* ------------
+ * Part 4: 左边导航条
+ * ------------
+ */
+div#node { /* tree wrapper */
+	padding-top: 10px;
+}
+
+p.treeNode {
+	margin: 0 5px 5px 10px;
+}
+
+p.treeNode a {
+	text-decoration: none;
+}
+
+input.button,
+button {
+	border: 1px solid #aaaaaa; /*COLOR*/
+	background: url(../image/bg-btn.png) repeat-x 0px 1px;
+	cursor: pointer;
+	height: 20px;
+	padding-top: 1px;
+	padding-bottom: 1px;
+	line-height: 16px;
+	font-weight: normal;
+}
+
+.hide_todo {
+    display: none;
+}

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="GB2312"?>
+<pad:Parameters xmlns:pad="http://sei.pku.edu.cn/DomainEngineering/parameters" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://sei.pku.edu.cn/DomainEngineering/Parameter	Parameter.xsd" name="Detailization-Templete">
+  <pad:feature ID="feature-1196865387780-3600256946094012319">0</pad:feature>
+  <pad:feature ID="feature-1196865387780-4168295910750914636">1</pad:feature>
+</pad:Parameters>
+

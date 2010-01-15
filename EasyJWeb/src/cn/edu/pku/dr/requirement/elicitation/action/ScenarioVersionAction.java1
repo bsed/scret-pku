@@ -1,0 +1,726 @@
+package cn.edu.pku.dr.requirement.elicitation.action;
+
+import easyJ.common.EasyJException;
+import easyJ.http.Globals;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import easyJ.common.BeanUtil;
+import easyJ.business.proxy.CompositeDataProxy;
+import cn.edu.pku.dr.requirement.elicitation.data.Description;
+import easyJ.common.validate.GenericValidator;
+import java.util.ArrayList;
+import easyJ.business.proxy.SingleDataProxy;
+import com.sun.tools.javac.v8.util.Hashtable;
+import easyJ.database.transaction.*;
+import java.sql.Connection;
+import easyJ.database.connection.*;
+import easyJ.database.dao.*;
+import java.sql.SQLException;
+import easyJ.common.EasyJException;
+import java.util.ArrayList;
+import easyJ.common.BeanUtil;
+import easyJ.logging.EasyJLog;
+import easyJ.database.dao.command.UpdateCommand;
+import easyJ.database.dao.command.UpdateItem;
+import easyJ.database.dao.command.SelectCommand;
+import cn.edu.pku.dr.requirement.elicitation.data.ScenarioVersion;
+import cn.edu.pku.dr.requirement.elicitation.data.*;
+import easyJ.database.session.SessionFactory;
+import easyJ.database.session.Session;
+import java.io.*;
+import java.text.DateFormat;
+
+public class ScenarioVersionAction
+    extends easyJ.http.servlet.SingleDataAction {
+  private String preDisplayValue;
+  private static ArrayList SCList;
+  private java.util.ArrayList scenarioversions;
+  private Hashtable classValues;
+  private Connection conn;
+  private Long tempId;
+
+  public ScenarioVersionAction() {
+  }
+
+  public void process(HttpServletRequest request, HttpServletResponse response) throws
+      EasyJException {
+    super.process(request, response);
+  }
+
+  public boolean encapsulateObject() throws EasyJException {
+    super.encapsulateObject();
+    return true;
+  }
+
+  public String changename(String preDisplayValue) throws EasyJException {
+    this.preDisplayValue = preDisplayValue;
+    String displayValue = new String();
+
+    if (preDisplayValue == null) {
+      displayValue = preDisplayValue;
+    }
+    else {
+      String[] postDisplayValue = preDisplayValue.split("\\*");
+      if (postDisplayValue.length == 1) {
+
+        displayValue = "场景是: " + postDisplayValue[0] + " 没有发生改变";
+      }
+      if (postDisplayValue.length == 2) {
+        displayValue = "场景是: " + postDisplayValue[0] + "  " +
+            postDisplayValue[1] + "  发生改变";
+      }
+    }
+    return displayValue;
+
+  }
+
+  public void edit() throws EasyJException {
+    super.edit();
+  }
+
+  public void newObject() throws EasyJException {
+    super.newObject();
+  }
+
+  public void update() throws EasyJException {
+    super.update();
+  }
+
+  public void query() throws EasyJException {
+    // this.returnPath="Scenario.jsp";
+    //看看Obj是否存在，如果存在，则不用再次去通过getObject()来获得，这样效率稍微高一些
+    if (object == null) {
+      if (upper == null) {
+        upper = BeanUtil.getObject(className, properties,
+                                   "upper", errors);
+      }
+      if (lower == null) {
+        lower = BeanUtil.getObject(className, properties,
+                                   "lower", errors);
+      }
+    }
+    else {
+      if (upper == null) {
+        upper = BeanUtil.getObject(BeanUtil.colneObject(object), properties,
+                                   "upper", errors);
+      }
+      if (lower == null) {
+        lower = BeanUtil.getObject(BeanUtil.colneObject(object), properties,
+                                   "lower", errors);
+      }
+    }
+
+    request.setAttribute(Globals.LOWER, lower);
+    request.setAttribute(Globals.UPPER, upper);
+
+    conn = ConnectionControllerFactory.getConnection();
+    ScenarioVersion scenarioversion = (ScenarioVersion) object;
+    Data data = new Data();
+    Role communicator = new Role();
+    Role participant = new Role();
+    Role observer = new Role();
+    Problem problem = new Problem();
+    Solution solution = new Solution();
+    Remark remark = new Remark();
+
+    SingleDataProxy sdp = SingleDataProxy.getInstance();
+    String pageNo = request.getParameter(Globals.PAGENO);
+    if (pageNo == null) {
+      pageNo = "1";
+    }
+    Page page = sdp.query(lower, upper, new Integer(pageNo));
+    ArrayList svList = page.getPageData();
+    int size = svList.size();
+    String[][] sv = new String[size][13];
+    for (int i = 0; i < size; i++) {
+      for (int j = 0; j < 13; j++) {
+        sv[i][j] = "";
+      }
+    }
+    for (int i = 0; i < size; i++) {
+      scenarioversion = (ScenarioVersion) svList.get(i);
+      Long scenarioVersionId = scenarioversion.getScenarioVersionId();
+      sv[i][0] = scenarioVersionId.toString();
+      Long scenarioId = scenarioversion.getScenarioId();
+      sv[i][1] = scenarioId.toString();
+      java.sql.Date scUpdatetime = scenarioversion.getUpdateTime();
+      if (scUpdatetime != null) {
+        sv[i][2] = scUpdatetime.toGMTString();
+      }
+      String scenarioName = scenarioversion.getScenarioName();
+      sv[i][3] = scenarioName;
+      String CreatorName = scenarioversion.getCreatorName();
+      sv[i][4] = CreatorName;
+      String modifyMark = scenarioversion.getModifyMark();
+      sv[i][5] = modifyMark;
+      String[] modifyDomain = sv[i][5].split("\\,");
+      for (int k = 0; k < modifyDomain.length; k++) {
+        if ("datas".equals(modifyDomain[k])) {
+          Object o = BeanUtil.getEmptyObject(
+              "cn.edu.pku.dr.requirement.elicitation.data.Data");
+          Class clazz = o.getClass();
+          SelectCommand scmd = DAOFactory.getSelectCommand(clazz);
+          String[] datas = new String[10];
+          datas = scenarioversion.getDatas().split("\\,");
+          Filter filter = DAOFactory.getFilter("dataId", SQLOperator.IN, datas);
+          scmd.setFilter(filter);
+          Session session = SessionFactory.openSession();
+          ArrayList dataList = session.query(scmd);
+          System.out.println("datalist的长度" + dataList.size());
+          //sv[i][6] = "";
+          for (int j = 0; j < dataList.size(); j++) {
+            data = (Data) dataList.get(j);
+            sv[i][6] = sv[i][6] + data.getDataName();
+            System.out.print("***" + sv[i][6] + "***");
+          }
+          scenarioversion.setDatas(sv[i][6]);
+        }
+        else if ("participants".equals(modifyDomain[k])) {
+          Object o = BeanUtil.getEmptyObject(
+              "cn.edu.pku.dr.requirement.elicitation.data.Role");
+          Class clazz = o.getClass();
+          SelectCommand scmd = DAOFactory.getSelectCommand(clazz);
+          String[] participants = new String[10];
+          participants = scenarioversion.getParticipants().split("\\,");
+          Filter filter = DAOFactory.getFilter("roleId", SQLOperator.IN,
+                                               participants);
+          scmd.setFilter(filter);
+          Session session = SessionFactory.openSession();
+          ArrayList participantList = session.query(scmd);
+          //sv[i][7] = "";
+          for (int j = 0; j < participantList.size(); j++) {
+            participant = (Role) participantList.get(j);
+            sv[i][7] = sv[i][7] + participant.getRoleName();
+            System.out.print("***" + sv[i][7] + "***");
+          }
+          scenarioversion.setParticipants(sv[i][7]);
+        }
+        else if ("communicators".equals(modifyDomain[k])) {
+          Object o = BeanUtil.getEmptyObject(
+              "cn.edu.pku.dr.requirement.elicitation.data.Role");
+          Class clazz = o.getClass();
+          SelectCommand scmd = DAOFactory.getSelectCommand(clazz);
+          String[] communicators = new String[10];
+          communicators = scenarioversion.getCommunicators().split("\\,");
+          Filter filter = DAOFactory.getFilter("roleId", SQLOperator.IN,
+                                               communicators);
+          scmd.setFilter(filter);
+          Session session = SessionFactory.openSession();
+          ArrayList communicatorList = session.query(scmd);
+
+          // sv[i][8] = "";
+          for (int j = 0; j < communicatorList.size(); j++) {
+            communicator = (Role) communicatorList.get(j);
+            sv[i][8] = sv[i][8] + communicator.getRoleName();
+          }
+          scenarioversion.setCommunicators(sv[i][8]);
+        }
+        else if ("observers".equals(modifyDomain[k])) {
+          Object o = BeanUtil.getEmptyObject(
+              "cn.edu.pku.dr.requirement.elicitation.data.Role");
+          Class clazz = o.getClass();
+          SelectCommand scmd = DAOFactory.getSelectCommand(clazz);
+          String[] observers = new String[10];
+          observers = scenarioversion.getObservers().split("\\,");
+          Filter filter = DAOFactory.getFilter("roleId", SQLOperator.IN,
+                                               observers);
+          scmd.setFilter(filter);
+          Session session = SessionFactory.openSession();
+          ArrayList observerList = session.query(scmd);
+
+          // sv[i][9] = "";
+          for (int j = 0; j < observerList.size(); j++) {
+            observer = (Role) observerList.get(j);
+            sv[i][9] = sv[i][9] + observer.getRoleName();
+          }
+          scenarioversion.setObservers(sv[i][9]);
+        }
+        else if ("problems".equals(modifyDomain[k])) {
+          Object o = BeanUtil.getEmptyObject(
+              "cn.edu.pku.dr.requirement.elicitation.data.Problem");
+          Class clazz = o.getClass();
+          SelectCommand scmd = DAOFactory.getSelectCommand(clazz);
+          String[] problems = new String[10];
+          problems = scenarioversion.getProblems().split("\\,");
+          Filter filter = DAOFactory.getFilter("problemId", SQLOperator.IN,
+                                               problems);
+          scmd.setFilter(filter);
+          Session session = SessionFactory.openSession();
+          ArrayList problemList = session.query(scmd);
+          // sv[i][10] = "";
+          for (int j = 0; j < problemList.size(); j++) {
+            problem = (Problem) problemList.get(j);
+            sv[i][10] = sv[i][10] + problem.getProblemContent();
+          }
+          scenarioversion.setProblems(sv[i][10]);
+        }
+        else if ("solutions".equals(modifyDomain[k])) {
+          Object o = BeanUtil.getEmptyObject(
+              "cn.edu.pku.dr.requirement.elicitation.data.Solution");
+          Class clazz = o.getClass();
+          SelectCommand scmd = DAOFactory.getSelectCommand(clazz);
+          String[] solutions = new String[10];
+          solutions = scenarioversion.getSolutions().split("\\,");
+          Filter filter = DAOFactory.getFilter("solutionId", SQLOperator.IN,
+                                               solutions);
+          scmd.setFilter(filter);
+          Session session = SessionFactory.openSession();
+          ArrayList solutionList = session.query(scmd);
+          // sv[i][11] = "";
+          for (int j = 0; j < solutionList.size(); j++) {
+            solution = (Solution) solutionList.get(j);
+            sv[i][11] = sv[i][11] + solution.getSolutionContent();
+          }
+          scenarioversion.setSolutions(sv[i][11]);
+        }
+        else if ("description".equals(modifyDomain[k])) {
+          Class clazz = BeanUtil.getClass("cn.edu.pku.dr.requirement.elicitation.data.DescriptionVersion");
+          SelectCommand scmd = DAOFactory.getSelectCommand(clazz);
+          Filter filter = DAOFactory.getFilter("scenarioVersionId", SQLOperator.EQUAL,
+                                               scenarioversion.getScenarioVersionId());
+
+          scmd.setFilter(filter);
+          Session session = SessionFactory.openSession();
+          ArrayList descriptionList = session.query(scmd);
+          //sv[i][12] = "";
+          for (int j = 0; j < descriptionList.size(); j++) {
+            DescriptionVersion descriptionVersion = (DescriptionVersion) descriptionList.get(j);
+            sv[i][12] = sv[i][12] + descriptionVersion.getDescriptionVersionContent();
+          }
+
+          scenarioversion.setDescriptions(sv[i][12]);
+        }
+      }
+      svList.set(i, scenarioversion);
+      page.setPageData(svList);
+    }
+
+    // if(GenericValidator.isBlankOrNull(returnPath)) returnPath=Globals.SINGLE_DATA_QUERY_RETURN_PARTH;
+    for (int l = 0; l < size; l++) {
+      for (int j = 0; j < 13; j++) {
+        System.out.print(sv[l][j]);
+        System.out.print('@');
+      }
+      System.out.println();
+    }
+    request.setAttribute(Globals.PAGE, page);
+    returnPath = "ScenarioVersion.jsp";
+
+    /*
+          //查询remarks数据
+          Object o = BeanUtil.getEmptyObject(
+              "cn.edu.pku.dr.requirement.elicitation.data.Role.java");
+          Class clazz = o.getClass();
+          SelectCommand scmd = DAOFactory.getSelectCommand(Data);
+          scmd.setCondition("in" + preDatas);
+          ArrayList dataList = scmd.execute(o);
+          sv[i][7] = "";
+          for (j = 0; j < dataList.size(); j++) {
+            data = (Data) dataList.get(j);
+            sv[i][7] = sv[i][7] + data.getDataName();
+          }
+          //查询problems数据
+          Object o = BeanUtil.getEmptyObject(
+              "cn.edu.pku.dr.requirement.elicitation.data.Role.java");
+          Class clazz = o.getClass();
+          SelectCommand scmd = DAOFactory.getSelectCommand(Data);
+          scmd.setCondition("in" + preDatas);
+          ArrayList dataList = scmd.execute(o);
+          sv[i][8] = "";
+          for (j = 0; j < dataList.size(); j++) {
+            data = (Data) dataList.get(j);
+            sv[i][8] = sv[i][8] + data.getDataName();
+          }
+          //查询solutions数据
+          Object o = BeanUtil.getEmptyObject(
+              "cn.edu.pku.dr.requirement.elicitation.data.Role.java");
+          Class clazz = o.getClass();
+          SelectCommand scmd = DAOFactory.getSelectCommand(Data);
+          scmd.setCondition("in" + preDatas);
+          ArrayList dataList = scmd.execute(o);
+          sv[i][9] = "";
+          for (j = 0; j < dataList.size(); j++) {
+            data = (Data) dataList.get(j);
+            sv[i][9] = sv[i][9] + data.getDataName();
+          }*/
+  }
+
+  public void getContent() throws EasyJException {
+    Long ScenarioVersionId = new Long(request.getParameter("ScenarioVersionId"));
+    this.tempId = ScenarioVersionId;
+    conn = ConnectionControllerFactory.getConnection();
+    ScenarioVersion scenarioversion = new ScenarioVersion();
+    Data data = new Data();
+    Role communicator = new Role();
+    Role participant = new Role();
+    Role observer = new Role();
+    Problem problem = new Problem();
+    Solution solution = new Solution();
+    Remark remark = new Remark();
+
+
+    SingleDataProxy sdp = SingleDataProxy.getInstance();
+    String pageNo = request.getParameter(Globals.PAGENO);
+    if (pageNo == null) {
+      pageNo = "1";
+    }
+    Page page = sdp.query(scenarioversion, new Integer(pageNo));
+    ArrayList svList = page.getPageData();
+    int size = svList.size();
+    String[][] sv = new String[size][13];
+    for (int i = 0; i < size; i++) {
+      for (int j = 0; j < 13; j++) {
+        sv[i][j] = "";
+      }
+    }
+
+    for (int i = 0; i < size; i++) {
+      scenarioversion = (ScenarioVersion) svList.get(i);
+      Long scenarioVersionId = scenarioversion.getScenarioVersionId();
+      sv[i][0] = scenarioVersionId.toString();
+      Long scenarioId = scenarioversion.getScenarioId();
+      sv[i][1] = scenarioId.toString();
+      java.sql.Date scUpdatetime = scenarioversion.getUpdateTime();
+      if (scUpdatetime != null) {
+        sv[i][2] = scUpdatetime.toGMTString();
+      }
+      String scenarioName = scenarioversion.getScenarioName();
+      sv[i][3] = scenarioName;
+      String CreatorName = scenarioversion.getCreatorName();
+      sv[i][4] = CreatorName;
+      String modifyMark = scenarioversion.getModifyMark();
+      sv[i][5] = modifyMark;
+      String[] modifyDomain = sv[i][5].split("\\,");
+      for (int k = 0; k < modifyDomain.length; k++) {
+        if ("datas".equals(modifyDomain[k])) {
+          Object o = BeanUtil.getEmptyObject(
+              "cn.edu.pku.dr.requirement.elicitation.data.Data");
+          Class clazz = o.getClass();
+          SelectCommand scmd = DAOFactory.getSelectCommand(clazz);
+          String[] datas = new String[10];
+          datas = (String[]) scenarioversion.getDatas().split("\\,");
+          Filter filter = DAOFactory.getFilter("dataId", SQLOperator.IN, datas);
+          scmd.setFilter(filter);
+          Session session = SessionFactory.openSession();
+          ArrayList dataList = session.query(scmd);
+          System.out.println("datalist的长度" + dataList.size());
+          //sv[i][6] = "";
+          for (int j = 0; j < dataList.size(); j++) {
+            data = (Data) dataList.get(j);
+            sv[i][6] = sv[i][6] + data.getDataName();
+            System.out.print("***" + sv[i][6] + "***");
+          }
+          scenarioversion.setDatas(sv[i][6]);
+        }
+        else if ("participants".equals(modifyDomain[k])) {
+          Object o = BeanUtil.getEmptyObject(
+              "cn.edu.pku.dr.requirement.elicitation.data.Role");
+          Class clazz = o.getClass();
+          SelectCommand scmd = DAOFactory.getSelectCommand(clazz);
+          String[] participants = new String[10];
+          participants = scenarioversion.getParticipants().split("\\,");
+          Filter filter = DAOFactory.getFilter("roleId", SQLOperator.IN,
+                                               participants);
+          scmd.setFilter(filter);
+          Session session = SessionFactory.openSession();
+          ArrayList participantList = session.query(scmd);
+          //sv[i][7] = "";
+          for (int j = 0; j < participantList.size(); j++) {
+            participant = (Role) participantList.get(j);
+            sv[i][7] = sv[i][7] + participant.getRoleName();
+            System.out.print("**************************" + sv[i][7] + "***");
+          }
+          scenarioversion.setParticipants(sv[i][7]);
+        }
+        else if ("communicators".equals(modifyDomain[k])) {
+          Object o = BeanUtil.getEmptyObject(
+              "cn.edu.pku.dr.requirement.elicitation.data.Role");
+          Class clazz = o.getClass();
+          SelectCommand scmd = DAOFactory.getSelectCommand(clazz);
+          String[] communicators = new String[10];
+          communicators = scenarioversion.getCommunicators().split("\\,");
+          Filter filter = DAOFactory.getFilter("roleId", SQLOperator.IN,
+                                               communicators);
+          scmd.setFilter(filter);
+          Session session = SessionFactory.openSession();
+          ArrayList communicatorList = session.query(scmd);
+
+          // sv[i][8] = "";
+          for (int j = 0; j < communicatorList.size(); j++) {
+            communicator = (Role) communicatorList.get(j);
+            sv[i][8] = sv[i][8] + communicator.getRoleName();
+          }
+          scenarioversion.setCommunicators(sv[i][8]);
+        }
+        else if ("observers".equals(modifyDomain[k])) {
+          Object o = BeanUtil.getEmptyObject(
+              "cn.edu.pku.dr.requirement.elicitation.data.Role");
+          Class clazz = o.getClass();
+          SelectCommand scmd = DAOFactory.getSelectCommand(clazz);
+          String[] observers = new String[10];
+          observers = scenarioversion.getObservers().split("\\,");
+          Filter filter = DAOFactory.getFilter("roleId", SQLOperator.IN,
+                                               observers);
+          scmd.setFilter(filter);
+          Session session = SessionFactory.openSession();
+          ArrayList observerList = session.query(scmd);
+
+          // sv[i][9] = "";
+          for (int j = 0; j < observerList.size(); j++) {
+            observer = (Role) observerList.get(j);
+            sv[i][9] = sv[i][9] + observer.getRoleName();
+          }
+          scenarioversion.setObservers(sv[i][9]);
+        }
+        else if ("problems".equals(modifyDomain[k])) {
+          Object o = BeanUtil.getEmptyObject(
+              "cn.edu.pku.dr.requirement.elicitation.data.Problem");
+          Class clazz = o.getClass();
+          SelectCommand scmd = DAOFactory.getSelectCommand(clazz);
+          String[] problems = new String[10];
+          problems = scenarioversion.getProblems().split("\\,");
+          Filter filter = DAOFactory.getFilter("problemId", SQLOperator.IN,
+                                               problems);
+          scmd.setFilter(filter);
+          Session session = SessionFactory.openSession();
+          ArrayList problemList = session.query(scmd);
+          // sv[i][10] = "";
+          for (int j = 0; j < problemList.size(); j++) {
+            problem = (Problem) problemList.get(j);
+            sv[i][10] = sv[i][10] + problem.getProblemContent();
+          }
+          scenarioversion.setProblems(sv[i][10]);
+        }
+        else if ("solutions".equals(modifyDomain[k])) {
+          Object o = BeanUtil.getEmptyObject(
+              "cn.edu.pku.dr.requirement.elicitation.data.Solution");
+          Class clazz = o.getClass();
+          SelectCommand scmd = DAOFactory.getSelectCommand(clazz);
+          String[] solutions = new String[10];
+          solutions = scenarioversion.getSolutions().split("\\,");
+          Filter filter = DAOFactory.getFilter("solutionId", SQLOperator.IN,
+                                               solutions);
+          scmd.setFilter(filter);
+          Session session = SessionFactory.openSession();
+          ArrayList solutionList = session.query(scmd);
+          // sv[i][11] = "";
+          for (int j = 0; j < solutionList.size(); j++) {
+            solution = (Solution) solutionList.get(j);
+            sv[i][11] = sv[i][11] + solution.getSolutionContent();
+          }
+          scenarioversion.setSolutions(sv[i][11]);
+        }
+        else if ("description".equals(modifyDomain[k])) {
+          Class clazz = BeanUtil.getClass("cn.edu.pku.dr.requirement.elicitation.data.DescriptionVersion");
+          SelectCommand scmd = DAOFactory.getSelectCommand(clazz);
+          Filter filter = DAOFactory.getFilter("scenarioVersionId", SQLOperator.EQUAL,
+                                               scenarioversion.getScenarioVersionId());
+
+          scmd.setFilter(filter);
+          Session session = SessionFactory.openSession();
+          ArrayList descriptionList = session.query(scmd);
+          //sv[i][12] = "";
+          for (int j = 0; j < descriptionList.size(); j++) {
+            DescriptionVersion descriptionVersion = (DescriptionVersion) descriptionList.get(j);
+            sv[i][12] = sv[i][12] + descriptionVersion.getDescriptionVersionContent();
+          }
+          scenarioversion.setDescriptions(sv[i][12]);
+        }
+      }
+    }
+
+
+    for (int i = 0; i < size; i++) {
+       String content = " ";
+      scenarioversion = (ScenarioVersion) svList.get(i);
+      if (tempId.equals(scenarioversion.getScenarioVersionId())) {
+        String[] modifyDomain = scenarioversion.getModifyMark().split("\\,");
+        for (int k = 0; k < modifyDomain.length; k++) {
+          if ("datas".equals(modifyDomain[k])) {
+            if (i != 0) {
+              content = content + "<table class=\"changeborder\">" +
+                  "<tr class=\"change\" ><td>datas</td></tr>" +
+                  "<tr class=\"version\"><td>上一版本:</td></tr>" +
+                  "<tr class=\"content\"><td>" +
+                  sv[i][6] + "</td></tr>" +
+                  "<tr class=\"version\"><td>目前版本:</td></tr>" +
+                  "<tr class=\"content\"><td>" + sv[i-1][6] +
+                  "</td></tr></table>";
+            }
+            else {
+              content = content + "<table class=\"changeborder\">" +
+                  "<tr class=\"change\" ><td>datas</td></tr>" +
+                  "<tr class=\"version\"><td>上一版本:</td></tr>" +
+                  "<tr class=\"content\"><td>" +
+                  "无" + "</td></tr>" +
+                  "<tr class=\"version\"><td>目前版本:</td></tr>" +
+                  "<tr class=\"content\"><td>" + sv[i][6] +
+                  "</td></tr></table>";
+            }
+          }
+          else if ("participants".equals(modifyDomain[k])) {
+            if (i != 0) {
+              content = content + "<table class=\"changeborder\">" +
+                  "<tr class=\"change\" ><td>participants</td></tr>" +
+                  "<tr class=\"version\"><td>上一版本:</td></tr>" +
+                  "<tr class=\"content\"><td>" +
+                  sv[i][7] + "</td></tr>" +
+                  "<tr class=\"version\"><td>目前版本:</td></tr>" +
+                  "<tr class=\"content\"><td>" + sv[i-1][7] +
+                  "</td></tr></table>";
+
+            }
+            else {
+              content = content + "<table class=\"changeborder\">" +
+                  "<tr class=\"change\" ><td>participants</td></tr>" +
+                  "<tr class=\"version\"><td>上一版本:</td></tr>" +
+                  "<tr class=\"content\"><td>" +
+                  "无" + "</td></tr>" +
+                  "<tr class=\"version\"><td>目前版本:</td></tr>" +
+                  "<tr class=\"content\"><td>" + sv[i][7] +
+                  "</td></tr></table>";
+
+            }
+          }
+          else if ("communicators".equals(modifyDomain[k])) {
+            if (i != 0) {
+              content = content + "<table class=\"changeborder\">" +
+                  "<tr class=\"change\" ><td>communicators</td></tr>" +
+                  "<tr class=\"version\"><td>上一版本:</td></tr>" +
+                  "<tr class=\"content\"><td>" +
+                  sv[i][8] + "</td></tr>" +
+                  "<tr class=\"version\"><td>目前版本:</td></tr>" +
+                  "<tr class=\"content\"><td>" + sv[i-1][8] +
+                  "</td></tr></table>";
+
+            }
+            else {
+              content = content + "<table class=\"changeborder\">" +
+                  "<tr class=\"change\" ><td>communicators</td></tr>" +
+                  "<tr class=\"version\"><td>上一版本:</td></tr>" +
+                  "<tr class=\"content\"><td>" +
+                  "无" + "</td></tr>" +
+                  "<tr class=\"version\"><td>目前版本:</td></tr>" +
+                  "<tr class=\"content\"><td>" + sv[i][8] +
+                  "</td></tr></table>";
+
+            }
+          }
+          else if ("observers".equals(modifyDomain[k])) {
+            if (i != 0) {
+              content = content + "<table class=\"changeborder\">" +
+                  "<tr class=\"change\" ><td>observers</td></tr>" +
+                  "<tr class=\"version\"><td>上一版本:</td></tr>" +
+                  "<tr class=\"content\"><td>" +
+                  sv[i][9] + "</td></tr>" +
+                  "<tr class=\"version\"><td>目前版本:</td></tr>" +
+                  "<tr class=\"content\"><td>" + sv[i-1][9] +
+                  "</td></tr></table>";
+
+            }
+            else {
+              content = content + "<table class=\"changeborder\">" +
+                  "<tr class=\"change\" ><td>observers</td></tr>" +
+                  "<tr class=\"version\"><td>上一版本:</td></tr>" +
+                  "<tr class=\"content\"><td>" +
+                  "无" + "</td></tr>" +
+                  "<tr class=\"version\"><td>目前版本:</td></tr>" +
+                  "<tr class=\"content\"><td>" + sv[i][9] +
+                  "</td></tr></table>";
+
+            }
+
+          }
+          else if ("problems".equals(modifyDomain[k])) {
+            if (i != 0) {
+              content = content + "<table class=\"changeborder\">" +
+                  "<tr class=\"change\" ><td>problems</td></tr>" +
+                  "<tr class=\"version\"><td>上一版本:</td></tr>" +
+                  "<tr class=\"content\"><td>" +
+                  sv[i][10] + "</td></tr>" +
+                  "<tr class=\"version\"><td>目前版本:</td></tr>" +
+                  "<tr class=\"content\"><td>" + sv[i-1][10] +
+                  "</td></tr></table>";
+
+            }
+            else {
+              content = content + "<table class=\"changeborder\">" +
+                  "<tr class=\"change\" ><td>problems</td></tr>" +
+                  "<tr class=\"version\"><td>上一版本:</td></tr>" +
+                  "<tr class=\"content\"><td>" +
+                  "无" + "</td></tr>" +
+                  "<tr class=\"version\"><td>目前版本:</td></tr>" +
+                  "<tr class=\"content\"><td>" + sv[i][10] +
+                  "</td></tr></table>";
+
+            }
+
+          }
+          else if ("solutions".equals(modifyDomain[k])) {
+            if (i != 0) {
+              content = content + "<table class=\"changeborder\">" +
+                  "<tr class=\"change\" ><td>solutions</td></tr>" +
+                  "<tr class=\"version\"><td>上一版本:</td></tr>" +
+                  "<tr class=\"content\"><td>" +
+                  sv[i][11] + "</td></tr>" +
+                  "<tr class=\"version\"><td>目前版本:</td></tr>" +
+                  "<tr class=\"content\"><td>" + sv[i-1][11] +
+                  "</td></tr></table>";
+
+            }
+            else {
+              content = content + "<table class=\"changeborder\">" +
+                  "<tr class=\"change\" ><td>solutions</td></tr>" +
+                  "<tr class=\"version\"><td>上一版本:</td></tr>" +
+                  "<tr class=\"content\"><td>" +
+                  "无" + "</td></tr>" +
+                  "<tr class=\"version\"><td>目前版本:</td></tr>" +
+                  "<tr class=\"content\"><td>" + sv[i][11] +
+                  "</td></tr></table>";
+
+            }
+
+          }
+          else if ("description".equals(modifyDomain[k])) {
+            if (i != 0) {
+              content = content + "<table class=\"changeborder\">" +
+                  "<tr class=\"change\" ><td>description</td></tr>" +
+                  "<tr class=\"version\"><td>上一版本:</td></tr>" +
+                  "<tr class=\"content\"><td>" +
+                  sv[i][12] + "</td></tr>" +
+                  "<tr class=\"version\"><td>目前版本:</td></tr>" +
+                  "<tr class=\"content\"><td>" + sv[i-1][12] +
+                  "</td></tr></table>";
+
+            }
+            else {
+              content = content + "<table class=\"changeborder\">" +
+                  "<tr class=\"change\" ><td>description</td></tr>" +
+                  "<tr class=\"version\"><td>上一版本:</td></tr>" +
+                  "<tr class=\"content\"><td>" +
+                  "无" + "</td></tr>" +
+                  "<tr class=\"version\"><td>目前版本:</td></tr>" +
+                  "<tr class=\"content\"><td>" + sv[i][12] +
+                  "</td></tr></table>";
+
+            }
+
+          }
+        }
+
+      }
+      try {
+        response.getWriter().println(content);
+      }
+      catch (IOException ex) {
+        ex.getStackTrace();
+      }
+
+    }
+    //content = "<table>" + content + "</table>";
+
+  }
+
+  {
+  }
+}

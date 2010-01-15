@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC 
+	"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" 
+	"../dtd/struts-2.0.dtd">
+
+<struts>
+<!-- Define all the page-communication,relation between jsp-page and  action-->
+	<!--  <constant name="struts.objectFactory" value="org.apache.struts2.spring.StrutsSpringObjectFactory" /> -->
+	<constant name="struts.enable.DynamicMethodInvocation" value="true" /> <!-- baipeng add permit dynamic-method-invocation -->
+	<!--   <include file="struts-logreg.xml" /> --> 
+	<package name="logreg"   extends="struts-default" namespace="/">
+	 	<action name="register" class="elicitation.action.user.RegisterAction" method="register">
+			<result name="input">user/register.jsp</result>			
+			<result name="success" type="redirect">Login.jsp</result>
+			<result name="error"  type="redirect">user/register.jsp</result>
+		</action> 
+		<action name="login" class="elicitation.action.user.LoginXAction">
+			<result name="input">Login.jsp</result>
+			<!-- <result name="success" type="dispatcher">AjaxProject.jsp</result> -->
+			<result name="success" type="redirect">${url}</result>			
+			<result name="error" type="dispatcher">Login.jsp</result>
+		</action>
+		<action name="test" class="elicitation.action.test.TestAction" >
+			<result name="success">index.jsp</result>
+		</action>
+	</package>
+	
+	<package name="validate"   extends="json-default">	
+		<action name="validateName" class="elicitation.action.user.ValidateNameAction">
+			<result name = "success" type="json"/>
+		</action>
+	</package>
+</struts>
+

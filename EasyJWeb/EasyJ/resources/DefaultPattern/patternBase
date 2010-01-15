@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="GB2312"?>
+<pbd:patternBase xmlns:pbd="http://sei.pku.edu.cn/DomainEngineering/PatternBase" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://sei.pku.edu.cn/DomainEngineering/patternBase	patternBase.xsd" name="PatternBase">
+  <pbd:patternList>
+    <pbd:pattern name="Refinement-Pattern">
+      <pbd:description></pbd:description>
+      <pbd:childrenList>
+        <pbd:childTempleteList>
+          <pbd:templete name="Decomposition-Templete" />
+          <pbd:templete name="Detailization-Templete" />
+          <pbd:templete name="Specialization-Templete" />
+        </pbd:childTempleteList>
+      </pbd:childrenList>
+    </pbd:pattern>
+  </pbd:patternList>
+  <pbd:templeteList>
+    <pbd:templete name="Detailization-Templete">
+      <pbd:parent type="pattern" name="Refinement-Pattern" />
+    </pbd:templete>
+    <pbd:templete name="Decomposition-Templete">
+      <pbd:parent type="pattern" name="Refinement-Pattern" />
+    </pbd:templete>
+    <pbd:templete name="Specialization-Templete">
+      <pbd:parent type="pattern" name="Refinement-Pattern" />
+    </pbd:templete>
+  </pbd:templeteList>
+</pbd:patternBase>
+

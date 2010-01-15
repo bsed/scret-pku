@@ -1,0 +1,239 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>读写文件a </title>
+</head>
+
+<body>
+<iframe id="editor" width="600px" height="200px"></iframe>
+<script type="text/javascript">
+<!--
+//读txt文件
+    var ForReading = 1; 
+	//var ForWriting =2;
+	var fos,f,s,arr,cha;
+	arr = new Array();
+	//cha = new Array(new Array());
+	var s;
+	var j;
+	var k;
+	var i=0;
+    fso = new ActiveXObject("Scripting.FileSystemObject");
+	f = fso.OpenTextFile("e:\\dr\\项目\\test_new.html", ForReading); 
+	//alert("read successful");
+	 var editor = document.getElementById("editor").contentWindow;
+     editor.document.designMode = "on";
+     editor.document.contentEditable = true;    
+     // 以下是firefox必需
+     editor.document.open();
+	while(!f.atendofstream){
+	    //s = f.ReadLine();
+		html = f.ReadAll();
+		//alert(html);
+		var ar = new Array();
+		var out = new Array();
+		ar = html.split("");
+		//alert(ar.length);
+		var count = 0;
+		var num =0;
+		
+		var position=0;
+		var whetherCount=true;
+		while(num<ar.length)
+		{
+			if(ar[num]=='<')
+			   whetherCount=false;
+
+			if(whetherCount==true)
+			{
+			    
+				out[position] = '<span id="'+count+'">'+ar[num]+'</span>';
+				//out[position] = '<span name="'+count+'">'+ar[num]+'</span>';
+				count++;
+				
+			}else
+				out[position]=ar[num];
+
+			if(ar[num]=='>')
+          	   whetherCount=true;
+
+			num++;
+			position++;
+		}
+		var ss = out[0];
+		for(var i = 1;i<out.length;i++){
+		var ss = ss + out[i];
+		}
+       // alert(ss);	
+		}	
+		</script>
+		<iframe id="editor1" width="600px" height="200px"></iframe>
+		<script type="text/javascript">
+		var editor1 = document.getElementById("editor1").contentWindow;
+        editor1.document.designMode = "on";
+        editor1.document.contentEditable = true;    
+       //以下是firefox必需
+        editor1.document.open();
+        editor1.document.writeln(ss); //这里是网页内容 
+	    //editor1.document.close();
+        //editor1.focus();
+		</script>
+		
+		<iframe id="editor2" width="600px" height="200px"></iframe>
+	    
+		<script type="text/javascript">
+		var editor = document.getElementById("editor2").contentWindow;
+        editor.document.designMode = "on";
+        editor.document.contentEditable = true;    
+       //以下是firefox必需
+        editor.document.open();
+        editor.document.writeln(ss); //这里是网页内容 
+	    //editor.document.close();
+        //editor.focus();
+		//alert(count);
+		</script>
+		
+		<script language="javascript"> 
+		//alert(document.all.('action'));
+		/*
+		var obj=""; 
+		for(i=0;i<document.all.length;i++) 
+		obj+=document.all[i].('action')+";"; 
+		alert(obj); 
+		
+		*/
+		</script>
+		<input type="button" value="保存" onclick="compare()" />
+		<script type="text/javascript">
+		function compare(){
+		
+		//editor.document.getElementById("0").innerHTML ="";
+		//alert(editor.document.getElementById("0").outerHTML);
+		//alert(editor.document.getElementById("0").innerHTML);
+		//alert(editor.document.getElementById("0").innerHTML.length);
+		//var aaa = editor.document.getElementById("0").innerHTML+editor.document.getElementById("1").innerHTML;
+/*
+		var aab = aaa.split("");
+		alert(aab.length);
+		alert(aab[0]);
+		alert(aab[1]);
+		alert(aab);
+		*/
+		var results = "";
+		for(var i=0;i<count;i++){
+			var a = new String(i);		
+			//var d = new String(i+1);
+			var cc = a;
+			//判断删除的情况
+			if(!editor.document.getElementById(cc)){
+		    	var enter = i;
+				while(!editor.document.getElementById(cc)){
+			    	i++;
+			    	var cc = new String(i);
+				}
+		    	var b = cc;
+				//纯粹的删除
+				//alert("准备判断");
+		    	if(editor.document.getElementById(String(enter-1)).innerHTML.length==1){
+			 		var middle = "";
+			 		//alert("进入middle");
+			 		for(var k = enter;k <i;k++){
+						//alert("进入循环");
+						middle = middle+'<span id ="'+k+'"><font color="blue"><strike>'+editor1.document.getElementById(String(k)).innerText+'</strike></font></span>';
+						//alert(middle);
+					}
+					//alert("出循环");
+					editor.document.getElementById(b).outerHTML=middle+editor.document.getElementById(b).outerHTML;
+ 				}
+	   			else{
+		    		var middle2 = "";
+			 		for(var k2 = enter;k2 <i;k2++){	
+						middle2 = middle2+'<span id ="'+k2+'"><font color="blue"><strike>'+editor1.document.getElementById(String(k2)).innerText+'</strike></font></span>';	
+   					}
+					editor.document.getElementById(b).outerHTML=middle2+editor.document.getElementById(b).outerHTML;
+				}	
+			}
+			//判断增加的情况
+			if (editor.document.getElementById(a).innerText.length >=2){
+			var add = new Array();
+				add = editor.document.getElementById(a).innerText.split("");
+				middle1 = "";
+			for(var ii =1;ii<add.length;ii++){
+				middle1 = middle1 + add[ii];
+			}
+			editor.document.getElementById(a).innerHTML=add[0]+'<font color="red"><u>'+middle1+'</u></font>';
+			}
+			/*
+			if(editor1.document.getElementById(a).innerText!=editor.document.getElementById(a).innerText){
+				if (editor.document.getElementById(a).innerText.length >=2){
+				var add = new Array();
+				add = editor.document.getElementById(a).innerText.split("");
+				alert(editor.document.getElementById(a).innerText.length);
+				if(editor.document.getElementById(a).innerText.length >2){
+					var beBack = 1;
+					while(add[beBack] == editor1.document.getElementById(String(i+beBack)).innerText){
+					//alert(add);
+					beBack++;
+					}
+					//alert(beBack);
+					var middle4 = "";
+					for (var i4 = 0;i4<beBack;i4++){
+						middle4 = middle4 + add[i4];
+					}
+					var middle3 = "";
+					for (var ii = beBack;ii<editor.document.getElementById(a).innerText.length;ii++){
+						middle3 = middle3 + add[ii];
+					}
+					//alert(middle3);
+					//alert(middle4);
+					editor.document.getElementById(a).innerHTML=middle4+'<font color="red"><u>'+middle3+'</u></font>';
+				}
+				else{
+					//alert(add[0]);
+					if(add[1] != editor1.document.getElementById(String(i+1)).innerText){
+					//alert("jinlai");
+					//alert(add[0]+"***"+add[1]);
+			     		editor.document.getElementById(a).innerHTML=add[0]+'<font color="red"><u>'+add[1]+'</u></font>';     
+					} 
+				}
+				}
+			}*/
+			//关闭editor
+		 	editor1.document.close();
+        	//editor1.focus()
+  	    	editor.document.close();
+        	//editor.focus()
+			
+			
+		}
+
+		//var result = editor.document.all[1];
+		//alert(result);
+		for(var res=0;res<count;res++){
+			var res_a = new String(res);	
+			
+			//alert(editor.document.getElementById(res_a).innerHTML);
+			var innerHTML = editor.document.getElementById(res_a).innerHTML;			
+			editor.document.getElementById(res_a).outerHTML = innerHTML;
+			//alert(res_a);
+		}
+		for(var res_moved=0;res_moved<1;res_moved++){
+			var res_moved_a = new String(res_moved);	
+			
+			//alert(editor.document.getElementById(res_a).innerHTML);
+			var innerHTML = editor.document.getElementById('moved_'+res_moved_a).innerHTML;			
+			editor.document.getElementById('moved_'+res_moved_a).outerHTML = '<font color="red"><u>'+innerHTML+'</u></font>';
+			//alert(res_a);
+		}
+		alert(editor.document.body.outerHTML);
+		//var result = results.replace(/<span id=\d>*<\/STRIKE><\/FONT>/g,"aa");
+		//var result = results.replace(/<FONT color=blue><STRIKE><\/STRIKE><\/FONT>/g,"");
+		//alert(result);*/
+	}
+	
+		
+</script>
+		
+</body>
+</html>
