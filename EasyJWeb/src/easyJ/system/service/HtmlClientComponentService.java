@@ -1142,7 +1142,7 @@ public class HtmlClientComponentService {
 						StringBuffer selectBuffer = HtmlClientComponentService
 						.getSelect(propertyValueTable, BeanUtil
 								.getFieldValue(object, propertyName));
-				buffer.append(selectBuffer.toString());
+						buffer.append(selectBuffer.toString());
 					} else {
 						StringBuffer selectBuffer = HtmlClientComponentService
 								.getSelect(propertyValueTable, BeanUtil
