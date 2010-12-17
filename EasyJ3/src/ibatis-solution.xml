@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap SYSTEM  "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="solution">
+	<resultMap class="elicitation.model.solution.Solution" id="Map.Solution">
+		<result property="id" column="id"/>
+		<result property="creatorId" column="creator_id"/>
+		<result property="name" column="name"/>
+		<result property="description" column="description"/>
+		<result property="status" column="status"/>
+	</resultMap>
+	<select id="selectSolution" resultMap="Map.Solution">
+		select * from solution where id = #value#
+	</select>
+	<select id="selectSolutionListofScenario" parameterClass="elicitation.model.project.Scenario" 
+		resultMap="Map.Solution">
+		select * from solution join solution_scenario on solution.id = solution_scenario.solution_id where 
+			solution_scenario.scenario_id = #scenarioId# 
+	</select>
+	<select id="selectSolutionQuestionList" parameterClass="elicitation.model.solution.Solution" resultMap="Map.Question">
+		select * from question join solution_question on question.id = solution_question.question_id 
+			where solution_question.solution_id =#id# 
+	</select>
+	<select id ="selectSolutionScenarioList" parameterClass="elicitation.model.solution.Solution" resultMap="Map.Scenario">
+		select * from  solution_scenario join   scenario on  solution_scenario.scenario_id	 = scenario.scenario_id where solution_scenario.solution_id =#id# 
+	</select>
+	<select id="selectSolutionFromPrevScenario" parameterClass="elicitation.model.project.Scenario" resultClass="java.lang.Integer">
+		select solution_id from solution_scenario where scenario_id = #scenarioId#
+	</select> 	
+	<select id="selectSolutionFromNextScenario" parameterClass="elicitation.model.project.Scenario" resultClass="java.lang.Integer">
+		select solution_id from scenario_version where scenario_id_end =  #scenarioId#
+	</select> 	
+	<select id="selectVote" parameterClass="java.util.HashMap"     resultClass="java.util.HashMap">
+		select * from solution_vote where solution_id = #solutionId# and voter_id = #userId#
+	</select>
+	<select id="selectVoteNum" resultClass="java.lang.Integer">
+		select count(*) from solution_vote where solution_id = #value# 
+	</select>
+	<insert id="insertVote">
+		insert into solution_vote (solution_id,voter_id) values(#solutionId#,#userId#)
+	</insert>
+	<update id="pickSolution" parameterClass="elicitation.model.solution.Solution">
+		update solution set status  = 'yes' where id = #id#
+	</update>
+	
+	<select id="selectNextScenarioFromSolution" parameterClass="java.util.HashMap" resultClass="java.lang.Integer">
+		select scenario_id_end from scenario_version where scenario_id_begin = #preId# and solution_id = #solutionId#
+	</select>
+	<select id="selectPreScenarioFromSolution" parameterClass="java.util.HashMap" resultClass="java.lang.Integer">
+		select scenario_id_begin from scenario_version where scenario_id_end = #nextId# and solution_id = #solutionId#
+	</select>
+	
+	<insert id="insertSolution" parameterClass="elicitation.model.solution.Solution">
+		insert into solution (name,description,creator_id) values(#name#,#description#,#creatorId#)
+		<selectKey keyProperty="id" resultClass="java.lang.Integer">select @@IDENTITY as id</selectKey>
+	</insert>
+	<insert id="insertSolutionQuestion" parameterClass="java.util.HashMap">
+		insert into solution_question (solution_id,question_id) values(#solutionId#,#questionId#)
+		<selectKey resultClass="java.lang.Integer">select @@IDENTITY as id</selectKey>
+	</insert>
+	<insert id="insertSolutionScenario" parameterClass="java.util.HashMap">
+		insert into solution_scenario (solution_id,scenario_id) values(#solutionId#,#scenarioId#)
+		<selectKey resultClass="java.lang.Integer">select @@IDENTITY as id</selectKey>
+	</insert>
+	
+	<insert id="upgrade" parameterClass="java.util.HashMap">
+		insert into scenario_version (scenario_id_begin ,solution_id,scenario_id_end )
+		 values (#prevScenarioId#,#solutionId#,#scenarioId#)
+		<selectKey resultClass="java.lang.Integer">select @@IDENTITY as id</selectKey>
+	</insert> 
+	
+	
+</sqlMap>

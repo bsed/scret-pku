@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="version">
+	<select id="selectVote" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+		select * from scenario_vote where scenario_id = #scenarioId# and voter_id = #userId# and role_id = #roleId#
+	</select>
+	<insert id="insertVote" parameterClass="java.util.HashMap">
+		insert into scenario_vote(role_id,scenario_id,voter_id) values(#roleId#, #scenarioId#,#userId#)
+		<selectKey type="post" resultClass="java.lang.Integer">
+			select  @@IDENTITY as id
+		</selectKey>
+	</insert>
+	
+	
+	<select id="selectRoleUserNum" resultClass="java.lang.Integer">
+		select count(role.role_id)
+		from user_project_role join role on user_project_role.role_id = role.role_id 
+		where role.role_id = #value# 
+	</select>
+	<select id="selectRoleVoterNum" parameterClass="java.util.HashMap" resultClass="java.lang.Integer">
+		select count(*)
+		from  scenario_vote 
+		where scenario_vote.role_id = #roleId# and scenario_vote.scenario_id = #scenarioId#  
+	</select>
+	<update id="makeVersion">
+		update scenario set use_state = 'version' where scenario.scenario_id = #value#
+	</update>
+	
+	<select id="selectScenarioVersion" parameterClass="java.lang.String" resultMap="Map.Scenario">
+		select * 
+			from scenario
+				where scenario.scenario_name = #value# and 
+				( scenario.use_state = 'freeze' or scenario.use_state = 'version' )
+				order by build_time desc	
+	</select>
+</sqlMap>

@@ -1,0 +1,54 @@
+@CHARSET "UTF-8";
+.header{
+	margin-left: 4em;
+	margin-right:4em;
+	height: 100px;
+	background: #d6d2ed
+}
+.left{
+	margin-left: 4em;	
+	margin-right:4em;
+	border-right:2px;
+	background:  red;
+	border-right:1px solid black;
+	width:33%;
+	float:left;
+	}
+.right {
+	padding-left:2em;
+	margin-left: 4em;
+	margin-right:4em;
+	background:green;
+	/**float:right;**/
+}
+.footer{
+	clear:both;
+	text-align: center;
+}
+/*******************/
+#main_project {
+	border-bottom: 2px solid black;
+	background:#c9c0f4;
+	margin-top:10px;
+	margin-bottom: 1px;
+}
+#main_project_description{
+	margin-left:2em;
+	margin-right:2em;
+	border_bottom:1px solid black;
+	border-top:1px solid black;
+	border-left:1px solid black;
+	border-right:px solid black;
+	text-indent: 2em;
+	background:#d6d2ed
+	}
+.data{
+	margin-top:10px;
+}
+.role{
+	margin-top:10px;
+}
+.scenario{
+	margin-top:10px;
+}
+ 

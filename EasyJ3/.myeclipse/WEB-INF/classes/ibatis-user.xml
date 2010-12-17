@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "D:\workspace\toolplugin\EasyJ3\src\dtd\sql-map-2.dtd">
+<sqlMap namespace="user">
+<!-- user -->
+
+<resultMap id="getUser" class="elicitation.model.user.SysUser" >
+		<result property="userId" column="user_id"
+			jdbcType="INT" javaType="int" />	
+		<result property="state" column="use_state"
+			jdbcType="CHAR" javaType="java.lang.String" />
+		<result property="buildTime" column="build_time"
+			jdbcType="DATE"	javaType="java.sql.Date" ></result>
+		<result property="userName" column="user_name"
+			jdbcType="CHAR"	javaType="java.lang.String" />
+			
+		<result property="email" column="email"
+			jdbcType="CHAR"	javaType="java.lang.String" />
+		<result property="phone" column="phone"
+			jdbcType="CHAR"	javaType="java.lang.String" />
+			
+		<result property="mobile" column="mobile"
+			jdbcType="CHAR"	javaType="java.lang.String" />
+			
+		<result property="updateTime" column="update_time"
+			jdbcType="DATE" javaType="java.sql.Date" />
+			
+		<result property="password" column="password"
+			jdbcType="CHAR"	javaType="java.lang.String" />
+		
+</resultMap>
+	
+
+	<select id="getUserByUserName" parameterClass="java.lang.String" resultMap="getUser">
+		select * from sys_user where user_name=#value#
+	</select>
+	<select id="getUserByUserID" resultMap="getUser">
+		select * from sys_user where user_id=#userId#
+	</select>
+	<update id="updateUser" parameterClass="elicitation.model.user.SysUser">
+		update sys_user set 
+		password = #password#,
+		mobile = #mobile#,
+		phone=#phone#,
+		email=#email#,
+		use_state=#state#,		
+		build_time=#buildTime#,
+		update_time=now()
+		where user_name = #userName#
+	</update>
+	<delete id="deleteUser" parameterClass="elicitation.model.user.SysUser">
+		delete from sys_user where user_name = #userName#
+	</delete>
+	<insert id="registerUser" parameterClass="elicitation.model.user.SysUser">
+		insert into sys_user(
+		user_name,
+		password,
+		email,
+		build_time
+		)
+		values(		
+		#userName#,
+		#password#,
+		#email#,
+		now()
+		
+		)
+		<selectKey resultClass="int" keyProperty="userId">
+			SELECT @@IDENTITY AS userId 
+		</selectKey>		
+	</insert>
+	
+	<select id="selectProjects" parameterClass="elicitation.model.user.SysUser"
+		 resultClass="java.util.HashMap" >
+		select * from user_project_role where user_id = #userId#
+	</select>
+	<insert id="insertUserProjectRole" parameterClass="java.util.HashMap">
+		insert into user_project_role(user_id,project_id,role_id,is_creator) value(
+		#userId#,#projectId#,#roleId#,#isCreator#)
+	</insert>
+	<delete id="deleteUserProjectRole" parameterClass="java.util.HashMap">
+		delete from user_project_role where user_id = #userId# and project_id=#projectId# and role_id=#roleId# and is_creator =#isCreator#
+	</delete>
+</sqlMap>

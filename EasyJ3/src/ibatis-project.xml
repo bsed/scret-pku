@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap SYSTEM  "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="project" >	
+	<resultMap class="elicitation.model.project.Project" id="MapProject.X">
+		<result property="projectId" column="project_id" jdbcType="int" javaType="int"/>
+	 	<result property="projectName" column="project_name" jdbcType="CHAR" javaType="String"/>
+		<result property="projectDescription" column="project_description" jdbcType="CHAR" javaType="String"/>
+		<result property="domainId" column="domain_id" jdbcType="int" javaType="int"/>
+		<result property="creatorId" column="creator_id" jdbcType="int" javaType="int" nullValue="-100"/>
+		<result property="buildTime" column="build_time" jdbcType="Date" javaType="java.sql.Date"/>
+		<result property="updateTime" column="update_time" jdbcType="Date" javaType="java.sql.Date"/> 
+	</resultMap>
+	<resultMap class="elicitation.model.project.Data" id="Map.Data">
+		<result property="dataId" column="data_id" jdbcType="int" javaType="int"/>
+		<result property="dataName" column="data_name" jdbcType="varchar" javaType="String"/>
+		<result property="dataDes" column="data_description" jdbcType="varchar" javaType="String"/>
+		<result property="creatorId" column="creator_id" jdbcType="int" javaType="int"/>
+		<result property="projectId" column="project_id" jdbcType="int" javaType="int"/>
+		<result property="buildTime" column="build_time" jdbcType="Date" javaType="java.sql.Date"/>
+		<result property="updateTime" column="update_time" jdbcType="Date" javaType="java.sql.Date"/>
+		</resultMap>
+	<resultMap class="elicitation.model.project.Role" id="Map.Role">
+		<result property="roleId" column="role_id" jdbcType="int" javaType="int"/>
+		<result property="roleName" column="role_name" jdbcType="varchar" javaType="String"/>
+		<result property="roleDes" column="role_description" jdbcType="varchar" javaType="String"/>
+		<result property="creatorId" column="creator_id" jdbcType="int" javaType="int"/>
+		<result property="projectId" column="project_id" jdbcType="int" javaType="int"/>
+		<result property="buildTime" column="build_time" jdbcType="Date" javaType="java.sql.Date"/>
+		<result property="updateTime" column="update_time" jdbcType="Date" javaType="java.sql.Date"/>
+	</resultMap>
+	<resultMap class="elicitation.model.project.Scenario" id="Map.Scenario">
+		<result property="scenarioId" column="scenario_id" jdbcType="int" javaType="int"  />
+		<result property="scenarioName" column="scenario_name" jdbcType="varchar" javaType="String" />
+		<result property="projectId" column="project_id" jdbcType="int" javaType="int"/>
+		<result property="creatorId" column="creator_id" jdbcType="int" javaType="int"/>
+		<result property="buildTime" column="build_time" jdbcType="Date" javaType="java.sql.Timestamp"/>
+		<result property="updateTime" column="update_time" jdbcType="Date" javaType="java.sql.Timestamp"/>
+		<result property="useState" column="use_state" jdbcType="varchar" javaType="String"/>
+	</resultMap>
+	<insert id="insertProject"
+		parameterClass="elicitation.model.project.Project">
+		
+		insert into project(
+		project_name,
+		domain_id,
+		use_state,
+		build_time,
+		update_time,		
+		project_description,
+		creator_id
+		)
+		values(
+		#projectName#,		
+		#domainId#,
+		#state#,
+		now(),
+		now(),		
+		#projectDescription#,
+		#creatorId#		
+		)
+		<selectKey resultClass="int" keyProperty="projectId">
+			SELECT @@IDENTITY AS projectId 
+		</selectKey>
+
+	</insert>
+	<delete id="deleteProject" parameterClass="elicitation.model.project.Project">
+		delete from project where project_name= #projectName#
+	</delete>
+	<select id="queryProject" parameterClass="elicitation.model.project.Project" resultMap="MapProject.X">
+		 <!-- select * from project where project_name = #projectName# or project_id = #projectId# -->
+		 select * from project where project_id = #projectId#		
+		</select>
+	<update id="updateProject" parameterClass="elicitation.model.project.Project">
+	update project
+	set project_name=#projectName#,
+	project_description=#projectDescription#,
+	domain_id =#domainId#,
+	creator_id = #creatorId#,
+	update_time = now() 
+	where project_id = #projectId#</update>
+	<!--  Data Segment -->
+	<insert id="insertData" parameterClass="elicitation.model.project.Data">
+		insert into data(data_name,data_description,project_id,creator_id,build_time,update_time)
+		values(#dataName#,#dataDes#,#projectId#,#creatorId#,now(),now())
+		<selectKey resultClass="int" keyProperty="dataId">
+		select @@IDENTITY as dataId</selectKey>
+	</insert>
+	<update id="updateData" parameterClass="elicitation.model.project.Data">
+		update data set
+		 data_name = #dataName#,
+		 data_description=#dataDes#,
+		 project_id = #projectId#,
+		 creator_id = #creatorId#,
+		 update_time = now()
+		 where data_id = #dataId# 
+		 </update>
+	<select id="selectData" parameterClass="elicitation.model.project.Data"
+		resultMap="Map.Data">
+	select * from data where data_id = #dataId#
+	</select>
+	<select id="selectDataList" parameterClass="elicitation.model.project.Project"
+		resultMap="Map.Data">
+		select * from data where project_id = #projectId#
+		</select>
+	<delete id = "deleteData" parameterClass="elicitation.model.project.Data">
+		delete from data where data_id = #dataId#
+	</delete>
+	<!-- Role Segment -->
+	<insert id="insertRole" parameterClass="elicitation.model.project.Role">
+		insert into role(role_name,role_description,project_id,creator_id,build_time,update_time)
+			values(#roleName#,#roleDes#,#projectId#,#creatorId#,now(),now())
+		<selectKey resultClass="int" keyProperty="roleId">
+		select @@IDENTITY as roleId</selectKey>
+		</insert>
+	<update id="updateRole" parameterClass="elicitation.model.project.Role">
+		update role set
+			role_name = #roleName#,
+			role_description= #roleDes#,
+			project_id= #projectId#,
+			creator_id =#creatorId#,
+			update_time = now()
+		where role_id = #roleId#
+		</update>
+		<select id="selectRole" parameterClass="elicitation.model.project.Role"
+			resultMap="Map.Role">
+		select * from role where role_id = #roleId#
+		</select>
+		<select id="selectRoleList" parameterClass="elicitation.model.project.Project"
+			resultMap="Map.Role">
+			select * from role where project_id = #projectId#
+		</select>
+		<select id="selectRoleListOfUser" parameterClass="java.util.HashMap" resultMap="Map.Role">
+			select role.* from 
+				user_project_role   join role on user_project_role.role_id = role.role_id
+					where user_project_role.user_id = #userId# and user_project_role.project_id = #projectId#
+		</select>
+		<delete id="deleteRole" parameterClass="elicitation.model.project.Role">
+			delete from role where role_id = #roleId#
+		</delete>
+	<!-- Scenario Segment -->
+	<insert id="insertScenario" parameterClass="elicitation.model.project.Scenario">
+		insert into scenario(scenario_name,project_id,creator_id,build_time,update_time) 
+		values(#scenarioName#,#projectId#,#creatorId#,now(),now())
+		<selectKey resultClass="int" keyProperty="scenarioId">
+		select @@IDENTITY as scenarioId</selectKey>			
+	</insert>
+	<update id="freezeScenario" parameterClass="elicitation.model.project.Scenario">
+		update scenario
+		set use_state = 'freeze'
+		where scenario_id = #scenarioId#
+	</update>
+	<delete id="deleteScenario" parameterClass="elicitation.model.project.Scenario">
+		delete from scenario where scenario_id = #scenarioId#
+		</delete>
+	<select id="selectScenario" parameterClass="elicitation.model.project.Scenario"
+		resultMap="Map.Scenario">
+		select * from scenario where scenario_id = #scenarioId#
+	</select>
+	<select id="selectScenarioList" parameterClass="elicitation.model.project.Project"
+		resultMap="Map.Scenario">
+		select * from scenario where project_id =#projectId# 
+		order by scenario_id desc
+	</select>
+	<update id="updateScenario" parameterClass="elicitation.model.project.Scenario">
+		update scenario set
+			scenario_name =#scenarioName#,
+			project_id = #projectId#,
+			creator_id = #creatorId#,
+			update_time=now()
+			where scenario_id = #scenarioId#
+	</update>
+	<!-- Composite Scenario-Data Segment -->
+	<select id="selectScenarioData" parameterClass="elicitation.model.project.Scenario" 
+		resultMap="Map.Data">
+		<!-- select * from scenario_data where scenario_id = #scenarioId# -->
+		select * from scenario_data join data on scenario_data.data_id = data.data_id 
+       			where scenario_id = #scenarioId#
+		</select>
+		<insert id="insertScenarioData" parameterClass="java.util.HashMap">
+			insert into scenario_data(scenario_id,data_id) values(#scenarioId#,#dataId#)
+			</insert>
+		<delete id="deleteScenarioData" parameterClass="java.util.HashMap">
+		delete from scenario_data where scenario_id =#scenarioId# and data_id = #dataId#
+		</delete>
+	<!-- Composite Scenario-Role Segment -->
+	<select id="selectScenarioRole" parameterClass="elicitation.model.project.Scenario" 
+		resultMap="Map.Role">
+		<!-- select * from scenario_role where scenario_id = #scenarioId# -->
+		select * from scenario_role join role on scenario_role.role_id = role.role_id 
+			where scenario_id = #scenarioId#
+		</select>
+		<insert id="insertScenarioRole" parameterClass="java.util.HashMap">
+			insert into scenario_role(scenario_id,role_id) values(#scenarioId#,#roleId#)
+			</insert>
+		<delete id="deleteScenarioRole" parameterClass="java.util.HashMap">
+		delete from scenario_role where scenario_id =#scenarioId# and role_id = #roleId#
+		</delete>
+	<!-- Composite Scenario-Role-Description Segment -->
+	<select id="selectScenarioRoleDes" parameterClass="java.util.HashMap" resultClass="String">
+		select description from scenario_role_description where scenario_id = #scenarioId# and role_id = #roleId# 
+	</select>
+	<select id="selectScenarioRoleDesState"  parameterClass="java.util.HashMap" resultClass="String">
+		select state from scenario_role_description 
+			where scenario_id = #scenarioId# and role_id = #roleId#		
+	</select>
+	<update id="lockScenarioRoleDes" parameterClass="java.util.HashMap">
+		update scenario_role_description set state = 'busy' 
+			where scenario_id = #scenarioId# and role_id = #roleId#
+	</update>
+	<update id="freeScenarioRoleDes" parameterClass="java.util.HashMap">
+		update scenario_role_description set state = 'free' 
+			where scenario_id = #scenarioId# and role_id = #roleId#
+	</update>
+	<update id="updateScenarioRoleDes" parameterClass="java.util.HashMap">
+		update scenario_role_description set 
+			description = #description# , state = 'free' 
+			where scenario_id = #scenarioId# and	role_id = #roleId#
+	</update>
+	<insert id="insertScenarioRoleDes" parameterClass="java.util.HashMap">
+		insert into scenario_role_description (scenario_id,role_id,description) values(
+			#scenarioId#,#roleId#,#description#)
+			<selectKey keyProperty="id" resultClass="int">select @@IDENTITY as id</selectKey>
+	</insert>
+	<delete id="deleteScenarioRoleDes" parameterClass="java.util.HashMap">
+		delete from scenario_role_description where scenario_id = #scenarioId# and role_id = #roleId#
+	</delete>
+	
+	<insert id="insertJoinReq" parameterClass="java.util.HashMap">
+		insert into req_join_scenario(project_id,role_id,req_description,user_id) values(
+			#projectId#,#roleId#,#reqDes#,#userId#)			
+			<selectKey resultClass="int" keyProperty="id">
+		select @@IDENTITY as req_id</selectKey>
+			
+	</insert>
+	<!--  专门用于 管理员 选择自己的角色 -->
+	<insert id="insertUserProjectRole" parameterClass="java.util.HashMap">
+		insert into user_project_role (project_id,role_id,user_id,is_creator) values(#projectId#,#roleId#,#userId#,#isCreator#)
+		<selectKey resultClass="int">
+			select @@IDENTITY as id
+		</selectKey>
+	</insert>
+</sqlMap>

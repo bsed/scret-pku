@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Register all the services. baipeng -->
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+ 
+    <bean id="sqlMapClient"
+        class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+        <property name="configLocation">
+            <value>/WEB-INF/classes/sqlMapConfig.xml</value>
+        </property>
+    </bean>
+
+    <bean id="databaseService" class="shengpeng.service.database.DatabaseService">
+        <property name="sqlMapClient">
+            <ref local="sqlMapClient" />
+        </property>
+    </bean>	
+</beans>

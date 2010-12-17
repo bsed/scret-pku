@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap SYSTEM  
+"http://www.ibatis.com/dtd/sql-map-2.dtd" >
+<sqlMap namespace="domain">
+	<resultMap class="elicitation.model.domain.Domain" id="MapDomain">
+		<result javaType="Integer" jdbcType="int" property="domainId"
+			column="domain_id" />
+		<result javaType="String" jdbcType="varchar"
+			property="domainName" column="domain_name" />
+		<result javaType="String" jdbcType="varchar"
+			property="domainDes" column="domain_description" />
+		<result javaType="Integer" jdbcType="int" property="creatorId"
+			column="creator_id" />
+	</resultMap>
+	<select id ="selectUserDomainList"
+		parameterClass="elicitation.model.user.SysUser"
+		resultMap="MapDomain">
+		select * from domain where creator_id = #userId#
+	</select>
+	<select id="selectDomainList" 
+		parameterClass="elicitation.model.domain.Domain"
+		resultMap="MapDomain">
+		select * from domain
+		</select>
+	<select id="selectDomain"
+		parameterClass="elicitation.model.domain.Domain"
+		resultMap="MapDomain">
+		select * from domain where domain.domain_id = #domainId#
+	</select>
+	<delete id="deleteDomain"
+		parameterClass="elicitation.model.domain.Domain">
+		delete from domain where domain.domain_id = #domainId#
+	</delete>
+	<update id="updateDomain"
+		parameterClass="elicitation.model.domain.Domain">
+	update domain set domain_id = #domainId#, domain_name =
+	#domainName#, domain_description = #domainDes#, creator_id =
+	#creatorId#, build_time = #buildTime#, update_time = now() where
+	domain.domain_id = #domainId#
+	</update>
+	<insert id="insertDomain"
+		parameterClass="elicitation.model.domain.Domain">
+		insert into
+		domain(domain_name,domain_description,creator_id,build_time,update_time)
+		values(#domainName#,#domainDes#,#creatorId#,now(),now())
+		 <selectKey resultClass="int" keyProperty="domainId">
+			SELECT @@IDENTITY AS userId 
+		</selectKey>		
+	</insert>
+	<select id="selectProjects"
+		parameterClass="elicitation.model.domain.Domain" resultMap="MapProject.X">
+		select * from domain inner join project on domain.domain_id = project.domain_id
+			where domain.domain_id = #domainId#
+	</select>
+	
+</sqlMap>

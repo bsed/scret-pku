@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC 
+	"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" 
+	"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+ <include file="struts-default.xml"></include>
+ <!-- <include file="strust-main.xml"></include> -->
+<!-- Define all the page-communication,relation between jsp-page and  action-->
+	<!--  <constant name="struts.objectFactory" value="org.apache.struts2.spring.StrutsSpringObjectFactory" /> -->
+	<constant name="struts.enable.DynamicMethodInvocation" value="true" /> <!-- baipeng add permit dynamic-method-invocation -->
+	<constant name="struts.action.extension" value="do"/>
+	<!--   <include file="struts-logreg.xml" /> --> 
+	<package name="logreg"   extends="struts-default" namespace="/">
+	 	<action name="register" class="elicitation.action.user.RegisterAction" method="register">
+			<result name="input">user/register.jsp</result>			
+			<result name="success" type="redirect">Login.jsp</result>
+			<result name="error"  type="redirect">user/register.jsp</result>
+		</action> 
+		<action name="test" class="elicitation.test.TestAction" >
+			<result name="success">index.jsp</result>
+		</action>
+	</package>
+	
+	<package name="validate"   extends="json-default">	
+		<action name="validateName" class="elicitation.action.user.ValidateNameAction">
+			<result name = "success" type="json"/>
+		</action>
+	</package>
+	<package name="domain" extends="struts-default" namespace="/">
+		<action name="action_domainList" class="elicitation.action.main.DomainListAction">
+			<result name="success" type="dispatcher">/index.jsp</result>
+		</action>
+		<action name="getProjectsOfDomain" class="elicitation.action.main.DomainListAction"
+			method="getProjectsOfDomain">
+			<result name="success" type="dispatcher">/index.jsp</result>
+		</action>
+		<action name="getProjectDetail" class="elicitation.action.project.ProjectAction"
+			method="exe_getProjectDetail">			
+			<result name="success" type="dispatcher">/project.jsp</result>
+		</action>		
+		<action name="getScenarioDetail" class="elicitation.action.scenario.ScenarioAction"
+			method="exe_getScenarioDetail">
+			<result name="success" type="dispatcher">/scenario.jsp</result>
+		</action>
+	</package>
+	<package name="user" extends="struts-default" namespace="/">
+		<action name="userCenter" class="elicitation.action.user.UserAction"
+			method="exe_userCenter">
+			<result name="success" type="dispatcher">/userCenter.jsp</result>
+		</action>
+		</package>
+</struts>
+

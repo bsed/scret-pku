@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap SYSTEM  "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="question" >
+	<resultMap class="elicitation.model.question.QKind" id="Map.QKind">
+		<result javaType="int" jdbcType="int" property="id" column="id"/>
+		<result javaType="java.lang.String" jdbcType="char" property="name" column="name"/>
+		<result javaType="java.lang.String" jdbcType="char" property="description" column="description"/>
+		<result javaType="int" jdbcType="int" property="projectId" column="project_id"/>
+		<result javaType="int" jdbcType="int" property="creatorId" column="creator_id"/>		
+	</resultMap>
+	<resultMap class="elicitation.model.question.Question" id="Map.Question">
+		<result javaType="int" jdbcType="int" property="id" column="id"/>
+		<result javaType="java.lang.String" jdbcType="char" property="title" column="title"/>
+		<result javaType="java.lang.String" jdbcType="char" property="description" column="description"/>		
+		<result javaType="int" jdbcType="int" property="userId" column="user_id"/>
+		<result javaType="int" jdbcType="int" property="qkindId" column="qkind_id"/>		
+	</resultMap>
+	<select id="selectQKind" parameterClass="elicitation.model.project.Project"
+		resultMap="Map.QKind">
+		select * from question_kind where project_id = #projectId# or project_id = -1
+	</select>
+	<insert id = "insertQuestionKind" parameterClass="elicitation.model.question.QKind">
+		insert into question_kind (name,description,project_id,creator_id) values(#name#,#description#,#projectId#,#creatorId#)
+		<selectKey keyProperty="id">select @@IDENTITY as id</selectKey>
+	</insert>
+	<select id="selectQKindById" resultMap="Map.QKind">
+		select * from question_kind where id = #value#
+	</select>
+	<select id="selectRelatedScenario" resultClass="java.lang.Integer">
+		select scenario_id from question_relate_scenario where question_id = #value#
+	</select>
+	<select id="selectQuestions" parameterClass="elicitation.model.project.Scenario"
+		resultMap="Map.Question">
+		select question.* from question join question_relate_scenario on question.id = question_relate_scenario.question_id 
+		where question_relate_scenario.scenario_id = #scenarioId#
+	</select>
+	<select id="selectQuestionsByProject" parameterClass="elicitation.model.project.Project"
+		resultMap="Map.Question">
+		 select question.* 
+    from  (question_relate_scenario join scenario 
+    on question_relate_scenario.scenario_id = scenario.scenario_id ) join question 
+    on question_relate_scenario.question_id = question.id 
+    where scenario.project_id = #projectId#
+	</select>
+	<select id="selectQuestion" resultMap="Map.Question">
+		select * from question where id = #value#
+	</select>
+		
+	<insert id="insertQuestion" parameterClass="elicitation.model.question.Question">
+		insert into question (title,description,qkind_id,user_id)
+			values(#title#,#description#,#qkindId#,#userId#)
+		<selectKey keyProperty="id">select @@IDENTITY as id</selectKey>
+	</insert>
+	<insert id="insertQuestion2Scenario" parameterClass="java.util.HashMap">
+		insert into question_relate_scenario (scenario_id,question_id) 
+			values(#scenarioId#,#questionId#)
+			<selectKey > select @@IDENTITY as id</selectKey>
+	</insert>
+</sqlMap>

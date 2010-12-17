@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap SYSTEM  "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+<!-- <!DOCTYPE sqlMap SYSTEM  "./dtd/sql-map-2.dtd"> -->
+<sqlMap namespace="review">
+	<resultMap class="elicitation.model.review.Review" id="Map.Review">
+		<result property="id" column="id"/>
+		<result property="userId" column="user_id"/>
+		<result property="scenarioId" column="scenario_id"/>
+		<result property="time" column="time"/>
+		<result property="content" column="content"/>
+	</resultMap>
+	<select id="selectReview" resultMap="Map.Review">
+		select * from review where id = #value#
+	</select>
+	<select id="selectScenarioReview" resultMap="Map.Review">
+		select * from review where scenario_id = #value#
+	</select>
+	<insert id="insertReview" parameterClass="elicitation.model.review.Review">
+		insert into review (user_id,scenario_id,content) values (#userId#,#scenarioId#,#content#)
+		<selectKey resultClass="java.lang.Integer" keyProperty="id">select @@IDENTITY as id</selectKey>
+	</insert>
+	<insert id="insertReviewRole" parameterClass="java.util.HashMap">
+		insert into review_role (review_id,role_id) values(#review_id#,#role_id#)
+	</insert>
+	<select id="selectReviewRole" resultClass="int">
+		select role_id from review_role where review_id = #value#
+	</select>
+</sqlMap>
