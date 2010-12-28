@@ -210,22 +210,21 @@
 						场景
 					</div>
 					<div id="version_div">
-					版本
+					<!-- 版本 -->
 					<table class="scenarioTable">
 						<tr>
 							<th>名称</th>							
-							<th>创建时间</th>							
+							<th>创建时间</th>
+							<th>类型</th>							
 							<s:if test="model.writePermission">
 							<th>操作</th>
 							</s:if>
 							<th>角色</th>
 						</tr>
-						<s:iterator id="scenario" value="model.scenarioVersionList">
+						<s:iterator id="scenario" value="model.freshScenarioList">
 							
 							
-								<s:url id="scenarioUrl" value="getScenarioDetail.do">
-									<s:param name="scenarioId" value="#scenario.scenarioId"></s:param>
-								</s:url>
+								
 								<!--<s:set name="count" value="#st.count"/>
 								<s:if test="#st.count == 1">
 									<tr>
@@ -248,7 +247,10 @@
 									</td>
 									<td>
 										<s:property value="#scenario.buildTime"/>
-										</td>
+									</td>
+									<td>
+										<s:property value="#scenario.viewUseState"/>
+									</td>
 									
 									<s:if test="model.writePermission">
 									<td class="scenario_delete">
@@ -267,51 +269,7 @@
 					</table>
 					</div><!-- version_div -->
 					<div id="draft_div">
-						草稿
-						<table class="scenarioTable">
-						<tr>
-							<th>名称</th>							
-							<th>创建时间</th>
-							<s:if test="model.writePermission">
-							<th>操作</th>
-							</s:if>
-							<th>角色</th>
-						</tr>
-						<s:iterator id="scenario" value="model.scenarioDraftList">
-							<!-- scenarioList是单个scenario的各版本形成的list -->
-							
-								<s:url id="scenarioUrl" value="getScenarioDetail.do">
-									<s:param name="scenarioId" value="#scenario.scenarioId"></s:param>
-								</s:url>							
-								<tr>
-									<td class="scenarioName">
-										<s:url id="scenarioUrl" value="getScenarioDetail.do">
-											<s:param name="scenarioId" value="#scenario.scenarioId"></s:param>
-											<s:param name="_st" value="#scenario.rand"></s:param>
-										</s:url>
-										<s:a href="%{scenarioUrl}">
-											<s:property value="#scenario.scenarioName" />
-										</s:a>
-									</td>
-									<td>
-										<s:property value="#scenario.buildTime"/>
-										</td>
-									
-									<s:if test="model.writePermission">
-									<td class="scenario_delete">
-										<a href="#"
-											onclick="deleteInProject('scenarioIn',<s:property value="#scenario.scenarioId"/>)">删除</a>
-									</td>
-									</s:if>
-									<td>
-										<s:property value="#scenario.roleListStr"/>
-									</td>
-								</tr>
-							
-							
-						</s:iterator>
-						<!-- scenarioDraftList -->
-					</table>
+					<!-- 删掉了，可以从前面的版本中找回. -->
 					</div>
 				</div>
 			</div>
