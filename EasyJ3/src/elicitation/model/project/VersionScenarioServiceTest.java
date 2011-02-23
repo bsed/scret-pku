@@ -1,5 +1,6 @@
 package elicitation.model.project;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import junit.framework.TestCase;
@@ -17,6 +18,7 @@ public class VersionScenarioServiceTest extends TestCase {
 		String s = VersionService.makeVersion(95);
 		System.out.println(s);
 	}
+	
 	public void testSelectScenarioVersion(){
 		
 		List<Scenario> scenarios = VersionService.selectScenarioVersion("设计调查问卷");
@@ -24,20 +26,23 @@ public class VersionScenarioServiceTest extends TestCase {
 			System.out.println(sce.getScenarioName()+" Id="+sce.getScenarioId()+" buildTime="+sce.getBuildTime());
 		}
 	}
-	public void testSelectPreVersion(){
+	public void testSelectPreVersion() throws SQLException{
 		System.out.println("=================select pre version begins");
 		Scenario sce = new Scenario();
-		sce.setScenarioId(127);
+		sce.setScenarioId(146);
 		sce = VersionService.selectPreVersion(sce);
+		
 		System.out.println(sce.getScenarioName()+" Id="+sce.getScenarioId()+" buildTime="+sce.getBuildTime());
 		System.out.println("=================select pre version ends");
 	}
-	public void testSelectNextVersion(){
+	public void testSelectNextVersions() throws SQLException{
 		System.out.println("=================select next version begins");
 		Scenario sce = new Scenario();
-		sce.setScenarioId(116);
-		sce = VersionService.selectNextVersion(sce);
-		System.out.println(sce.getScenarioName()+" Id="+sce.getScenarioId()+" buildTime="+sce.getBuildTime());
+		sce.setScenarioId(146);
+		List<Scenario> nexts= VersionService.selectNextVersions(sce);
+		for(Scenario next:nexts){
+			System.out.println(next.getScenarioName()+" Id="+next.getScenarioId()+" buildTime="+next.getBuildTime());
+		}
 		System.out.println("=================select next version ends");
 	}
 

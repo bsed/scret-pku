@@ -2,15 +2,19 @@ package elicitation.model.project;
 
 import java.io.Serializable;
 
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
 
 
+import elicitation.action.scenario.ScenarioServlet;
 import elicitation.model.question.Question;
 import elicitation.model.question.QuestionService;
 import elicitation.model.review.Review;
@@ -30,7 +34,7 @@ import elicitation.service.user.UserService;
  *  
  *  scenario.jsp ->ScenarioAction 's Model = Scenario.
  */
-public class Scenario implements Serializable{
+public class Scenario implements Serializable , Comparable<Scenario>{
 	public static String DRAFT = "draft";
 	public static String VERSION = "version";
 	public static String FREEZE= "freeze";
@@ -55,14 +59,19 @@ public class Scenario implements Serializable{
 	/**
 	 * 权限部分.
 	 */
+	
 	private boolean joinPermission = false;
 	private boolean makeVersionPermission = false;
 	private boolean questionPermission = false;
 	private boolean defineQTypePermission = false;
 	private boolean solutionPermission = false;
 	private boolean chooseSolutionPermission = false;
+	private boolean voteQuestionPermission = false;
 	public Scenario(){
 		// Avoid java.lang.InstantiationException in Ibatis-instantiation. 
+	}
+	public Scenario(int scenarioId){
+		this.scenarioId = scenarioId;
 	}
 	public Scenario(String name, int cid, int pid) {
 		this.scenarioName = name;
@@ -198,12 +207,12 @@ public class Scenario implements Serializable{
 	}
 	/**
 	 * 返回该版本最终采纳的 Solution
+	 * 采用多分支版本演化机制，这里的bestsolution 就是一个集合。
+	 * reference： history_version.jsp.
 	 */
-	public Solution getBestSolution(){
+	public List<Solution> getBestSolution(){
 		List<Solution> solutions = SolutionService.selectSolutionFromPrevScenario(this);
-		if(solutions != null)
-			return solutions.get(0);
-		return null;
+		return solutions;
 	}
 	public List<Question> getQuestion(){
 		return QuestionService.selectQuestions(this);
@@ -242,6 +251,16 @@ public class Scenario implements Serializable{
 	}
 	public String getUseState() {
 		return useState;
+	}
+	/**
+	 * 方便在 project.jsp页面中显示.
+	 * @return
+	 */
+	public String getViewUseState(){
+		if(useState.equals(Scenario.DRAFT))
+			return "草稿";
+		return "版本";
+		
 	}
 	/**
 	 * 冻结版本
@@ -295,7 +314,12 @@ public class Scenario implements Serializable{
 			List<Role> s_roles = roleList;
 			if(uid == project.getCreatorId()){ //Maybe bug.
 				setProjectAdminPermission(p_roles);
-			}else if(user.isMemberOfScenario(p_roles,s_roles)){ // TODO 这个地方效率有损失，后期再调整效率吧
+			}else{
+				makeVersionPermission = false;		
+				solutionPermission = false; //提解决方案;
+				chooseSolutionPermission = false;//选择解决方案.
+			}
+			if(user.isMemberOfScenario(p_roles,s_roles)){ // TODO 这个地方效率有损失，后期再调整效率吧
 				setScenarioUserPermission(p_roles);
 			}else if(user.isMemberOfProject(p_roles)){
 				setProjectUserPermission();
@@ -313,20 +337,21 @@ public class Scenario implements Serializable{
 		questionPermission = false;
 		defineQTypePermission =false;
 		solutionPermission = false;
-		chooseSolutionPermission =false; 
+		 
 		
 	}
 	public void setGeneralUserPermission(){
 		joinPermission = true;
-		makeVersionPermission = false;
+		
 		questionPermission = true;
 		defineQTypePermission = true;
 		solutionPermission = false;
-		chooseSolutionPermission =false;
+		
+		voteQuestionPermission = false;
 	}
 	public void setScenarioUserPermission(List<Role> roles){
 		joinPermission = true;
-		makeVersionPermission = false;
+		
 		for(Role role :roleList){
 			if(roles.contains(role)){
 				role.setEditPermission(true);
@@ -335,32 +360,38 @@ public class Scenario implements Serializable{
 		questionPermission = true;
 		defineQTypePermission = true;
 		solutionPermission = true;
-		chooseSolutionPermission =false;
+		
+		voteQuestionPermission = true;
 	}
 	public void setProjectUserPermission(){
-		joinPermission = true;
-		makeVersionPermission = false;
+		joinPermission = true;		
 		questionPermission = true;
 		defineQTypePermission = true;
-		solutionPermission = true;
-		chooseSolutionPermission =false;
+		
+		solutionPermission = true;				
+		voteQuestionPermission = true;
 	}
 	/**
 	 * 
-	 * @param roles -- 管理员在场景中具有的角色.
+	 * @param roles  
+	 * 管理员处理的问题： 
+	 *  1. 确定版本
+	 *  2. 提解决方案 
+	 *  3. 确定解决方案 
+	 *  
+	 *  如编辑描述等，是由角色控制的，不属于管理员的处理范畴。
+	 *  管理员可以直接为自己选择角色.
+	 * 
 	 */
-	public void setProjectAdminPermission(List<Role> roles){
-		joinPermission = false;
-		makeVersionPermission = true;
-		for(Role role:roleList){ //必须是对roleList中的对象赋值。
-			if(roles.contains(role))
-				role.setEditPermission(true);
-		}
-		questionPermission = true;
-		defineQTypePermission = true;
-		solutionPermission = true;
-		chooseSolutionPermission =true;
+	public void setProjectAdminPermission(List<Role> roles){		
+		makeVersionPermission = true;		
+		solutionPermission = true; //提解决方案;
+		chooseSolutionPermission =true;//选择解决方案.
 	}
+	public boolean isVoteQuestionPermission(){
+		return voteQuestionPermission;
+	}
+	@Deprecated
 	public boolean isJoinPermission() {
 		return joinPermission;
 	}
@@ -383,5 +414,92 @@ public class Scenario implements Serializable{
 	
 	public double getRand(){
 		return Math.random();
+	}
+	/***
+	 * 以下是多分支版本的功能.
+	 * 初次实现，全部由数据库直接读取;
+	 * 后续有功夫的话，需要代码重构，一次读取，在内存中操作，减少数据库的压力.
+	 */
+	public List<Scenario> getChildren() throws Exception{
+		List<Scenario> children = 
+			ProjectService.selectScenarioChildren(this);
+		return children;
+	}
+	public Scenario getParent() throws Exception{
+		Scenario parent = ProjectService.selectScenarioParent(this);
+		return parent;
+	}
+	/**
+	 * 以当前场景为末端，返回 一条历史路径 。
+	 * 用于[历史版本]链接,产生一个历史版本路径.
+	 * @return
+	 * @throws Exception
+	 */
+	public List<Scenario> getHistoryPath() throws Exception {
+		List<Scenario> path = new ArrayList<Scenario>();		
+		Scenario parent = getParent();
+		while(parent != null){
+			path.add(parent);
+			parent = parent.getParent();
+		}
+		return path;
+	}
+	// 以当前版本为根的树的叶子.
+	public List<Scenario> getLeafs() throws Exception{
+		List<Scenario> leafs = new ArrayList<Scenario>();
+		
+		
+		List<Scenario> children =getChildren();
+		if(children == null || children.size() ==  0) {
+			leafs.add(this);
+			return leafs;
+		}
+		for(Scenario node:children){
+			//1. 如果当前节点是叶子，就加入到 leafs.
+			if(node.isLeaf())
+				leafs.add(node);
+			//2. 如果当前节点是中间节点，递归调用 getLeafs .
+			else {
+				leafs.addAll(node.getLeafs());
+			}
+		}
+		//按照 id 进行降序排列.
+		Collections.sort(leafs);
+		return leafs;
+	}
+	public boolean isLeaf() throws SQLException{
+		return ProjectService.isLeaf(this);
+	}
+	public boolean isRoot() throws SQLException{
+		return ProjectService.isRoot(this);
+	}
+	@Override
+	public int compareTo(Scenario o) {
+		
+		return -(scenarioId - o.scenarioId);
+	}
+	/**
+	 * scenario.jsp
+	 * 用于得到上一版本的ID.
+	 */
+	public int getPrevId() throws SQLException{
+		Scenario pre = VersionService.selectPreVersion(this);
+		if(pre != null)
+			return pre.scenarioId;
+		return -1;
+	}
+	// 得到下一版本的Scenarios 
+	// 多分支结构. => List<Scenario>
+	public List<Scenario> getNextScenarios() throws SQLException {
+		List<Scenario> ns = VersionService.selectNextVersions(this);
+		return ns;
+	}
+	/**
+	 * <PreScenario,PreSolutions{chooosed}, CurScenario>
+	 * 可以选择多个解决方案，进化到下一个版本中. => List<Solution> 
+	 * @return
+	 */
+	public List<Solution> getPreSolutions(){
+		return SolutionService.selectSolutionFromNextScenario(this);
 	}
 }

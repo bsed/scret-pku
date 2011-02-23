@@ -221,38 +221,33 @@
 							</s:if>
 							<th>角色</th>
 						</tr>
-						<s:iterator id="scenario" value="model.freshScenarioList">
-							
-							
-								
-								<!--<s:set name="count" value="#st.count"/>
-								<s:if test="#st.count == 1">
-									<tr>
-										<td><s:property value="#scenario.scenarioName"/></td>
-										<td><s:a href="%{scenarioUrl}">当前内容</s:a></td>							
-									</tr>
-								</s:if>
-								<tr>
-									<td></td><td><s:a href="%{scenarioUrl}">历史版本<s:property value="#st.count"/></s:a></td>
-								</tr> -->
-								<tr>
-									<td class="scenarioName">
-										<s:url id="scenarioUrl" value="getScenarioDetail.do">
-											<s:param name="scenarioId" value="#scenario.scenarioId"></s:param>
-											<s:param name="_st" value="#scenario.rand"></s:param>
-										</s:url>
-										<s:a href="%{scenarioUrl}">
+						<s:iterator id="scenario" value="model.roots">
+							<tr>
+								<td class="scenarioName">
+
 											<s:property value="#scenario.scenarioName" />
-										</s:a>
-									</td>
-									<td>
-										<s:property value="#scenario.buildTime"/>
-									</td>
-									<td>
-										<s:property value="#scenario.viewUseState"/>
-									</td>
 									
-									<s:if test="model.writePermission">
+								</td>
+								<td>
+									<s:property value="#scenario.buildTime"/>
+								</td>
+								<td>
+								<ol>
+									<s:iterator id="leaf" value="#scenario.leafs" status="st">
+										<s:url id="scenarioUrl" value="getScenarioDetail.do">
+												<s:param name="scenarioId" value="#leaf.scenarioId"></s:param>
+												<s:param name="_st" value="#leaf.rand"></s:param>
+										</s:url>
+										<li>
+										<s:a href="%{scenarioUrl}">
+											分支<s:property value="#st.count"/>&nbsp;&nbsp;&nbsp;&nbsp;<s:property value="#leaf.viewUseState"/>
+										</s:a>
+										</li>
+									</s:iterator>
+								</ol>
+								</td>
+									
+								<s:if test="model.writePermission">
 									<td class="scenario_delete">
 										<a href="#"
 											onclick="deleteInProject('scenarioIn',<s:property value="#scenario.scenarioId"/>)">删除</a>
@@ -266,6 +261,8 @@
 							<!-- scenarioList -->
 						</s:iterator>
 						<!-- scenarioVersionList -->
+						
+						
 					</table>
 					</div><!-- version_div -->
 					<div id="draft_div">

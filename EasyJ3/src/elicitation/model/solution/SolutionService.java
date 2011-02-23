@@ -171,14 +171,18 @@ public class SolutionService {
 			List<Question> questions = scenario.getQuestion();
 			QuestionService.mapQuestion2Scenario(questions, nextScenario);
 			
-			List<Solution> solutions = scenario.getSolutions();
+			//List<Solution> solutions = scenario.getSolutions();
+			List<Solution> solutions = new ArrayList<Solution>();
+			solutions.add(solution);
 			SolutionService.mapSolution2Scenario(solutions,nextScenario);
 			/**
-			 * 4. 考虑已有的版本如何处理？
-			 *  
-			 *    单单冻结？还是隐藏掉？
+			 * 4. 在 table scenario_version中插入记录，表达 scenario,solution ,new scenario 的演化关系.
+			 *
 			 */
-			
+			int prevScenarioId = scenario.getScenarioId();
+			int solutionId = solution.getId();
+			int nextScenarioId = nextScenario.getScenarioId();
+			SolutionService.upgrade(prevScenarioId, solutionId, nextScenarioId);
 			/**
 			  * 5. 冻结原版本的 提问和解决方案 功能. 
 			 */
@@ -193,6 +197,12 @@ public class SolutionService {
 			return ActionSupport.ERROR;
 		}
 	}	
+	/**
+	 * table scenario_solution 中，使用id作为关联即可!.
+	 * @param solutions
+	 * @param scenario
+	 * @return
+	 */
 	public static String mapSolution2Scenario(List<Solution> solutions,	
 			Scenario scenario) {
 		try{

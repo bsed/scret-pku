@@ -267,6 +267,16 @@
 		<servlet-name>submitQuestion</servlet-name>
 		<url-pattern>/submitQuestion.so</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>voteQuestion</servlet-name>
+		<servlet-class>elicitation.action.question.VoteQuestionServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>voteQuestion</servlet-name>
+		<url-pattern>/voteQuestion.so</url-pattern>
+	</servlet-mapping>
+	
 	<servlet>
 		<servlet-name>getQuestion</servlet-name>
 		<servlet-class>elicitation.action.question.GetQuestionServlet</servlet-class>
@@ -292,6 +302,17 @@
 		<servlet-name>getProjectQuestion</servlet-name>
 		<url-pattern>/getProjectQuestion.so</url-pattern>
 	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>getScenarioQuestion</servlet-name>
+		<servlet-class>elicitation.action.project.GetScenarioQuestionServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>getScenarioQuestion</servlet-name>
+		<url-pattern>/getScenarioQuestion.so</url-pattern>
+	</servlet-mapping>
+	
 	<servlet>
 		<servlet-name>submitSolution</servlet-name>
 		<servlet-class>elicitation.action.project.SubmitSolutionServlet</servlet-class>
@@ -360,5 +381,14 @@
 	<servlet-mapping>
 		<servlet-name>pickRole</servlet-name>
 		<url-pattern>/pickRole.so</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>versionTree</servlet-name>
+		<servlet-class>elicitation.action.version.VersionTreeServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>versionTree</servlet-name>
+		<url-pattern>/versionTree.so</url-pattern>
 	</servlet-mapping>
 </web-app>

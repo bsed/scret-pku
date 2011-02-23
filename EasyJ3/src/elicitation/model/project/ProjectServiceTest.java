@@ -180,6 +180,57 @@ public class ProjectServiceTest extends TestCase {
 		sc.solvePermission(user);
 		System.out.println(sc);
 	}
+	/**
+	 * 以下是多分支版本的测试函数 
+	 */
+	public void testGetRoots() throws SQLException{
+		Project project = new Project(122);
+		List<Scenario> ss = ProjectService.selectScenarioList(project);
+		project.addScenario(ss);
+		List<Scenario> roots = project.getRoots();
+		for(Scenario node:roots){
+			System.out.println(node);
+		}
+	}
+	public void testIsRoot() throws SQLException{
+		Scenario scenario = new Scenario(145);
+		System.out.println(scenario.isRoot());
+	}
+	public void testIsLeaf() throws SQLException{
+		Scenario scenario = new Scenario(184);
+		System.out.println(scenario.isLeaf());
+	}
+	public void testGetLeafs() throws Exception {
+		Scenario scenario = new Scenario(149);
+		List<Scenario> leafs = scenario.getLeafs();
+		for(Scenario node:leafs){
+			System.out.println(node);
+		}
+	}
+	public void testGetParent() throws Exception {
+		Scenario scenario  =new Scenario(146);
+		Scenario parent = scenario.getParent();
+		System.out.println(parent);
+	}
+	public void testGetHistoryPath() throws Exception{
+		Scenario node = new Scenario(189);
+		List<Scenario> path = node.getHistoryPath();
+		for(Scenario sce:path){
+			System.out.println(sce);
+		}
+	}
+	public void testBuildTreeJson() throws Exception{
+		Scenario root = new Scenario(146);
+		String treeJson = ProjectService.buildTreeJson(root);
+		System.out.println(treeJson);
+		
+	}
+	public void testSelectRootScenario() throws Exception{
+		Scenario root = new Scenario(184);
+		root.setScenarioName("求职者填写简历");
+		root = ProjectService.selectRootScenario(root);
+		System.out.println(root);
+	}
 	protected void tearDown(){
 		
 	}

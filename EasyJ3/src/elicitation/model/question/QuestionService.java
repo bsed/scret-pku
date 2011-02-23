@@ -26,14 +26,9 @@ public class QuestionService {
 			qs  = (Question) client.queryForObject("question.selectQuestion",questionId);
 			QKind kind = (QKind) client.queryForObject("question.selectQKindById" ,qs.getQkindId());
 			qs.setQkind(kind);
-			List sces = client.queryForList("question.selectRelatedScenario",qs.getId());
-			for(Object id:sces){
-				//System.out.println(id);
-				Scenario scenario = new Scenario();
-				scenario.setScenarioId(Integer.valueOf(id.toString()));
-				scenario = (Scenario) client.queryForObject("project.selectScenario",scenario);
-				qs.addRelatedScenario(scenario);
-			}
+			List<Scenario> sces = client.queryForList("question.selectRelatedScenario",qs.getId());
+			qs.setRelatedScenarios(sces);
+			
 		}catch(Exception e){
 			e.printStackTrace();
 			return null;
@@ -42,7 +37,38 @@ public class QuestionService {
 		
 		
 	}
-
+	/**
+	 * 找出该版本场景的历史问题
+	 * 
+	 * TODO： 需要找出之前版本的问题吗？？还是仅仅是当前版本的历史问题..
+	 * 
+	 * 当前策略：
+	 * 　　　　只找出当前版本的历史问题．
+	 * @param sce
+	 * @return
+	 */
+	public static List<Question> selectHistoryQuestions(Scenario sce){
+		List<Question> qs = new ArrayList<Question>();
+		try{
+			qs = client.queryForList("question.selectHistoryQuestion",sce);	//TODO
+			for(Question q:qs){
+				SysUser user = (SysUser) client.queryForObject("user.getUserByUserID",q.getUserId());
+				q.setUser(user);
+				QKind  kind = (QKind) client.queryForObject("question.selectQKindById",q.getQkindId());
+				q.setQkind(kind);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			return qs;
+		}
+	}
+	/**
+	 * 找出当前场景的问题. 默认是  wait 问题.
+	 * 
+	 * @param sce
+	 * @return
+	 */
 	public static List<Question> selectQuestions(Scenario sce){
 		List<Question> qs = new ArrayList<Question>();
 		try{
@@ -126,6 +152,45 @@ public class QuestionService {
 		}finally{
 			return ks;
 		}	
+	}
+	/**	 
+	 * @param qid
+	 * @param num
+	 * @return
+	 */
+	public static String vote(int qid, int userId , int vote) {
+		try{
+			HashMap para = new HashMap();
+			para.put("questionId", qid);
+			para.put("userId", userId);
+			para.put("vote", vote);			
+			Object r = client.queryForObject("question.selectVote",para);
+			if(r != null) {
+				
+				return String.valueOf(r);
+			}
+			Object o = client.insert("question.vote",para);
+			if(o == null){
+				return ActionSupport.ERROR;
+			}else{
+				System.out.println(o);
+				return ActionSupport.SUCCESS;					
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			return ActionSupport.ERROR;
+		}
+	}
+	public static int selectVoteNum(int qid ){
+		try{
+			Object r = client.queryForObject("question.selectVoteNum",qid);
+			if(r == null)
+				return 0;
+			return (Integer) r;
+		}catch(Exception e){
+			e.printStackTrace();
+			return Integer.MAX_VALUE;
+		}
 	}
 	
 }

@@ -397,7 +397,104 @@ public class ProjectService {
 			return ActionSupport.SUCCESS;
 		}
 	}
+	/**
+	 * 多分支版本功能.
+	 * @param string
+	 * @param scenario
+	 * @return
+	 */
+	public static List<Scenario> selectScenarioChildren(
+			Scenario scenario) throws Exception{
+		client.startTransaction();
+		List<Scenario> children = client.queryForList("project.selectScenarioChildren",scenario);		
+		client.commitTransaction();
+		client.endTransaction();
+		return children;
+	}
+
+	public static Scenario selectScenarioParent(Scenario scenario) throws Exception{
+		client.startTransaction();
+		Scenario parent = (Scenario) client.queryForObject("project.selectScenarioParent",scenario);		
+		client.commitTransaction();
+		client.endTransaction();
+		return parent;
+	}
+
 	
+	/**
+	 * 空置，采用java语言 更合适.SQL 需要子过程辅助，不适合写在这里
+	 */
+	@Deprecated
+	public static List<Scenario> selectScenarioLeafs(Scenario scenario) throws SQLException{
+		client.startTransaction();
+		List<Scenario> leafs = client.queryForList("project.selectScenarioLeafs",scenario);		
+		client.commitTransaction();
+		client.endTransaction();
+		return leafs;
+	}
+
+	public static boolean isLeaf(Scenario node) throws SQLException{
+		client.startTransaction();
+		//1. 查看table scenario_version
+		Object ro = client.queryForObject("project.isLeaf",node); //table scenario_version.		
+		client.commitTransaction();
+		client.endTransaction();
+		if(ro == null){
+			//2. 查看是否是初创的草稿.
+			String name = node.getScenarioName();
+			if(name == null || "".equals(name) ) {
+				//首先抽取全部的scenario信息
+				node = ProjectService.selectScenario(node);
+			}
+			if(node.getUseState().equals(Scenario.DRAFT)) 
+				return true; // 说明是初创的草稿，也属于叶子节点.
+			return false; //不是叶子节点.
+		}
+		return true;
+	}
+	/**
+	 * 直接按照名字在 scenario中找 id 最小的，也能找到根.
+	 * @param node
+	 * @return
+	 * @throws SQLException
+	 */
+	public static boolean isRoot(Scenario node) throws SQLException{
+		//1. 查看table scenario_version
+		Object parent = client.queryForObject("project.isRoot",node); //table scenario_version.
+		if(parent == null)		return true;
+		//System.out.println("parent id = "+parent);
+		return false;
+		
+	}
+	
+	public static String buildTreeJson(Scenario root) throws Exception{
+		String tree = "";
+		List<Scenario> children = root.getChildren();
+		for(Scenario node:children){
+			int sid = node.getScenarioId();
+			if(node.isLeaf()){
+				tree += "{id:'"+ sid +"',text:'"+ sid +"',leaf:true},";
+			}else{
+				String childrenTree = buildTreeJson(node);
+				tree += "{id:'"+ sid +"',text:'"+ sid +"',children:"+ childrenTree + "},";
+			}
+		}
+		if(tree.length() > 0) 
+			tree = tree.substring(0,tree.length()-1);
+		tree = '['+tree+']';
+		return tree;
+	}
+
+	public static Scenario selectRootScenario(Scenario scenario)  {
+		
+		try{
+		Scenario root = (Scenario) client.queryForObject("project.selectRootScenario",scenario);
+		return root;
+		}catch(Exception e){
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
 	/** * Scenario - Role - Scenario Description ** */
 }

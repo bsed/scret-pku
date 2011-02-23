@@ -13,7 +13,9 @@
 		<result javaType="java.lang.String" jdbcType="char" property="title" column="title"/>
 		<result javaType="java.lang.String" jdbcType="char" property="description" column="description"/>		
 		<result javaType="int" jdbcType="int" property="userId" column="user_id"/>
-		<result javaType="int" jdbcType="int" property="qkindId" column="qkind_id"/>		
+		<result javaType="int" jdbcType="int" property="qkindId" column="qkind_id"/>
+		<result javaType="java.sql.Date" jdbcType="date" property="buildTime" column="build_time"/>
+		<result javaType="java.lang.String" jdbcType="char" property="status" column="status"/>
 	</resultMap>
 	<select id="selectQKind" parameterClass="elicitation.model.project.Project"
 		resultMap="Map.QKind">
@@ -26,13 +28,23 @@
 	<select id="selectQKindById" resultMap="Map.QKind">
 		select * from question_kind where id = #value#
 	</select>
-	<select id="selectRelatedScenario" resultClass="java.lang.Integer">
-		select scenario_id from question_relate_scenario where question_id = #value#
+	<select id="selectRelatedScenario" resultClass="java.lang.Integer" resultMap="Map.Scenario">		
+		select scenario.* 
+		from question_relate_scenario join scenario 
+		on question_relate_scenario.scenario_id = scenario.scenario_id
+		where question_id = #value#
 	</select>
+	
+	<select id="selectHistoryQuestion" parameterClass="elicitation.model.project.Scenario"
+		resultMap="Map.Question">
+		select question.* from question join question_relate_scenario on question.id = question_relate_scenario.question_id 
+		where question_relate_scenario.scenario_id = #scenarioId# 
+	</select>
+	
 	<select id="selectQuestions" parameterClass="elicitation.model.project.Scenario"
 		resultMap="Map.Question">
 		select question.* from question join question_relate_scenario on question.id = question_relate_scenario.question_id 
-		where question_relate_scenario.scenario_id = #scenarioId#
+		where question_relate_scenario.scenario_id = #scenarioId# and question.status = 'wait'
 	</select>
 	<select id="selectQuestionsByProject" parameterClass="elicitation.model.project.Project"
 		resultMap="Map.Question">
@@ -56,4 +68,21 @@
 			values(#scenarioId#,#questionId#)
 			<selectKey > select @@IDENTITY as id</selectKey>
 	</insert>
+	<insert id="vote" parameterClass="java.util.HashMap">
+		insert into question_vote ( question_id , user_id,vote) values( #questionId#,#userId#,#vote#) 
+		<selectKey > select @@IDENTITY as id</selectKey>
+	</insert>
+	<select id="selectVote" parameterClass="java.util.HashMap" resultClass="int">
+		select  vote from question_vote where question_id = #questionId# and user_id = #userId#
+	</select>
+	<select id="selectVoteNum" parameterClass="int" resultClass="int">
+		select  sum(vote) from question_vote 
+		where question_id = #value#
+	</select>
+	<update id="fixQuestion" parameterClass="elicitation.model.question.Question">
+		update question  
+			set status = 'fixed'
+               where question.id = #id# 
+	</update>
+	
 </sqlMap>

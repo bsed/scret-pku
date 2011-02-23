@@ -147,7 +147,7 @@ public class SysUser implements java.io.Serializable {
 		return false;
 	}
 	public boolean isMemberOfProject(List<Role> p_roles) {
-		if(p_roles == null || p_roles.size() == 0) return true;
-		return false;
+		if(p_roles == null || p_roles.size() == 0) return false;
+		return true;
 	}
 }

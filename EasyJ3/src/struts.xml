@@ -52,6 +52,9 @@
 			method="exe_historyVersion">
 			<result name="success" type="dispatcher">/history_version.jsp</result>
 		</action>
+		<action name="history_question" class="elicitation.action.question.QuestionHistoryAction">
+			<result name="success" type="dispatcher">/history_question.jsp</result>
+		</action>
 	</package>
 	<package name="user" extends="struts-default" namespace="/">
 		<action name="userCenter" class="elicitation.action.user.UserAction"

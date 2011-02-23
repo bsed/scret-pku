@@ -21,7 +21,15 @@ public class QuestionServiceTest extends TestCase {
 					" kind="+q.getQkind().getName()+" user="+q.getUser().getUserName());
 		}
 	}
-
+	public void testVoteQuestion(){
+		String res = QuestionService.vote(2, 1, 1);
+		System.out.println(res);
+	}
+	public void testVoteNum(){
+		int num = QuestionService.selectVoteNum(40);
+		System.out.println(num);
+	}
+	
 	public void testInsertQuestionKind() {
 		QKind kind = new QKind();
 		kind.setCreatorId(1);
@@ -51,9 +59,8 @@ public class QuestionServiceTest extends TestCase {
 		qu.setUser(user);
 		Scenario sce = new Scenario();
 		sce.setScenarioId(scenarioId);
-		qu.setScenario(sce);
 		
-			String res = QuestionService.insertQuestion(qu);
+		String res = QuestionService.insertQuestion(qu);
 		
 		System.out.println(res);
 	}
@@ -68,11 +75,11 @@ public class QuestionServiceTest extends TestCase {
 	}
 	
 	public void testSelectQuestion(){
-		Question question= QuestionService.selectQuestion(15);
+		Question question= QuestionService.selectQuestion(40);
 		List<Scenario> ss = question.getRelatedScenarios();
 		for(Scenario scenario:ss){
 			System.out.println(scenario.getScenarioId()+" "+scenario.getScenarioName());
 		}
-	}
+	}	
 
 }

@@ -7,6 +7,7 @@ import java.util.List;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 
+import elicitation.model.project.ProjectService;
 import elicitation.model.project.Scenario;
 import elicitation.model.project.VersionService;
 
@@ -40,6 +41,9 @@ public class VersionAction implements Action {
 			System.out.println(sce.getScenarioId());
 		}
 		return historyVersion;
+	}
+	public Scenario getRootScenario() {
+		return ProjectService.selectRootScenario(scenario);
 	}
 	@Override
 	public String execute() throws Exception {

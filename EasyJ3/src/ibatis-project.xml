@@ -161,6 +161,45 @@
 		select * from scenario where project_id =#projectId# 
 		order by scenario_id desc
 	</select>
+	<select id="selectScenarioChildren" parameterClass="elicitation.model.project.Scenario" resultMap="Map.Scenario">
+		select scenario.* 
+			from scenario_version join scenario on scenario_version.scenario_id_end = scenario.scenario_id 
+				where scenario_id_begin = #scenarioId# 
+				order by scenario.scenario_id desc
+	</select>
+	<select id="selectScenarioParent" parameterClass="elicitation.model.project.Scenario" resultMap="Map.Scenario">
+		select scenario.* 
+			from scenario_version join scenario on scenario_version.scenario_id_begin = scenario.scenario_id 
+				where scenario_id_end = #scenarioId# 
+	</select>
+	<select id="selectScenarioLeafs" parameterClass="elicitation.model.project.Scenario" resultMap="Map.Scenario">
+		<!-- 空置，采用java语言 更合适.SQL 需要子过程辅助，不适合写在这里. -->
+	</select>
+	<select id="isLeaf" parameterClass="elicitation.model.project.Scenario" resultClass="java.util.HashMap">
+		select *
+			from scenario_version 
+			where scenario_id_end not in (select scenario_id_begin from scenario_version) 
+      		and scenario_id_end = #scenarioId# 
+	</select>
+	
+	<select id="isRoot" parameterClass="elicitation.model.project.Scenario" resultClass="int">
+	<!-- 在scenario_version 中，无父节点，则说明是根. -->
+		select scenario_id_begin
+				from scenario_version
+			 
+      		where  scenario_id_end = #scenarioId# 
+	</select>
+	
+	<select id ="selectRootScenario" parameterClass="elicitation.model.project.Scenario" resultMap="Map.Scenario">
+		
+			select  *
+			from scenario 
+			where scenario_name = #scenarioName#
+			order by scenario_id asc
+			limit 0,1
+	</select>
+	
+	
 	<update id="updateScenario" parameterClass="elicitation.model.project.Scenario">
 		update scenario set
 			scenario_name =#scenarioName#,

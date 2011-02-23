@@ -420,7 +420,8 @@ a:hover{
 .data ,.role ,.scenario,.div_roleDes,
 	#main_user_center .user_center_domains,
 	#main_user_center .user_center_projects,
-	#main_user_center .user_center_project_involves{
+	#main_user_center .user_center_project_involves,
+	{
 	/*border:dashed 1px;*/
 	padding:10px 5px 5px 5px;
 	margin-top:2em;
@@ -456,7 +457,8 @@ a:hover{
 #main_project .projectName,
 #main_scenario .scenarioName,
 .data  #data_title ,.role #role_title , .scenario #scenarioTitle,#role_des_title
-,#user_center_domain_tag,#user_center_project_tag,#user_center_project_involve_tag{
+,#user_center_domain_tag,#user_center_project_tag,#user_center_project_involve_tag,
+#pick_solution_title{
 	/*padding-bottom:5px;*/
 	border-bottom: dotted 1px;
 	color:#377BA4;
@@ -553,5 +555,11 @@ a.edit_scenario ,
 }
 .user_center_function ul li {
 	display: inline;
+}
+
+/**history_version.jsp**/
+.history_version_table tr{
+	border: bold 1px;
+	border-color: red;
 }
  

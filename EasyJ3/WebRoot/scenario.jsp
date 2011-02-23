@@ -37,8 +37,9 @@
 		<script type="text/javascript" src="pick_solution.js"></script>
 		<script type="text/javascript" src="contribute.js"></script>
 		<script type="text/javascript" src="make_version.js"></script>
-		<script type="text/javascript" src="use_solution.js"></script>
+		
 		<script type="text/javascript" src="scripts/log.js"></script>
+		<script type="text/javascript" src="question_vote.js"></script>
 	</head>
 <%
 		SysUser user = (SysUser)request.getSession().getAttribute("user");
@@ -126,12 +127,17 @@
 				</div>
 				<div class="des_unit">
 					<div class="scenarioName">
-						<s:property value="model.scenarioName" />						
+						<s:property value="model.scenarioName" />(<s:property value="model.viewUseState"/>)					
 					</div>					
 					<div id="main_scenario_description">
 						<s:property value="model.scenarioDescription" />
 					</div>
 					<div class="scenario_general_info">
+					<s:url id="prevUrl" value="getScenarioDetail.do">
+						<s:param name="scenarioId">
+							<s:property value="model.prevId"/>
+						</s:param>
+					</s:url>
 					<s:url id="hisUrl" value="history_version.do">
 							<s:param name="scenarioName">
 								<s:property value="model.scenarioName" escape="false"/>
@@ -140,6 +146,7 @@
 								<s:property value="model.scenarioId" />
 							</s:param> 
 					</s:url>
+					
 					<s:url id="projectUrl" value="getProjectDetail.do">
 						<s:param name="projectId">
 							<s:property value="model.project.projectId"/>
@@ -152,6 +159,13 @@
 						<li>所属项目 : <s:a href="%{projectUrl}"><s:property value="model.project.projectName"/></s:a></li>
 						<li>管理员   : <s:property value="model.sysUser.userName"/></li>
 						<li>创建时间 : <s:property value="model.buildTime"/></li>
+						<li>类型     : <s:property value="model.viewUseState"/></li>
+						<s:if test="model.prevId != -1">
+							<li><s:a href="%{prevUrl}"><< 上一版本</s:a></li>
+						</s:if>
+						<s:else>
+							<li>根版本</li>
+						</s:else>
 						<li><s:a href="%{hisUrl}">历史版本>></s:a></li>						
 						</ul>
 					</div>
@@ -213,7 +227,7 @@
 
 				<div class="div_roleDes">
 					<div id="role_des_title">
-						角色描述
+						场景描述
 					</div>
 					<table>
 						<s:iterator id="roleMap" value="model.roleMap">
@@ -294,6 +308,10 @@
 							</button>
 						</s:if>
 					</s:if>
+					<s:url id="history_question" value="history_question.do">
+						<s:param name="scenarioId"><s:property value="model.scenarioId"/></s:param>
+					</s:url>
+					<s:a target="_blank" href="%{history_question}">查看历史问题 >></s:a>
 				</div>
 				<br />
 				<table class="questionTable">
@@ -307,6 +325,17 @@
 						<th>
 							提问人
 						</th>
+						
+						<s:if test="model.draft">
+							<s:if test="model.voteQuestionPermission">
+								<th>
+									操作
+								</th>
+								<th>
+									综合票数
+								</th>
+							</s:if>
+						</s:if>
 					</tr>
 					<s:iterator id="question" value="model.question">
 						<s:url id="qUrl" value="question.jsp">
@@ -327,6 +356,23 @@
 							<td>
 								<s:property value="#question.user.userName"/>
 							</td>
+							<s:if test="model.draft">
+								<s:if test="model.voteQuestionPermission">
+									<td>
+										<a href="javascript:void(0)" onclick="
+										                   voteQuestion( <s:property value='#question.questionId'/> , 1 )
+										                ">
+										 修复</a>
+										<a href="javascript:void(0)"
+										 onclick=" voteQuestion( <s:property value='#question.questionId'/> , -1 )
+										                "> 
+										未修复</a>
+									</td>
+									<td>
+										<s:property value="#question.voteNum"/>
+									</td>
+								</s:if>
+							</s:if>
 						</tr>
 
 					</s:iterator>
@@ -336,7 +382,7 @@
 				<div class="solution_function">
 					<!-- <a href="#" id="make_solution" onclick="return false">提出解决方案</a>
 				<a href="javascript:void(0)" id="pick_solution" onclick="return false">确定解决方案</a>-->
-					<s:if test="model.version">
+					<s:if test="model.version || model.freeze">
 						<s:if test="model.solutionPermission">
 						<button id="make_solution">
 							提出解决方案
@@ -347,6 +393,11 @@
 							确定解决方案
 						</button>
 						</s:if>
+					</s:if>
+					<s:if test="model.draft">
+					<span id="pick_solution_title">
+						采取的解决方案
+						</span>
 					</s:if>
 				</div>
 				<br />
@@ -384,7 +435,7 @@
 							<s:if test="model.version">
 								<td>
 									<a href="javascript:void(0)"
-										onclick="voteSolution(<s:property value="#solution.id"/>)">投票</a>
+										onclick="voteSolution(<s:property value="#solution.id"/>)">赞成</a>
 								</td>
 							</s:if>
 							<td>

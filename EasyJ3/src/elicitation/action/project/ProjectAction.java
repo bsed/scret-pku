@@ -31,6 +31,10 @@ public class ProjectAction extends ActionSupport implements ModelDriven<Project>
 		project.addData(ds);
 		List<Role> rs = ProjectService.selectRoleList(project);
 		project.addRole(rs);
+		/*
+		 * select * from scenario where project_id =#projectId# 
+		 * order by scenario_id desc
+		*/
 		List<Scenario> ss = ProjectService.selectScenarioList(project);
 		project.addScenario(ss);
 		project.solveScenarioRole();

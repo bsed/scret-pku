@@ -7,6 +7,7 @@ import java.util.List;
 import com.ibatis.sqlmap.client.SqlMapClient;
 import com.opensymphony.xwork2.ActionSupport;
 
+import elicitation.model.question.Question;
 import elicitation.utils.Utils;
 
 /**
@@ -64,6 +65,20 @@ public class VersionService {
 		x  = ((int)(x*100))/(float)100;
 		return x;
 	}
+	public static String makeVersion(int scenarioId, List<Question> qlist) {
+		try {
+			client.startTransaction();
+			client.update("version.makeVersion", scenarioId);
+			for(Question q :qlist){
+				client.update("question.fixQuestion",q);
+			}
+			client.commitTransaction();
+			client.endTransaction();
+			return ActionSupport.SUCCESS;
+		} catch (Exception e) {
+			return ActionSupport.ERROR;
+		}
+	}
 	public static String makeVersion(int scenarioId) {
 		try{
 		client.update("version.makeVersion",scenarioId);
@@ -85,6 +100,7 @@ public class VersionService {
 	 * 			SolutionService#selectSolutionFromPrevScenario(Scenario prevsce)
 	 * @param name
 	 * @return
+	 * @deprecated  --- 线性结构，后面已经改成多分支结构了.
 	 */
 	public static List<Scenario> selectScenarioVersion(String name){
 		List<Scenario> scenarios = null; 
@@ -96,59 +112,25 @@ public class VersionService {
 		return scenarios;
 	}
 	/**
-	 * 利用找到的scenario_id的大小来判断版本的先后。
+	 * 多分支结构
 	 * @param sce#id
 	 * @return
+	 * @throws SQLException 
 	 */
-	public static Scenario selectNextVersion(Scenario sce){
-		try{
-			sce = ProjectService.selectScenario(sce);
-		}catch(SQLException se){
-			se.printStackTrace();
-		}
-		List<Scenario> ss = selectScenarioVersion(sce.getScenarioName());
-		int id = sce.getScenarioId();
-		int size = ss.size();
-		int min = Integer.MAX_VALUE;
-		int imin = -1;
-		for(int i = 0 ;i<size;i++){
-			int tid = ss.get(i).getScenarioId();
-			if(tid>id){
-				if(tid<min) {
-					min = tid;
-					imin = i ;
-				}
-			}
-		}
-		if(min != Integer.MAX_VALUE){
-			return ss.get(imin);
-		}
-		return null;
+	public static List<Scenario> selectNextVersions(Scenario sce) throws SQLException{
+		List<Scenario> nexts = client.queryForList("version.selectNextVersions",sce);
+		return nexts;
 	}
-	public static Scenario selectPreVersion(Scenario sce){
-		try{
-			sce = ProjectService.selectScenario(sce);
-		}catch(SQLException se){
-			se.printStackTrace();
-		}
-		List<Scenario> ss = selectScenarioVersion(sce.getScenarioName());
-		int id = sce.getScenarioId();
-		int size = ss.size();
-		int max = Integer.MIN_VALUE;
-		int imax = -1;
-		for(int i = 0 ;i<size;i++){
-			int tid = ss.get(i).getScenarioId();
-			if(tid<id){
-				if(tid>max) {
-					max = tid;
-					imax = i ;
-				}
-			}
-		}
-		if(max != Integer.MIN_VALUE){
-			return ss.get(imax);
-		}
-		return null;
+	/**
+	 * Table scenario_version.
+	 * 采用多分支技术后，要更改代码.
+	 * @param sce
+	 * @return
+	 * @throws SQLException 
+	 */
+	public static Scenario selectPreVersion(Scenario sce) throws SQLException{
+		Scenario pre = (Scenario) client.queryForObject("version.selectPreVersion",sce);
+		return pre;
 	}
 	
 }

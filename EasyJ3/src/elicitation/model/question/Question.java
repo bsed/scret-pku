@@ -1,5 +1,6 @@
 package elicitation.model.question;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,12 +18,29 @@ public class Question {
 	private List<Scenario> relatedScenarios = new ArrayList<Scenario>(); // related scenarios.
 	private SysUser user;      //the user put the question!
 	
-	
+	private Date buildTime;
+	private String status;
 	public Question(){
 		
 	}
 	public Question(int id){
 		this.id = id;
+	}
+	public int getQuestionId(){
+		return id;
+	}
+	public void setBuildTime(Date time){
+		buildTime = time;
+	}
+	public Date getBuildTime(){
+		return buildTime;
+	}
+	public void setStatus(String status){
+		this.status = status;
+	}
+	public String getStatus(){
+		return this.status;
+		
 	}
 	public int getId() {
 		return id;
@@ -81,6 +99,9 @@ public class Question {
 	}
 	public int getQkindId(){
 		return qkind.getId();
+	}
+	public int getVoteNum(){
+		return QuestionService.selectVoteNum(getId());
 	}
 	@Override
 	public boolean equals(Object o){

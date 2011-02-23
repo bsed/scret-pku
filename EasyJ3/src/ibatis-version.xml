@@ -25,7 +25,19 @@
 	<update id="makeVersion">
 		update scenario set use_state = 'version' where scenario.scenario_id = #value#
 	</update>
-	
+	<select id="selectPreVersion" parameterClass="elicitation.model.project.Scenario" resultMap="Map.Scenario">
+		select scenario.* 
+			from scenario join scenario_version 
+			on scenario.scenario_id = scenario_version.scenario_id_begin
+			where scenario_version.scenario_id_end = #scenarioId#
+	</select>
+	<select id="selectNextVersions" parameterClass="elicitation.model.project.Scenario" resultMap="Map.Scenario">
+		<!-- 返回的是一个 list -->
+		select scenario.* 
+		from scenario join scenario_version 
+		on scenario.scenario_id = scenario_version.scenario_id_end
+		where scenario_version.scenario_id_begin = #scenarioId#
+	</select>
 	<select id="selectScenarioVersion" parameterClass="java.lang.String" resultMap="Map.Scenario">
 		select * 
 			from scenario

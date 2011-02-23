@@ -2,6 +2,7 @@ package elicitation.model.project;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -29,6 +30,7 @@ public class Project implements Serializable{
 	private List<Data> datas = new ArrayList<Data>();
 	private List<Role> roles = new ArrayList<Role>();
 	private List<Scenario> scenarios = new ArrayList<Scenario>();
+	
 	private boolean writePermission = false;
 	
 	public Project(){		
@@ -98,8 +100,7 @@ public class Project implements Serializable{
 		sce.setProjectId(this.projectId);
 		scenarios.add(sce);
 	}
-	public  List<Scenario> getScenarioList(){
-		
+	public  List<Scenario> getScenarioList(){		
 		return scenarios;
 	}
 	public Scenario findScenario(int sid){
@@ -284,8 +285,26 @@ public class Project implements Serializable{
 		return res;
 	}
 	/**
+	 * 得到各场景最新的版本List.
+	 * @return
+	 */
+	public List<Scenario> getFreshScenarioList(){
+		if(this == null) return null;
+		List<Scenario> scenarios = getScenarioList();
+		List<Scenario> sl = new ArrayList<Scenario>();
+		HashSet<String> nset = new HashSet<String>();
+		for(Scenario sc : scenarios){			
+			String name = sc.getScenarioName();
+			if(nset.contains(name)) continue;
+			nset.add(name);
+			sl.add(sc);
+		}
+		return sl;
+	}
+	/**
 	 * 加入多版本以后的数据改正.
 	 * @return
+	 * @deprecated but don't delete.
 	 */
 	public List<Scenario> getScenarioVersionList(){
 		if(this == null) return null;
@@ -390,6 +409,24 @@ public class Project implements Serializable{
 	
 	public double getRand(){
 		return Math.random();
+	}
+	/**
+	 * 以下是多分支版本的辅助函数
+	 */
+	/**
+	 * 前提： scenarios 加载完毕
+	 * @throws SQLException 
+	 */
+	public List<Scenario> getRoots() throws SQLException{
+		
+		List<Scenario> roots = new ArrayList<Scenario>();
+		if(scenarios == null || scenarios.size() == 0) System.err.println("Project#getRoots(),not load scenarios. or just has no scenarios");
+		for(Scenario node:scenarios){
+			//System.out.println(node);
+			if(node.isRoot())
+				roots.add(node);
+		}
+		return roots;
 	}
 	
 }
