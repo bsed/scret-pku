@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="xplayer">
+	<resultMap id="modelMap" class="model.Node">
+		<result property="id" column="id"/>
+		<result property="os" column="os"/>
+		<result property="date" column="date"/>
+	 	<result property="pv" column="pv"/>
+		<result property="vv" column="vv"/>		
+	</resultMap>
+	<select id="FetchInfo" parameterClass="java.lang.String" resultMap="modelMap">
+		select * from t_pvvv where date = #value#
+	</select>	
+</sqlMap>
